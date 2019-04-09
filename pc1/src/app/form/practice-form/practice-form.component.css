@@ -1,0 +1,8 @@
+.container {
+	padding: 10px;
+}
+
+.form-container {
+	display: flex;
+	flex-direction: column;
+}

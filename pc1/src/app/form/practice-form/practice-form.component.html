@@ -1,0 +1,38 @@
+<div class="container form-container border border-primary">
+<h6>Or create a new practice</h6>
+	<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+		<div class="row">
+			<div class="col">
+				<mat-form-field appearance="legacy">
+					<input
+						type="text" 
+						matInput placeholder="practice name"
+						class="form-control"
+						[(ngModel)]="name"
+						required
+						name="name">
+				</mat-form-field>
+			</div>
+			<div class="col">
+				<mat-form-field appearance="legacy">
+				<input
+					type="text" 
+					matInput
+					placeholder="practice slug"
+					class="form-control"
+					[(ngModel)]="slug"
+					required
+					name="slug">
+				</mat-form-field>
+			</div>
+			<div class="col" style="text-align: left">
+			<button
+
+				class='btn btn-primary btn-small' 
+				type="submit"
+				[disabled]="!f.valid">Create
+		 	</button>
+		 </div>
+		</div>
+	</form>
+</div>

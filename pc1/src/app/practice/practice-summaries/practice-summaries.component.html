@@ -1,0 +1,36 @@
+<div class="container border border-primary">
+	<h2 *ngIf="practice">{{practice.name}}</h2>
+	<div class="container" style="text-align:center">
+		<button (click)="toggleForm()" class="btn btn-primary">Add New Summary</button>
+		<div>
+			<app-form 
+				*ngIf="show_form"
+				(outSummary)="createSummary($event)"
+				></app-form>
+		</div>
+	</div>
+	<div class="container">
+		<h6>Select the date to view/edit daily summary details</h6>
+		<ul class="list-group"> 
+			<li *ngFor="let summary of practice?.daily_summaries" class="list-group-item">
+				<mat-expansion-panel>
+					<mat-expansion-panel-header>
+						<mat-panel-title>{{summary.date}}</mat-panel-title>
+						<mat-panel-description>
+							<p class="text-info">Select to edit</p>
+						</mat-panel-description>
+					</mat-expansion-panel-header>
+						<app-form
+							[summaryId] = "summary.id"
+							[practice] = "summary.practice"
+							[date]="summary.date" 
+							[visits]="summary.visits"
+							[workdays]="summary.workdays"
+							[noshows]="summary.noshows"
+							(outSummary)="updateSummary($event, summary.id)">
+						</app-form>
+				</mat-expansion-panel>
+			</li>
+		</ul>
+	</div>
+</div>

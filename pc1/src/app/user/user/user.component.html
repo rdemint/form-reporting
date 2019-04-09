@@ -1,0 +1,45 @@
+<div class="container">
+	<form [formGroup]="loginForm">
+		<div class="form-group">
+			<div class="row">
+				<div class="col-sm-4">
+					<label>Email:
+					<input 
+						type="text" 
+						name="email"
+						formControlName="email"
+						class="form-control"
+						>
+					</label>
+					<span 
+						*ngFor="let error of userService.errors"
+						>{{ error }}
+					</span>
+				</div>
+				<div class="col-sm-4">
+					<label>Password:
+					<input 
+						type="password" 
+						name="password"
+						formControlName="password"
+						class="form-control"
+						>
+					</label>
+				</div>
+				<div class="col-sm-4">
+					<button 
+						class="btn btn-primary"
+						(click)="login()"
+						>Login
+					</button>
+				</div>
+			<div class="col-sm-12">
+				<span *ngFor="let error of userService.errors.non_field_errors"
+				>{{ error }}
+				</span>
+			</div>
+		</div>
+	</div>
+	</form>
+</div>
+

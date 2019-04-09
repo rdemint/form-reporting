@@ -1,0 +1,7 @@
+.navbar {
+	font-size: 36px;
+}
+
+.fill-toolbar-space {
+	flex: 1 1 auto;
+}

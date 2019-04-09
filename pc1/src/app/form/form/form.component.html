@@ -1,0 +1,42 @@
+<form (ngSubmit)="onSubmit(f)" #f="ngForm">
+	<div class="container border">
+		<br>
+				<div class="row">
+					<div class="col">
+						<label>Date</label>
+					</div>
+					<div class="col">
+						<input type="date" class="form-control" [(ngModel)]="date" name="date" required>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<label>Visits</label>
+					</div>
+					<div class="col">
+						<input type="text" class="form-control" [(ngModel)]="visits" name="visits" required>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<label>Work Days</label>
+					</div>
+					<div class="col">
+						<input type="text" class="form-control" [(ngModel)]="workdays" name="workdays" required>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col">
+						<label>No Shows</label>
+					</div>
+					<div class="col">
+						<input type="text" class="form-control" [(ngModel)]="noshows" name="noshows" >
+					</div>
+				</div>
+			<button 
+				class='btn btn-primary' 
+				type="submit"
+				[disabled]="!f.valid">Submit
+		 	</button>
+		</div>
+	</form>
