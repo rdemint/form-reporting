@@ -1,7 +1,11 @@
-.navbar {
+nav div h1 {
 	font-size: 36px;
+	vertical-align: bottom;
 }
 
-.fill-toolbar-space {
-	flex: 1 1 auto;
+nav div img {
+	height: 15%;
+	width: 15%;
+	margin: 10px;
 }
+

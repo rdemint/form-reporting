@@ -70,5 +70,5 @@ class CreateTokenView(ObtainAuthToken):
 		user = serializer.validated_data['user']
 		token, created = Token.objects.get_or_create(user=user)
 		slug = user.practice.slug
-		return Response({'token': token.key, 'slug': slug})
+		return Response({'token': token.key, 'slug': slug, 'email': user.email})
 	

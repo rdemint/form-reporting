@@ -16,7 +16,7 @@ export class UserService {
 	public slug: string;
 	public token: string;
 	public token_expires: Date;
-	public username: string;
+	public email: string;
 	public errors: any = [];
 	private authHeader: HttpHeaders;
 
@@ -31,7 +31,7 @@ export class UserService {
   			.subscribe(
   				(data) => {
 
-  				this.updateData(data['token'], data['slug']);
+  				this.updateData(data['token'], data['slug'], data['email']);
   				this.router.navigate(['practices', this.slug])
   			},
   			(err) => {
@@ -46,8 +46,9 @@ export class UserService {
 		this.errors=[];
 	}
 	
-	private updateData(token, slug){
+	private updateData(token, slug, email){
 		this.token = token;
+		this.email = email;
 		this.slug = slug;
 		this.errors = [];
 		let authHeader = new HttpHeaders().set("Authorization", "Token " + token)
@@ -66,6 +67,10 @@ export class UserService {
 
 	getHttpOptions() {
 		return this.httpOptions;
+	}
+
+	getEmail() {
+		return this.email;
 	}
 
 	refreshToken() { }
