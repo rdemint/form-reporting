@@ -6,10 +6,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { appRoutes } from './routes';
 import { PracticeService } from './practice/practice.service';
+import { AuthService } from './auth/auth.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -17,12 +18,15 @@ import { AppComponent } from './app.component';
 import { FormComponent } from './form/form/form.component';
 import { FormsModule} from '@angular/forms';
 
+import { AuthGuard } from './auth-guard';
+
+import { AuthInterceptor } from './auth.interceptor';
 import { PracticeSummariesComponent } from './practice/practice-summaries/practice-summaries.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PracticeFormComponent } from './form/practice-form/practice-form.component';
 import { PracticeComponent } from './practice/practice/practice.component';
-import { UserComponent } from './user/user/user.component';
-import { LogoutComponent } from './user/logout/logout.component';
+import { LoginComponent } from './auth/login/login.component';
+import { LogoutComponent } from './auth/logout/logout.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +35,7 @@ import { LogoutComponent } from './user/logout/logout.component';
     PracticeSummariesComponent,
     PracticeFormComponent,
     PracticeComponent,
-    UserComponent,
+    LoginComponent,
     LogoutComponent,
   ],
   imports: [
@@ -54,7 +58,13 @@ import { LogoutComponent } from './user/logout/logout.component';
     MatFormFieldModule,
     MatInputModule,
   ],
-  providers: [MatNativeDateModule, PracticeService],
+  providers: [
+    MatNativeDateModule, 
+    PracticeService,
+    AuthService, 
+    AuthGuard,
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+    ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

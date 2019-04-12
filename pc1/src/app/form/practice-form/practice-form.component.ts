@@ -13,6 +13,7 @@ import { MatFormFieldModule} from '@angular/material/form-field';
 export class PracticeFormComponent implements OnInit {
 	@Input() name: string;
 	@Input() slug: string;
+
 	outPractice = new EventEmitter<Practice>();
 
   constructor(private practiceService: PracticeService) { }

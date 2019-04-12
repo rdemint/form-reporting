@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from rest_framework.validators import UniqueTogetherValidator
+
 from practices.models import Practice, DailySummary, User 
 from django.contrib.auth import get_user_model, authenticate
 
@@ -12,6 +14,12 @@ class DailySummarySerializer(serializers.ModelSerializer):
 	class Meta:
 		model = DailySummary
 		fields = "__all__"
+		validators=[UniqueTogetherValidator(
+				queryset=DailySummary.objects.all(),
+				fields=('practice', 'date'),
+				message="A daily summary for this date already exists.  Choose a new date or edit the existing summary."
+			)
+		]	
 
 class PracticeSerializer(serializers.ModelSerializer):
 	daily_summaries = DailySummarySerializer(many=True)

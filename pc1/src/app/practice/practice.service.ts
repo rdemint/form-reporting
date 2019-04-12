@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BehaviorSubject, Observable, combineLatest } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Practice, DailySummary } from '../models';
-import { UserService } from '../user/user.service';
+import { AuthService } from '../auth/auth.service';
 
 @Injectable({
   providedIn: 'root'
@@ -22,17 +22,16 @@ export class PracticeService {
   daily_summary_url: string ='http://127.0.0.1:8000/daily_summaries/';
   httpOptions: any;
 
-  constructor(private http: HttpClient, private userService: UserService, route: ActivatedRoute) {
+  constructor(private http: HttpClient, private authService: AuthService, route: ActivatedRoute) {
       this.getPracticeList();
  }
   getPracticeListII(){
-    return this.http.get(this.practice_url, this.userService.getHttpOptions()).subscribe();
+    return this.http.get(this.practice_url, this.authService.getHttpOptions()).subscribe();
   }    
 
   private getPracticeList(){
-  	this.http.get(this.practice_url, this.userService.getHttpOptions()).subscribe((practices) => 
+  	this.http.get(this.practice_url, this.authService.getHttpOptions()).subscribe((practices) => 
       {this.practice_list.next(practices);
-        console.log(practices);
       });
   }    
 
@@ -41,7 +40,7 @@ export class PracticeService {
   }
 
   getPractice(slug:string) {
-    return this.http.get(this.practice_url + slug + '/', this.userService.getHttpOptions())
+    return this.http.get(this.practice_url + slug + '/')
       .subscribe((practice) => this.selected_practice.next(practice));
   }
   
@@ -69,12 +68,12 @@ export class PracticeService {
   }
 
   patchSummary(summary: DailySummary, practice_slug: string, summaryId) {
-    return this.http.patch<DailySummary>(this.daily_summary_url + summaryId + "/", summary, this.userService.getHttpOptions())
+    return this.http.patch<DailySummary>(this.daily_summary_url + summaryId + "/", summary, this.authService.getHttpOptions())
     .subscribe(() => this.selectPractice(practice_slug))
   }
 
   postSummary(summary: DailySummary, practice_slug: string) {
-    return this.http.post<DailySummary>(this.daily_summary_url, summary, this.userService.getHttpOptions())
+    return this.http.post<DailySummary>(this.daily_summary_url, summary, this.authService.getHttpOptions())
       .subscribe(() => this.selectPractice(practice_slug))
   }
 

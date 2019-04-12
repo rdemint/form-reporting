@@ -1,20 +1,20 @@
 import { Component, OnInit,} from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { UserService } from '../user.service';
+import { AuthService } from '../auth.service';
 import { User } from '../../models';
 import { Observable } from 'rxjs';
 import { share } from 'rxjs/operators';
 
 
 @Component({
-  selector: 'app-user',
-  templateUrl: './user.component.html',
-  styleUrls: ['./user.component.css']
+  selector: 'app-login',
+  templateUrl: './login.component.html',
+  styleUrls: ['./login.component.css']
 })
-export class UserComponent implements OnInit {
+export class LoginComponent implements OnInit {
   loginForm: FormGroup;
 
-  constructor(private userService: UserService) {   }
+  constructor(private authService: AuthService) {   }
 
   ngOnInit() { 
     this.loginForm = new FormGroup({
@@ -25,7 +25,7 @@ export class UserComponent implements OnInit {
   }
 
   login(){
-      this.userService.login(this.loginForm.value);
+      this.authService.login(this.loginForm.value);
   }  
 
  }

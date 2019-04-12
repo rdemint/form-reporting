@@ -42,8 +42,14 @@ export class PracticeSummariesComponent implements OnInit {
   }
 
   createSummary(summary) {
-    summary['practice'] = this.practice.id
+    for (let i=0; i < this.practice.daily_summaries.length; i++) {
+      if (this.practice.daily_summaries[i].date == summary.date) {
+       window.alert("A summary with this date already exists.  Edit the summary or choose a new date.")
+      }
+    }
+    summary['practice'] = this.practice.id;
     this.practiceService.postSummary(summary, this.practice.slug);
     this.practiceService.selectPractice(this.practice.slug);
+    return {"success": true, "message": "Daily summary created"}
   }
 }

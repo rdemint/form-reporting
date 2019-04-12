@@ -9,10 +9,11 @@
 						name="email"
 						formControlName="email"
 						class="form-control"
+						autocomplete="on" 
 						>
 					</label>
 					<span 
-						*ngFor="let error of userService.errors"
+						*ngFor="let error of authService.errors"
 						>{{ error }}
 					</span>
 				</div>
@@ -23,6 +24,7 @@
 						name="password"
 						formControlName="password"
 						class="form-control"
+						autocomplete="off" 
 						>
 					</label>
 				</div>
@@ -34,7 +36,7 @@
 					</button>
 				</div>
 			<div class="col-sm-12">
-				<span *ngFor="let error of userService.errors.non_field_errors"
+				<span *ngFor="let error of authService.errors.non_field_errors"
 				>{{ error }}
 				</span>
 			</div>
