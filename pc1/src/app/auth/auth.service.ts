@@ -13,7 +13,8 @@ export class AuthService {
 	private authRefreshUrl: string ="http://127.0.0.1:8000/token/refresh/";
 	private newUserUrl: string = "http://127.0.0.1:8000/users";
 	private httpOptions: any;
-
+	
+	public practice_name: string;
 	public slug: string;
 	public token: string;
 	public token_expires: Date;
@@ -31,7 +32,11 @@ export class AuthService {
   			.subscribe(
   				(data) => {
 
-  				this.updateData(data['token'], data['slug'], data['email']);
+  				this.updateData(
+  					data['token'], 
+  					data['slug'], 
+  					data['email'],
+  					data['practice_name']);
   				this.isAuthenticated = true;
   				this.router.navigate(['practices', this.slug])
   			},
@@ -48,10 +53,11 @@ export class AuthService {
 		this.isAuthenticated = false;
 	}
 	
-	private updateData(token, slug, email){
+	private updateData(token, slug, email, practice_name){
 		this.token = token;
 		this.email = email;
 		this.slug = slug;
+		this.practice_name = practice_name
 		this.errors = [];
 		this.authHeader = new HttpHeaders().set("Authorization", "Token " + token)
 		this.httpOptions = {

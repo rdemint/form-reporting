@@ -24,7 +24,6 @@ import { AuthInterceptor } from './interceptors/auth.interceptor';
 import { ResponseInterceptor } from './interceptors/response.interceptor';
 import { PracticeSummariesComponent } from './practice/practice-summaries/practice-summaries.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { PracticeFormComponent } from './form/practice-form/practice-form.component';
 import { PracticeComponent } from './practice/practice/practice.component';
 import { LoginComponent } from './auth/login/login.component';
 import { LogoutComponent } from './auth/logout/logout.component';
@@ -34,7 +33,6 @@ import { LogoutComponent } from './auth/logout/logout.component';
     AppComponent,
     FormComponent,
     PracticeSummariesComponent,
-    PracticeFormComponent,
     PracticeComponent,
     LoginComponent,
     LogoutComponent,

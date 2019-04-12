@@ -9,10 +9,16 @@ import { Observable } from 'rxjs';
 })
 export class PracticeComponent implements OnInit {
 	email: string;
+	practiceName: string;
+	practiceSlug: string;
+	
   constructor(private authService: AuthService) { }
 
   ngOnInit() {
-  	this.email = this.authService.getEmail()
+  	this.email = this.authService.email;
+  	this.practiceName = this.authService.practice_name;
+  	this.practiceSlug = this.authService.slug;
+
   }
 
 }

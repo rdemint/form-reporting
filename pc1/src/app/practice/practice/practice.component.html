@@ -1,4 +1,9 @@
 <div>
 	<p class="text-muted">  Logged in as {{email}}. <a routerLink="/logout/">Log out  </a></p>
 </div>
-<app-practice-summaries></app-practice-summaries>
+<div class="container">
+	<h2>{{practice_name}}</h2>
+<app-practice-summaries
+	[practiceSlug]="practiceSlug"
+></app-practice-summaries>
+</div>

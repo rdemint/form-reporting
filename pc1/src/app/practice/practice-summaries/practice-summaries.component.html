@@ -1,5 +1,4 @@
 <div class="container border border-primary">
-	<h2 *ngIf="practice">{{practice.name}}</h2>
 	<div class="container" style="text-align:center">
 		<button (click)="toggleForm()" class="btn btn-primary">Add New Summary</button>
 		<div>
@@ -12,7 +11,7 @@
 	<div class="container">
 		<h6>Select the date to view/edit daily summary details</h6>
 		<ul class="list-group"> 
-			<li *ngFor="let summary of practice?.daily_summaries" class="list-group-item">
+			<li *ngFor="let summary of daily_summaries" class="list-group-item">
 				<mat-expansion-panel>
 					<mat-expansion-panel-header>
 						<mat-panel-title>{{summary.date}}</mat-panel-title>

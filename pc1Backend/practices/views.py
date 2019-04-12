@@ -41,6 +41,10 @@ class DailySummaryList(ListCreateAPIView):
 	queryset = DailySummary.objects.all()
 	permssion_classes = (IsAuthenticated,)
 
+	def get_queryset(self):
+		practice = Practice.objects.get(slug=self.kwargs['slug'])
+		return DailySummary.objects.filter(practice=practice).order_by('-date')
+
 class PracticeDetail(RetrieveUpdateDestroyAPIView):
 	serializer_class = PracticeSerializer
 	lookup_field = "slug"
@@ -70,5 +74,6 @@ class CreateTokenView(ObtainAuthToken):
 		user = serializer.validated_data['user']
 		token, created = Token.objects.get_or_create(user=user)
 		slug = user.practice.slug
-		return Response({'token': token.key, 'slug': slug, 'email': user.email})
+		name = user.practice.name
+		return Response({'token': token.key, 'slug': slug, 'email': user.email, 'practice_name': name})
 	

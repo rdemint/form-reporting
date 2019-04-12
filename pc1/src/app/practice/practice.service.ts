@@ -22,18 +22,7 @@ export class PracticeService {
   daily_summary_url: string ='http://127.0.0.1:8000/daily_summaries/';
   httpOptions: any;
 
-  constructor(private http: HttpClient, private authService: AuthService, route: ActivatedRoute) {
-      this.getPracticeList();
- }
-  getPracticeListII(){
-    return this.http.get(this.practice_url, this.authService.getHttpOptions()).subscribe();
-  }    
-
-  private getPracticeList(){
-  	this.http.get(this.practice_url, this.authService.getHttpOptions()).subscribe((practices) => 
-      {this.practice_list.next(practices);
-      });
-  }    
+  constructor(private http: HttpClient, private authService: AuthService, route: ActivatedRoute) { }
 
   loadPracticeList(){
     return this.practice_list.asObservable();
@@ -42,6 +31,11 @@ export class PracticeService {
   getPractice(slug:string) {
     return this.http.get(this.practice_url + slug + '/')
       .subscribe((practice) => this.selected_practice.next(practice));
+  }
+
+  getPracticeSummaries(slug:string) {
+    this.selected_practice_slug.next(slug);
+    return this.http.get<DailySummary[]>(this.practice_url + slug + '/daily_summaries/')
   }
   
   loadPractice() {
@@ -52,19 +46,6 @@ export class PracticeService {
     this.selected_practice_slug.next(slug);
     this.getPractice(slug);
     return this.loadPractice();
-  }
-
-  postPractice(practice) {
-    return this.http.post<Practice>(this.practice_url  + "/", practice)
-      .subscribe(()=> 
-         {this.getPracticeList();
-          this.loadPracticeList();
-        })
-  }
-
-  deletePractice(practiceSlug) {
-    return this.http.delete<string>(this.practice_url + practiceSlug + "/")
-      .subscribe(()=> this.getPracticeList());
   }
 
   patchSummary(summary: DailySummary, practice_slug: string, summaryId) {

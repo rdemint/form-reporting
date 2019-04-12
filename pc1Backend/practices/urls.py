@@ -11,6 +11,7 @@ urlpatterns = [
 	path('users/<int:pk>', views.UserDetail.as_view(), name="user_detail"),
 	path('practices/', views.PracticeList.as_view(), name="practice_list"),
 	path('practices/<slug:slug>/', views.PracticeDetail.as_view(), name="practice_detail"),
+	path('practices/<slug:slug>/daily_summaries/', views.DailySummaryList.as_view(), name='practice_summaries'),
 	path('daily_summaries/', views.DailySummaryList.as_view(), name="daily_summary_list"),
 	path('daily_summaries/<int:pk>/', views.DailySummaryDetail.as_view(), name="daily_summary_detail"),
 	#path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
