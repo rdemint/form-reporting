@@ -20,7 +20,8 @@ import { FormsModule} from '@angular/forms';
 
 import { AuthGuard } from './auth-guard';
 
-import { AuthInterceptor } from './auth.interceptor';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { ResponseInterceptor } from './interceptors/response.interceptor';
 import { PracticeSummariesComponent } from './practice/practice-summaries/practice-summaries.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PracticeFormComponent } from './form/practice-form/practice-form.component';
@@ -63,7 +64,8 @@ import { LogoutComponent } from './auth/logout/logout.component';
     PracticeService,
     AuthService, 
     AuthGuard,
-    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
+    {provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true}
     ],
   bootstrap: [AppComponent]
 })
