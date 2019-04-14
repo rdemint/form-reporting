@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
@@ -21,8 +21,10 @@ export class PracticeService {
 	practice_url: string = 'http://127.0.0.1:8000/practices/'; 
   daily_summary_url: string ='http://127.0.0.1:8000/daily_summaries/';
   httpOptions: any;
+  httpParams = new HttpParams();
 
-  constructor(private http: HttpClient, private authService: AuthService, route: ActivatedRoute) { }
+  constructor(private http: HttpClient, private authService: AuthService) { 
+  }
 
   loadPracticeList(){
     return this.practice_list.asObservable();
@@ -33,9 +35,13 @@ export class PracticeService {
       .subscribe((practice) => this.selected_practice.next(practice));
   }
 
-  getPracticeSummaries(slug:string) {
+  getPracticeSummaries(slug:string, year, month) {
+    let httpparams: HttpParams = new HttpParams().append('year', year).append('month', month);
     this.selected_practice_slug.next(slug);
-    return this.http.get<DailySummary[]>(this.practice_url + slug + '/daily_summaries/')
+    return this.http.get<DailySummary[]>(
+      this.practice_url + slug + '/daily_summaries/', 
+      {params: httpparams}
+    )
   }
   
   loadPractice() {

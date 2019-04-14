@@ -9,9 +9,20 @@
 		</div>
 	</div>
 	<div class="container">
-		<h6>Select the date to view/edit daily summary details</h6>
-		<ul class="list-group"> 
-			<li *ngFor="let summary of daily_summaries" class="list-group-item">
+		<div *ngIf="show_bar">
+			<h6 style="text-align:center">Loading summaries...</h6> 
+			<mat-progress-bar
+				class="example-margin"
+				color="primary"
+				mode="buffer"
+				>
+			</mat-progress-bar>
+		</div>
+		<h6 *ngIf="!show_bar" style="text-align: center">Select the date to view/edit daily summary details</h6>
+		<ul class="list-group">
+			<li
+				*ngFor="let summary of daily_summaries" 
+				class="list-group-item">
 				<mat-expansion-panel>
 					<mat-expansion-panel-header>
 						<mat-panel-title>{{summary.date}}</mat-panel-title>

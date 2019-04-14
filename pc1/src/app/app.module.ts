@@ -1,4 +1,5 @@
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatInputModule, MatFormFieldModule, MatNativeDateModule } from '@angular/material';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatToolbarModule} from '@angular/material/toolbar';
@@ -42,6 +43,7 @@ import { LogoutComponent } from './auth/logout/logout.component';
     NgbModule,
     RouterModule.forRoot(appRoutes),
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
     FormsModule,
@@ -52,6 +54,7 @@ import { LogoutComponent } from './auth/logout/logout.component';
     BrowserAnimationsModule,
     MatFormFieldModule,
     MatToolbarModule,
+    MatProgressBarModule
   ],
   exports: [
     MatFormFieldModule,

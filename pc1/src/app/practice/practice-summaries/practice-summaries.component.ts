@@ -5,6 +5,7 @@ import { PracticeService } from '../practice.service';
 import { Observable } from 'rxjs';
 import { switchMap } from 'rxjs/operators';
 import { MatExpansionModule} from '@angular/material/expansion';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-practice-summaries',
@@ -13,20 +14,36 @@ import { MatExpansionModule} from '@angular/material/expansion';
 })
 export class PracticeSummariesComponent implements OnInit {
   @Input() practiceSlug: string;
-  daily_summaries: DailySummary[];
+  daily_summaries: DailySummary[] = null;
   show_practice_detail: boolean=false;
   show_form: boolean=false;
+  show_bar: boolean=true;
+  today = new Date();
+  month: Observable<string>;z
+  year: Observable<string>;
 
   constructor(
   	private route: ActivatedRoute,
   	private router: Router,
-  	private practiceService: PracticeService
-  ) {
+  	private practiceService: PracticeService) {}
+ 
+  ngOnInit() {
+     console.log(this.route.snapshot.queryParams);
+     this.route.queryParams.subscribe(
+       (params)=>{
+         this.year = params['year'];
+         this.month = params['month'];
+       }
+     );
+     
      this.route.paramMap.pipe(
-       switchMap((params)=> this.practiceService.getPracticeSummaries(params.get('practiceSlug'))))
-         .subscribe((summaries) => this.daily_summaries = summaries);
-   }
-  ngOnInit() {}
+       switchMap((params)=> this.practiceService.getPracticeSummaries(params.get('practiceSlug'), this.year, this.month)))
+         .subscribe((summaries) => {
+           this.show_bar = false;
+
+           this.daily_summaries = summaries;
+         });
+  }
 
   navPracticeDetail(summaryId: string){
     this.router.navigate(['summaryId']);
