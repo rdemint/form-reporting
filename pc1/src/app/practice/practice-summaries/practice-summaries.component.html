@@ -19,6 +19,34 @@
 			</mat-progress-bar>
 		</div>
 		<h6 *ngIf="!show_bar" style="text-align: center">Select the date to view/edit daily summary details</h6>
+		<div class="container">
+			<mat-form-field>
+				<mat-label>Year</mat-label>
+				<mat-select
+					[(value)]="selected_year"
+					(selectionChange)="selectNewYear($event)"
+				>
+					<mat-option 
+						*ngFor="let year of year_options"
+						[value]="year"
+						>{{year}}
+					</mat-option>
+					</mat-select>
+			</mat-form-field>
+			<mat-form-field>
+				<mat-label>Month</mat-label>
+				<mat-select
+					[(value)]="selected_month"
+					(selectionChange)="selectNewMonth($event)"
+				>
+					<mat-option
+						*ngFor="let month of month_options"
+						[value]="month"
+						>{{month}}
+					</mat-option>
+				</mat-select>
+			</mat-form-field>
+		</div>
 		<ul class="list-group">
 			<li
 				*ngFor="let summary of daily_summaries" 

@@ -9,7 +9,7 @@ import { AuthGuard } from './auth-guard';
 export const appRoutes: Routes = [
 	{
 		path: 'practices/:practiceSlug',
-		// canActivate: [AuthGuard],
+		canActivate: [AuthGuard],
 		component: PracticeComponent,
 	},
 	{	path: 'login',

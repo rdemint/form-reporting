@@ -19,8 +19,10 @@ export class PracticeSummariesComponent implements OnInit {
   show_form: boolean=false;
   show_bar: boolean=true;
   today = new Date();
-  month: Observable<string>;z
-  year: Observable<string>;
+  selected_month: Observable<string>;
+  selected_year: Observable<string>;
+  year_options: any = ["2018", "2019"];
+  month_options: any = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
 
   constructor(
   	private route: ActivatedRoute,
@@ -28,16 +30,15 @@ export class PracticeSummariesComponent implements OnInit {
   	private practiceService: PracticeService) {}
  
   ngOnInit() {
-     console.log(this.route.snapshot.queryParams);
      this.route.queryParams.subscribe(
        (params)=>{
-         this.year = params['year'];
-         this.month = params['month'];
+         this.selected_year = params['year'];
+         this.selected_month = params['month'];
        }
      );
      
      this.route.paramMap.pipe(
-       switchMap((params)=> this.practiceService.getPracticeSummaries(params.get('practiceSlug'), this.year, this.month)))
+       switchMap((params)=> this.practiceService.getPracticeSummaries(params.get('practiceSlug'), this.selected_year, this.selected_month)))
          .subscribe((summaries) => {
            this.show_bar = false;
 
@@ -45,8 +46,26 @@ export class PracticeSummariesComponent implements OnInit {
          });
   }
 
-  navPracticeDetail(summaryId: string){
-    this.router.navigate(['summaryId']);
+  selectNewYear(year) {
+    this.daily_summaries = null;
+    this.show_bar = true;
+    this.route.paramMap.pipe(
+    switchMap((params)=>this.practiceService.getPracticeSummaries(params.get('practiceSlug'), year.value, this.selected_month)))
+      .subscribe((summaries) => {
+        this.daily_summaries = summaries;
+        this.show_bar = false;
+       })
+  }
+
+  selectNewMonth(month){
+    this.daily_summaries = null;
+    this.show_bar = true;
+    this.route.paramMap.pipe(
+    switchMap((params)=>this.practiceService.getPracticeSummaries(params.get('practiceSlug'), this.selected_year, month.value)))
+      .subscribe((summaries) => {
+        this.daily_summaries = summaries;
+        this.show_bar = false;
+       })
   }
 
   toggleForm(){
@@ -54,7 +73,6 @@ export class PracticeSummariesComponent implements OnInit {
   }
 
   updateSummary(summary, summaryId) {
-    console.log(summary);
    this.practiceService.patchSummary(summary, this.practiceSlug, summaryId);
   }
 
