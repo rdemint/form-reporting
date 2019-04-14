@@ -15,7 +15,9 @@ export class FormComponent implements OnInit {
 	@Input() visits: number = null;
   @Input() workdays: number = null;
   @Input() noshows: number = null;
+  @Input() resetForm: boolean = false;
   @Output() outSummary = new EventEmitter();
+  @Input() submitText: string = "Submit";
     
   constructor() { }
 
@@ -30,7 +32,10 @@ export class FormComponent implements OnInit {
         noshows: form.value.noshows,
        };
       this.outSummary.emit(summary);
-      form.reset()  
+      if (this.resetForm) {
+        form.reset();    
+      }
+      
     }
   }
 }

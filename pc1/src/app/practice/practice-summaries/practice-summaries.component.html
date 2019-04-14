@@ -3,6 +3,7 @@
 			<mat-card-content>
 				<app-form 
 					*ngIf="show_form"
+					[resetForm] = "true"
 					(outSummary)="createSummary($event)"
 				></app-form>
 			</mat-card-content>
@@ -10,6 +11,7 @@
 <br>
 <mat-card>
 	<mat-card-title>Daily Summary Dashboard</mat-card-title>
+	<mat-card-subtitle>Select a different year/month in the Manage Daily Summaries section to see different data</mat-card-subtitle>
 	<mat-card-content>
 		<div id="chartContainer" style="height: 370px; width: 100%; margin-left: auto; margin-right: auto"></div>
 	</mat-card-content>
@@ -74,7 +76,8 @@
 							[visits]="summary.visits"
 							[workdays]="summary.workdays"
 							[noshows]="summary.noshows"
-							(outSummary)="updateSummary($event, summary.id)">
+							(outSummary)="updateSummary($event, summary.id)"
+							[submitText]="'Update'">
 						</app-form>
 				</mat-expansion-panel>
 			</li>

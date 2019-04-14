@@ -56,7 +56,6 @@ export class PracticeService {
 
   patchSummary(summary: DailySummary, practice_slug: string, summaryId) {
     return this.http.patch<DailySummary>(this.daily_summary_url + summaryId + "/", summary, this.authService.getHttpOptions())
-    .subscribe(() => this.selectPractice(practice_slug))
   }
 
   postSummary(summary: DailySummary, practice_slug: string) {

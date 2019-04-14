@@ -55,7 +55,8 @@ export class PracticeSummariesComponent implements OnInit {
   }
 
   createChartData() {
-       let data = this.daily_summaries.reverse();
+       let data = this.daily_summaries.slice(0);
+       data.reverse();
        for (let i=0; i<data.length; i++) {
        this.chart_visits_data.push(
          {label: data[i].date, y: data[i].visits}
@@ -163,16 +164,19 @@ export class PracticeSummariesComponent implements OnInit {
   }
 
   updateSummary(summary, summaryId) {
-   this.practiceService.patchSummary(summary, this.practiceSlug, summaryId);
-   this.daily_summaries = null;
-   this.show_bar = true;
-   this.route.paramMap.pipe(
-     switchMap((params)=>this.practiceService.getPracticeSummaries(params.get('practiceSlug'), this.selected_year, this.selected_month)))
-      .subscribe((summaries) => {
-        this.daily_summaries = summaries;
-        this.show_bar = false;
-       })
-   ;
+   this.practiceService.patchSummary(summary, this.practiceSlug, summaryId)
+     .subscribe(
+       (resp)=> window.alert("Summary successfully updated"),
+       (error)=> window.alert(error)
+       );
+  //  this.daily_summaries = null;
+  //  this.show_bar = true;
+  //  this.route.paramMap.pipe(
+  //    switchMap((params)=>this.practiceService.getPracticeSummaries(params.get('practiceSlug'), this.selected_year, this.selected_month)))
+  //     .subscribe((summaries) => {
+  //       this.daily_summaries = summaries;
+  //       this.show_bar = false;
+  //      });
   }
 
   createSummary(summary) {
@@ -181,7 +185,6 @@ export class PracticeSummariesComponent implements OnInit {
       .subscribe(
         (location)=> location, 
         (error)=> {
-   
           if (error.error.non_field_errors) {
             window.alert(error.error.non_field_errors)
           }
