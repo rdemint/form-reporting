@@ -21,3 +21,8 @@ export interface User {
 	password: string;
 	practice?: number;
 }
+
+export interface ChartData {
+	label: any;
+	y: any;
+}

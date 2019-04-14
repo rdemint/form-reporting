@@ -61,7 +61,6 @@ export class PracticeService {
 
   postSummary(summary: DailySummary, practice_slug: string) {
     return this.http.post<DailySummary>(this.daily_summary_url, summary, this.authService.getHttpOptions())
-      .subscribe(() => this.selectPractice(practice_slug))
   }
 
 }

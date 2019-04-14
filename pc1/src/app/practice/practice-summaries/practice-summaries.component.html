@@ -1,24 +1,33 @@
-<div class="container border border-primary">
-	<div class="container" style="text-align:center">
-		<button (click)="toggleForm()" class="btn btn-primary">Add New Summary</button>
-		<div>
-			<app-form 
-				*ngIf="show_form"
-				(outSummary)="createSummary($event)"
-			></app-form>
-		</div>
+<mat-card>
+	<mat-card-title>Add a new summary</mat-card-title>
+			<mat-card-content>
+				<app-form 
+					*ngIf="show_form"
+					(outSummary)="createSummary($event)"
+				></app-form>
+			</mat-card-content>
+</mat-card>
+<br>
+<mat-card>
+	<mat-card-title>Daily Summary Dashboard</mat-card-title>
+	<mat-card-content>
+		<div id="chartContainer" style="height: 370px; width: 100%; margin-left: auto; margin-right: auto"></div>
+	</mat-card-content>
+</mat-card>
+<br>
+<div *ngIf="show_bar">
+		<h6 style="text-align:center">Loading summaries...</h6> 
+		<mat-progress-bar
+			class="example-margin"
+			color="primary"
+			mode="buffer"
+			>
+		</mat-progress-bar>
 	</div>
-	<div class="container">
-		<div *ngIf="show_bar">
-			<h6 style="text-align:center">Loading summaries...</h6> 
-			<mat-progress-bar
-				class="example-margin"
-				color="primary"
-				mode="buffer"
-				>
-			</mat-progress-bar>
-		</div>
-		<h6 *ngIf="!show_bar" style="text-align: center">Select the date to view/edit daily summary details</h6>
+<mat-card>
+	<mat-card-title>Manage Daily Summaries</mat-card-title>
+	<mat-card-content>
+		<h6 *ngIf="!show_bar" style="text-align: center">Or select a date below to view or edit previous daily summary details</h6>
 		<div class="container">
 			<mat-form-field>
 				<mat-label>Year</mat-label>
@@ -70,5 +79,5 @@
 				</mat-expansion-panel>
 			</li>
 		</ul>
-	</div>
-</div>
+	</mat-card-content>
+</mat-card>

@@ -1,6 +1,6 @@
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { MatInputModule, MatFormFieldModule, MatNativeDateModule } from '@angular/material';
+import { MatInputModule, MatCardModule, MatFormFieldModule, MatNativeDateModule } from '@angular/material';
 import { MatSelectModule} from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatToolbarModule} from '@angular/material/toolbar';
@@ -56,7 +56,8 @@ import { LogoutComponent } from './auth/logout/logout.component';
     MatFormFieldModule,
     MatToolbarModule,
     MatProgressBarModule,
-    MatSelectModule
+    MatSelectModule,
+    MatCardModule
   ],
   exports: [
     MatFormFieldModule,
