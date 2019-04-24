@@ -17,7 +17,7 @@ export class PracticeComponent implements OnInit {
   ngOnInit() {
   	this.email = this.authService.email;
   	this.practiceName = this.authService.practice_name;
-  	this.practiceSlug = this.authService.slug;
+  	this.practiceSlug = this.authService.practice_slug;
 
   }
 

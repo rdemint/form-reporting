@@ -4,6 +4,7 @@ import { PracticeComponent } from './practice/practice/practice.component';
 import { PracticeSummariesComponent } from './practice/practice-summaries/practice-summaries.component';
 import { LoginComponent } from './auth/login/login.component';
 import { LogoutComponent } from './auth/logout/logout.component';
+import { EntityComponent } from './entity/entity/entity.component';
 import { AuthGuard } from './auth-guard';
 
 export const appRoutes: Routes = [
@@ -11,6 +12,11 @@ export const appRoutes: Routes = [
 		path: 'practices/:practiceSlug',
 		canActivate: [AuthGuard],
 		component: PracticeComponent,
+	},
+	{
+		path: 'entities/:entitySlug',
+		canActivate: [AuthGuard],
+		component: EntityComponent
 	},
 	{	path: 'login',
 		component: LoginComponent,

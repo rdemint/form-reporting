@@ -17,7 +17,9 @@ export class AuthService {
 	
 	queryParams: any;
 	public practice_name: string;
-	public slug: string;
+	public practice_slug: string;
+	public entity_name: string;
+	public entity_slug: string;
 	public token: string;
 	public token_expires: Date;
 	public email: string;
@@ -26,6 +28,7 @@ export class AuthService {
 	public isAuthenticated: boolean = false;
 	private initial_month: string;
 	private initial_year: string;
+	private user_type; string;
 
   constructor(private http:HttpClient, private router:Router, private dateService: DateService) {
   	this.dateService.getMonth().subscribe((month)=>this.initial_month=month);
@@ -42,19 +45,31 @@ export class AuthService {
   		this.http.post(this.authUrl, user)
   			.subscribe(
   				(data) => {
-
-  				this.updateData(
-  					data['token'], 
-  					data['slug'], 
-  					data['email'],
-  					data['practice_name']);
-  				this.isAuthenticated = true;
-  				this.router.navigate(['practices', this.slug], this.queryParams)
-  			},
-  			(err) => {
-  				this.errors = err['error'];
-  			}
-	);
+	  				this.updateData(
+	  					data['token'], 
+	  					data['practice_slug'],
+	  					data['entity_slug'], 
+	  					data['email'],
+	  					data['practice_name'],
+	  					data['entity_name'],
+						data['user_type'],
+	  					);	
+		  				this.isAuthenticated = true;
+		  				if (this.user_type == "admin") {
+		  					this.router.navigate(
+		  						['entities', this.entity_slug],
+		  						this.queryParams);
+		  				}
+		  				else {
+							this.router.navigate(
+								['practices', this.practice_slug], 
+								this.queryParams);
+		  				}
+  				},
+	  			(err) => {
+	  				this.errors = err['error'];
+	  			}
+			);
   }
  
 	logout() {
@@ -64,12 +79,22 @@ export class AuthService {
 		this.isAuthenticated = false;
 	}
 	
-	private updateData(token, slug, email, practice_name){
-		localStorage.setItem("token", token)
+	private updateData(
+				token, 
+				practice_slug, 
+				entity_slug, 
+				email, 
+				practice_name, 
+				entity_name,
+				user_type) {
+		localStorage.setItem("token", token);
 		this.email = email;
-		this.slug = slug;
-		this.practice_name = practice_name
+		this.practice_slug = practice_slug;
+		this.entity_slug = entity_slug;
+		this.practice_name = practice_name;
+		this.entity_name = entity_name;
 		this.errors = [];
+		this.user_type = user_type
 		this.authHeader = new HttpHeaders().set("Authorization", "Token " + localStorage['token'])
 		this.httpOptions = {
 			headers: this.authHeader,

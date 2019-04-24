@@ -29,7 +29,7 @@
 <mat-card>
 	<mat-card-title>Manage Daily Summaries</mat-card-title>
 	<mat-card-content>
-		<h6 *ngIf="!show_bar" style="text-align: center">Or select a date below to view or edit previous daily summary details</h6>
+		<h6 style="text-align: center">Or select a date below to view or edit previous daily summary details</h6>
 		<div class="container">
 			<mat-form-field>
 				<mat-label>Year</mat-label>
@@ -60,9 +60,9 @@
 		</div>
 		<ul class="list-group">
 			<li
-				*ngFor="let summary of daily_summaries" 
+				*ngFor="let summary of daily_summaries$ | async" 
 				class="list-group-item">
-				<mat-expansion-panel>
+				<mat-expansion-panel>z
 					<mat-expansion-panel-header>
 						<mat-panel-title>{{summary.date}}</mat-panel-title>
 						<mat-panel-description>

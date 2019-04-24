@@ -4,9 +4,21 @@ from django.contrib.auth.base_user import BaseUserManager
 from django.utils.text import slugify
 
 # Create your models here.
+class Entity(models.Model):
+	name = models.CharField(max_length=200)
+	slug = models.SlugField(unique=True)
+
+	def save(self, *args, **kwargs):
+		self.slug=slugify(self.name)
+		super().save(*args, **kwargs)
+
+	def __str__(self):
+		return  self.name
+
 class Practice(models.Model):
 	name = models.CharField(max_length=200)
 	slug = models.SlugField(unique=True)
+	entity = models.ForeignKey(to=Entity, on_delete=models.CASCADE, default=None, null=True, related_name='practices')
 
 	def save(self, *args, **kwargs):
 		self.slug=slugify(self.name)
@@ -34,14 +46,16 @@ class UserManager(BaseUserManager):
 
 class User(AbstractBaseUser, PermissionsMixin):
 	TYPE_CHOICES = (
-	('Doctor', 'doctor'),
-	('Staff', 'staff'),
-	('Admin', 'admin'))
+	('doctor', 'Doctor'),
+	('staff', 'Staff'),
+	('admin', 'Admin'))
 	first_name = models.CharField(max_length=100)
 	last_name = models.CharField(max_length=100)
 	user_type = models.CharField(choices=TYPE_CHOICES, max_length=100)
 	practice = models.ForeignKey(Practice, on_delete=models.CASCADE,
-		related_name='users', null=True)
+		related_name='users', null=True, default=None, blank=True)
+	entity = models.ForeignKey(Entity, on_delete=models.CASCADE, 
+		related_name='entities', null=True)
 	email = models.EmailField(max_length=255, unique=True)
 	#the following two are required for custom user models 
 	#as stated by the django docs

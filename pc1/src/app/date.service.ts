@@ -7,12 +7,12 @@ import { Observable, BehaviorSubject } from 'rxjs';
 export class DateService {
 	selected_month = new BehaviorSubject<string>(null);
   	selected_year = new BehaviorSubject<string>(null);
+  	month = (new Date().getMonth()+1).toString();
+  	year = new Date().getFullYear().toString();
 
   constructor() {
-  	let month = (new Date().getMonth()+1).toString();
-  	let year = new Date().getFullYear().toString();
-    this.selected_month.next(month);
-    this.selected_year.next(year);
+  	this.selected_month.next(this.month);
+    this.selected_year.next(this.year);
     }
 
 

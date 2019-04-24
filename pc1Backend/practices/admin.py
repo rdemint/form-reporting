@@ -3,12 +3,16 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.admin import UserAdmin
 from django import forms 
 
-from practices.models import Practice, DailySummary, User
+from practices.models import Practice, DailySummary, User, Entity
 # Register your models here.
 
+class EntityAdmin(admin.ModelAdmin):
+	fields=('name',)
+	list_display=('name', 'slug')
+
 class PracticeAdmin(admin.ModelAdmin):
-	fields =('name',)
-	list_display = ('name', 'slug')
+	fields =('name', 'entity')
+	list_display = ('name', 'slug', 'entity')
 
 class DailySummaryAdmin(admin.ModelAdmin):
 	pass 
@@ -26,7 +30,7 @@ class CreateUserForm(forms.ModelForm):
 	
 	class Meta:
 		model= User
-		fields = ('first_name', 'last_name', 'user_type', 'practice', 'email')
+		fields = ('first_name', 'last_name', 'user_type', 'practice', 'entity', 'email')
 	
 	def clean_password2(self):
 		password1 = self.cleaned_data.get("password1")
@@ -47,7 +51,7 @@ class UpdateUserForm(forms.ModelForm):
 
 	class Meta:
 		model = User
-		fields = ('first_name', 'last_name', 'user_type', 'practice', 'email', 'is_active', 'password')
+		fields = ('first_name', 'last_name', 'user_type', 'practice', 'entity', 'email', 'is_active', 'password')
 
 	def clean_password(self):
 		return self.initial.get("password")
@@ -61,12 +65,12 @@ class CustomUserAdmin(UserAdmin):
 	fieldsets = (
 		(None, {'fields': ('email',)}),
 		('Personal info', {'fields': ('first_name', 'last_name')}),
-		('User setup', {'fields': ('practice', 'groups', 'user_type')})
+		('User setup', {'fields': ('practice', 'entity', 'groups', 'user_type')})
 		)
 
 	add_fieldsets = (
 		(None, {
-			'fields': ('first_name', 'last_name', 'practice', 'user_type', 'groups', 'email', 'password1', 'password2'),
+			'fields': ('first_name', 'last_name', 'practice', 'entity', 'user_type', 'groups', 'email', 'password1', 'password2'),
 			}),
 		)
 
@@ -76,3 +80,4 @@ class CustomUserAdmin(UserAdmin):
 admin.site.register(Practice, PracticeAdmin)
 admin.site.register(DailySummary, DailySummaryAdmin)
 admin.site.register(User, CustomUserAdmin)
+admin.site.register(Entity, EntityAdmin)

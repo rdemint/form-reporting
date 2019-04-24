@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
-from practices.models import Practice, DailySummary, User 
+from practices.models import Practice, DailySummary, User, Entity 
 from django.contrib.auth import get_user_model, authenticate
 
 class PracticeIdSerializer(serializers.ModelSerializer):
@@ -36,7 +36,7 @@ class PracticeListSerializer(serializers.ModelSerializer):
 class UserSerializer(serializers.ModelSerializer):
 	class Meta: 
 		model = get_user_model()
-		fields = ('username', 'email', 'password', 'practice', 'groups')
+		fields = ('username', 'email', 'password', 'practice', 'entity', 'groups')
 		extra_kwargs = {'password': {'write_only': True, 'min_length':5}}
 
 	def create(self, validated_data):
@@ -62,5 +62,13 @@ class AuthTokenSerializer(serializers.Serializer):
 
 		attrs['user'] = user
 		return attrs
+
+class EntitySerializer(serializers.ModelSerializer):
+	practices = serializers.SlugRelatedField(many=True, read_only=True, slug_field='name')
+
+	class Meta:
+		model = Entity
+		fields = ('name', 'slug', 'practices')
+
 
 

@@ -29,6 +29,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { PracticeComponent } from './practice/practice/practice.component';
 import { LoginComponent } from './auth/login/login.component';
 import { LogoutComponent } from './auth/logout/logout.component';
+import { EntityComponent } from './entity/entity/entity.component';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import { LogoutComponent } from './auth/logout/logout.component';
     PracticeComponent,
     LoginComponent,
     LogoutComponent,
+    EntityComponent,
   ],
   imports: [
     ReactiveFormsModule,
