@@ -18,8 +18,9 @@ export interface DailySummary {
 }
 
 export interface User {
+	token: string;
 	email: string;
-	password: string;
+	password?: string;
 	practice?: number;
 	entity?: number;
 	user_type?: string;
@@ -31,7 +32,13 @@ export interface ChartData {
 }
 
 export interface Entity {
+	name?: string;
+	slug?: string;
+	practices?: Practice[];
+}
+
+
+export interface Practice {
 	name: string;
 	slug: string;
-	practices?: Practice[];
 }

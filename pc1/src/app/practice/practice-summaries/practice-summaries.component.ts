@@ -25,12 +25,7 @@ export class PracticeSummariesComponent implements OnInit {
   selected_month:number;
   selected_year:number;
   practice_slug: string;
-  year_options: any = ["2018", "2019"];
-  month_options: any = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"]
   chart: any;
-  chart_visits_data$: Observable<number[]>;
-  chart_workdays_data$: Observable<number[]>;
-  chart_noshows_data$: Observable<number[]>;
   
   chart_visits_data: ChartData[];
   chart_workdays_data: ChartData[];
@@ -47,14 +42,21 @@ export class PracticeSummariesComponent implements OnInit {
     this.getQueryParams();
     this.getParams();
     this.show_bar = false;
+    this.getDailySummaries();
+    this.createChartData();
+  }
+
+  getDailySummaries() {
     this.route.queryParams.subscribe(
           (params)=> {
-            this.practiceService.getDailySummaries(this.practice_slug, params['year'], params['month']);
-            this.daily_summaries$ = this.practiceService.dailySummaries();
+            this.practiceService.getDailySummaries(
+              this.practice_slug, 
+              params['year'], 
+              params['month']
+            );
+            this.daily_summaries$ = this.practiceService.loadDailySummaries();
           }
     );
-
-    this.createChartData();
   }
 
   getQueryParams() {
@@ -134,25 +136,15 @@ export class PracticeSummariesComponent implements OnInit {
   selectNewYear(year) {
     this.daily_summaries$ = null;
     this.show_bar = true;
+    this.dateService.selected_year$.next(year);
     this.router.navigate(['practices/', this.practice_slug], {queryParams: {month: this.selected_month, year: year}});
-    // this.route.paramMap.pipe(
-    // switchMap((params)=>this.practiceService.getPracticeSummaries(params.get('practiceSlug'), year.value, this.selected_month$)))
-    //   .subscribe((summaries) => {
-    //     this.daily_summaries$ = summaries;
-    //     this.show_bar = false;
-    //     this.clearChartData();
-    //     this.createChartData();
-    //     this.chart.data[0].set('dataPoints', this.chart_visits_data);
-    //     this.chart.data[1].set('dataPoints', this.chart_workdays_data);
-    //     this.chart.data[2].set('dataPoints', this.chart_noshows_data);
-    //     this.chart.render();
-    //    })
 
   }
 
   selectNewMonth(month){
     this.daily_summaries$ = null;
     this.show_bar = true;
+    this.dateService.selected_month$.next(month);
     this.router.navigate(['practices/', this.practice_slug], {queryParams: {month: month.value, year: this.selected_year}});
     // this.route.paramMap.pipe(
     // switchMap((params)=>this.practiceService.getPracticeSummaries(params.get('practiceSlug'), this.selected_year, month.value)))

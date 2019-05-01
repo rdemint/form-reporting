@@ -13,6 +13,7 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { appRoutes } from './routes';
 import { PracticeService } from './practice/practice.service';
 import { AuthService } from './auth/auth.service';
+import { EntityService } from './entity/entity.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -69,6 +70,7 @@ import { EntityComponent } from './entity/entity/entity.component';
     MatNativeDateModule, 
     PracticeService,
     AuthService, 
+    EntityService,
     AuthGuard,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true}

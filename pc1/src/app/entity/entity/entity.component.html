@@ -1,3 +1,10 @@
-<p>
-  entity works!
-</p>
+<div>
+	<p class="text-muted">  Logged in as {{email$ | async}}. <a routerLink="/logout/">Log out  </a></p>
+</div>
+<div class="container">
+<h1>Entity Name: {{ entity$.name | async}}</h1>
+<ul *ngFor="let practice of entity$.practices | async">
+	<li>Practie Name: {{practice}}</li>
+</ul>
+
+</div>

@@ -38,7 +38,7 @@
 					(selectionChange)="selectNewYear($event)"
 				>
 					<mat-option 
-						*ngFor="let year of year_options"
+						*ngFor="let year of dateService.YEAR_OPTIONS"
 						[value]="year"
 						>{{year}}
 					</mat-option>
@@ -51,7 +51,7 @@
 					(selectionChange)="selectNewMonth($event)"
 				>
 					<mat-option
-						*ngFor="let month of month_options"
+						*ngFor="let month of dateService.MONTH_OPTIONS"
 						[value]="month"
 						>{{month}}
 					</mat-option>
@@ -62,7 +62,7 @@
 			<li
 				*ngFor="let summary of daily_summaries$ | async" 
 				class="list-group-item">
-				<mat-expansion-panel>z
+				<mat-expansion-panel>
 					<mat-expansion-panel-header>
 						<mat-panel-title>{{summary.date}}</mat-panel-title>
 						<mat-panel-description>
