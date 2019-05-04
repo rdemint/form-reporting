@@ -2,9 +2,16 @@
 	<p class="text-muted">  Logged in as {{email$ | async}}. <a routerLink="/logout/">Log out  </a></p>
 </div>
 <div class="container">
-<h1>Entity Name: {{ entity$.name | async}}</h1>
-<ul *ngFor="let practice of entity$.practices | async">
-	<li>Practie Name: {{practice}}</li>
-</ul>
+<h1>{{entity.name}}</h1>
+	<ul *ngFor="let practice of entity.practices">
+		<mat-card>
+			<mat-card-title>{{practice.name}}</mat-card-title>
+			<mat-card-content>
+				<ul *ngFor="let provider of practice.providers">
+					<li>{{provider.full_name}}</li>
+				</ul>
+			</mat-card-content>
+	</mat-card>
+	</ul>
 
 </div>

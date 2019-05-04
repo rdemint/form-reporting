@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework.decorators import api_view
 from rest_framework.generics import ListAPIView, ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.authtoken.views import ObtainAuthToken
@@ -7,8 +7,8 @@ from rest_framework.response import Response
 from rest_framework.reverse import reverse 
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.settings import api_settings
-from practices.models import Practice, DailySummary, User, Entity
-from practices.serializers import DailySummarySerializer, PracticeListSerializer, PracticeSerializer, UserSerializer, AuthTokenSerializer, EntitySerializer
+from practices.models import Practice, DailySummary, User, Entity, Provider
+from practices.serializers import DailySummarySerializer, PracticeSerializer, UserSerializer, AuthTokenSerializer, EntitySerializer, PracticeListSerializer, ProviderSerializer
 # Create your views here.
 
 
@@ -36,7 +36,7 @@ class PracticeList(ListCreateAPIView):
 	permssion_classes = (IsAuthenticated,)
 
 
-class DailySummaryList(ListCreateAPIView):
+class PracticeDailySummaryList(ListCreateAPIView):
 	serializer_class = DailySummarySerializer
 	queryset = DailySummary.objects.all()
 	permssion_classes = (IsAuthenticated,)
@@ -50,13 +50,31 @@ class DailySummaryList(ListCreateAPIView):
 		else:
 			return DailySummary.objects.filter(practice=practice).order_by('-date')
 
+
+class DailySummaryList(ListCreateAPIView):
+	serializer_class = DailySummarySerializer
+	queryset = DailySummary.objects.all()
+	permssion_classes = (IsAuthenticated,)
+
+	def get_queryset(self):
+		if self.request.query_params.get('year') and self.request.query_params.get('month'):
+			year = self.request.query_params.get('year')
+			month = self.request.query_params.get('month')		
+			return DailySummary.objects.filter(practice=self.kwargs['slug'], date__year=year, date__month=month)
+		else:
+			return DailySummary.objects.all()
+
+
 class PracticeDetail(RetrieveUpdateDestroyAPIView):
 	serializer_class = PracticeSerializer
 	lookup_field = "slug"
 	permssion_classes = (IsAuthenticated,)
+	filter_fields = ('daily_summaries__visits')
 
 	def get_queryset(self):
 		return Practice.objects.filter(slug=self.kwargs['slug'])
+		
+
 
 class DailySummaryDetail(RetrieveUpdateDestroyAPIView):
 	serializer_class = DailySummarySerializer
@@ -68,6 +86,17 @@ class DailySummaryDetail(RetrieveUpdateDestroyAPIView):
 		serializer = DailySummarySerializer(queryset, many=True)
 		return Response(serializer.data)
 	'''
+class ProviderList(ListCreateAPIView):
+	serializer_class = ProviderSerializer
+	queryset = Provider.objects.all()
+	permission_classes = (IsAuthenticated,)
+
+
+class ProviderDetail(RetrieveUpdateDestroyAPIView):
+	serializer_class = ProviderSerializer
+	queryset = Provider.objects.all()
+	permission_classes = (IsAuthenticated,)
+
 
 class EntityList(ListCreateAPIView):
 	serializer_class = EntitySerializer
@@ -83,6 +112,17 @@ class EntityDetail(RetrieveUpdateDestroyAPIView):
 
 	def get_queryset(self):
 		return Entity.objects.filter(slug=self.kwargs['slug'])
+
+class EntitySummaryDetail(ListCreateAPIView):
+	serializer_class = DailySummarySerializer
+	queryset = DailySummary.objects.all()
+	lookup_field = "slug"
+
+	def get_queryset(self):
+		year = self.request.query_params.get('year', None)
+		month = self.request.query_params.get('month', None)		
+		return DailySummary.objects.filter(entity__slug=self.kwargs['slug'], date__year=year, date__month=month)
+
 
 class CreateTokenView(ObtainAuthToken):
 	serializer_class = AuthTokenSerializer

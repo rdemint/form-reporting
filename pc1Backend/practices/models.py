@@ -24,6 +24,10 @@ class Practice(models.Model):
 		self.slug=slugify(self.name)
 		super().save(*args, **kwargs)
 
+	#https://stackoverflow.com/questions/28163556/how-do-you-filter-a-nested-serializer-in-django-rest-framework
+	def daily_summaries_by_month(self):
+		return DailySummary.objects.filter(practice=self, date__year=self.request.GET('year', None), date__month=self.request.GET('month', None))
+
 	def __str__(self):
 		return self.name 
 
@@ -69,20 +73,58 @@ class User(AbstractBaseUser, PermissionsMixin):
 	def __str__(self):
 		return self.first_name + " " + self.last_name
 
+class Provider(models.Model):
+	first_name = models.CharField(max_length=256)
+	last_name = models.CharField(max_length=256)
+	slug = models.SlugField(default=None, null=True, max_length=256)
+	credentials = models.CharField(null=True, max_length=256)
+	alias_1 = models.CharField(null=True, blank=True, max_length=256)
+	alias_2 = models.CharField(null=True, blank=True, max_length=256)
+	practices = models.ManyToManyField(Practice, related_name="providers")
+	entity = models.ForeignKey(
+		Entity, 
+		on_delete=models.CASCADE, 
+		related_name="providers")
+
+	def __str__(self):
+		return "{} {}, {}".format(self.first_name, self.last_name, self.credentials)
+
+	def save(self, *args, **kwargs):
+		self.slug = slugify(self.first_name + ' ' + self.last_name)
+		super().save(*args, **kwargs)
+
+class DailySummaryManager(models.Manager):
+
+	def get_queryset(self, year, month): 
+		return super().get_queryset().filter(date__month=self.request.kwargs['month'], date__year=self.request.kwargs['year'])
+
 class DailySummary(models.Model):
 	'''submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)'''
 	'''provider = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="daily_summaries") '''
 	practice = models.ForeignKey(Practice, on_delete=models.CASCADE, related_name="daily_summaries")
+	entity = models.ForeignKey(Entity, null=True, default=None, on_delete=models.CASCADE, related_name="daily_summaries")
 	date = models.DateField(null=True)
 	last_updated = models.DateTimeField(auto_now_add=True)
 	visits = models.IntegerField(null=False)
 	workdays = models.IntegerField(null=False)
 	noshows = models.IntegerField(null=True)
+	provider = models.ForeignKey(Provider, on_delete=models.CASCADE, related_name="daily_summaries")
+	
+
+	objects = models.Manager()
+	monthly_summaries = DailySummaryManager() 
 
 	class Meta:
-		unique_together = (('practice'),('date'))
+		unique_together = (('date', 'provider'))
+
+	def save(self, *args, **kwargs):
+		entity = self.practice.entity
+		super().save(*args, **kwargs)
+
+
 
 	def __str__(self):
 		return self.practice.__str__() + ': Daily for ' + self.date.strftime('%A') +', ' + self.date.strftime('%m/%d/%Y')
+
 
 
