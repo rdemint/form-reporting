@@ -2,7 +2,6 @@
 	<mat-card-title>Add a new summary</mat-card-title>
 			<mat-card-content>
 				<app-form 
-					*ngIf="show_form"
 					[resetForm] = "true"
 					(outSummary)="createSummary($event)"
 				></app-form>
@@ -17,7 +16,7 @@
 	</mat-card-content>
 </mat-card>
 <br>
-<div *ngIf="show_bar">
+<div *ngIf="show_loading">
 		<h6 style="text-align:center">Loading summaries...</h6> 
 		<mat-progress-bar
 			class="example-margin"

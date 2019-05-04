@@ -36,35 +36,6 @@ class PracticeList(ListCreateAPIView):
 	permssion_classes = (IsAuthenticated,)
 
 
-class PracticeDailySummaryList(ListCreateAPIView):
-	serializer_class = DailySummarySerializer
-	queryset = DailySummary.objects.all()
-	permssion_classes = (IsAuthenticated,)
-
-	def get_queryset(self):
-		year = self.request.query_params.get('year', None)
-		month = self.request.query_params.get('month', None)
-		practice = Practice.objects.get(slug=self.kwargs['slug'])
-		if year is not None and month is not None:
-			return DailySummary.objects.filter(practice=practice, date__month=month, date__year=year).order_by('-date')
-		else:
-			return DailySummary.objects.filter(practice=practice).order_by('-date')
-
-
-class DailySummaryList(ListCreateAPIView):
-	serializer_class = DailySummarySerializer
-	queryset = DailySummary.objects.all()
-	permssion_classes = (IsAuthenticated,)
-
-	def get_queryset(self):
-		if self.request.query_params.get('year') and self.request.query_params.get('month'):
-			year = self.request.query_params.get('year')
-			month = self.request.query_params.get('month')		
-			return DailySummary.objects.filter(practice=self.kwargs['slug'], date__year=year, date__month=month)
-		else:
-			return DailySummary.objects.all()
-
-
 class PracticeDetail(RetrieveUpdateDestroyAPIView):
 	serializer_class = PracticeSerializer
 	lookup_field = "slug"
@@ -80,12 +51,7 @@ class DailySummaryDetail(RetrieveUpdateDestroyAPIView):
 	serializer_class = DailySummarySerializer
 	queryset = DailySummary.objects.all()
 	permssion_classes = (IsAuthenticated,)
-	'''
-	def list(self, request):
-		queryset  = self.queryset()
-		serializer = DailySummarySerializer(queryset, many=True)
-		return Response(serializer.data)
-	'''
+	
 class ProviderList(ListCreateAPIView):
 	serializer_class = ProviderSerializer
 	queryset = Provider.objects.all()

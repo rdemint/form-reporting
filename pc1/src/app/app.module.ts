@@ -31,6 +31,7 @@ import { PracticeComponent } from './practice/practice/practice.component';
 import { LoginComponent } from './auth/login/login.component';
 import { LogoutComponent } from './auth/logout/logout.component';
 import { EntityComponent } from './entity/entity/entity.component';
+import { ChartComponent } from './chart/chart/chart.component';
 
 @NgModule({
   declarations: [
@@ -41,6 +42,7 @@ import { EntityComponent } from './entity/entity/entity.component';
     LoginComponent,
     LogoutComponent,
     EntityComponent,
+    ChartComponent,
   ],
   imports: [
     ReactiveFormsModule,

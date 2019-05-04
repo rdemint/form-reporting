@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../models';
-import { AuthService } from '../../auth/auth.service';
+import { UserService } from '../../user/user.service';
+import { PracticeService } from '../../practice/practice.service';
+import { Practice } from '../../models';
+
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
 
@@ -11,25 +14,23 @@ import { first } from 'rxjs/operators';
 })
 export class PracticeComponent implements OnInit {
 	email: string;
-	practiceName: string;
-	practiceSlug: string;
+	practice$: Observable<Practice>;
 	
-  constructor(private authService: AuthService) { }
+  constructor(private userService: UserService, private practiceService: PracticeService) { }
 
   ngOnInit() {
-  	this.authService.getUser().pipe(first())
+  	this.userService.loadUser().pipe(first())
       .subscribe(
         (user)=>{
-          this.practiceName = user.email
+          this.email = user.email
         }
       );
-    this.authService.getPractice().pipe(first())
-       .subscribe(
-       (practice)=> {
-         this.practiceName = practice.name;
-         this.practiceSlug = practice.slug;
-       }       
-    );
+    this.practice$ = this.practiceService.loadPractice().pipe(first())
+       // .subscribe(
+       // // (practice)=> {
+       //   this.practice = practice
+       // })      
+    ;
   }
 
 }

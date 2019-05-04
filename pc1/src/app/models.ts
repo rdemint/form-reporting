@@ -5,6 +5,7 @@ export interface Practice {
 	name: string;
 	slug: string;
 	entity?: string;
+	chart_data: any;
 }
 
 export interface Provider {
@@ -26,17 +27,10 @@ export interface DailySummary {
 }
 
 export interface User {
-	token: string;
 	email: string;
-	password?: string;
-	practice?: number;
-	entity?: number;
+	first_name?: string;
+	last_name?: string;
 	user_type?: string;
-}
-
-export interface ChartData {
-	label: any;
-	y: any;
 }
 
 export interface Entity {
@@ -47,8 +41,7 @@ export interface Entity {
 }
 
 
-export interface Practice {
-	name: string;
-	slug: string;
-	providers?: Provider[];
+export interface ChartData {
+	label: any;
+	y: any;
 }

@@ -16,20 +16,18 @@ import * as CanvasJs from '../../../../node_modules/canvasjs/canvasjs.min.js';
   styleUrls: ['./practice-summaries.component.css']
 })
 export class PracticeSummariesComponent implements OnInit {
-  @Input() practiceSlug: string;
-  daily_summaries$: Observable<DailySummary[]>;
-  show_practice_detail: boolean=false;
   show_form: boolean=true;
-  show_bar: boolean=true;
-  today = new Date();
+  show_loading: boolean=true;
   selected_month:number;
   selected_year:number;
-  practice_slug: string;
   chart: any;
+
+  practice$: Observable<Practice>;
+  practice: Practice;
   
   chart_visits_data: ChartData[];
   chart_workdays_data: ChartData[];
-  chart_noshows_data: ChartData[];
+  noshows: ChartData[];
 
   constructor(
   	private route: ActivatedRoute,
@@ -40,24 +38,13 @@ export class PracticeSummariesComponent implements OnInit {
  
   ngOnInit() {
     this.getQueryParams();
-    this.getParams();
-    this.show_bar = false;
     this.getDailySummaries();
     this.createChartData();
+    this.practiceService.loadPractice().subscribe((practice)=>this.practice = practice)
+    this.show_loading = false;
   }
 
-  getDailySummaries() {
-    this.route.queryParams.subscribe(
-          (params)=> {
-            this.practiceService.getDailySummaries(
-              this.practice_slug, 
-              params['year'], 
-              params['month']
-            );
-            this.daily_summaries$ = this.practiceService.loadDailySummaries();
-          }
-    );
-  }
+  getDailySummaries() {  }
 
   getQueryParams() {
     this.route.queryParams.subscribe(
@@ -68,20 +55,16 @@ export class PracticeSummariesComponent implements OnInit {
      );
   }
 
-  getParams() {
-    this.route.params.subscribe(
-       (params) => this.practice_slug = params['practiceSlug']
-    );
-  }
-
   createChartData() {
-      this.daily_summaries$.subscribe(
-        (summaries)=> {
-          this.chart_noshows_data = summaries.map((summary)=> ({label: summary.date, y: summary.noshows}));
-          this.chart_workdays_data = summaries.map((summary)=> ({label: summary.date, y: summary.workdays}));
-          this.chart_visits_data = summaries.map((summary)=> ({label: summary.date, y: summary.visits}));
+      this.practice$.subscribe(
+        (practice)=> {
+          this.practice = practice;
+          this.practice['chart_data'] = {};
+          this.practice.chart_data['noshows'] = practice.daily_summaries.map((summary)=> ({label: summary.date, y: summary.noshows}));
+          this.practice.chart_data['workdays'] = practice.daily_summaries.map((summary)=> ({label: summary.date, y: summary.workdays}));
+          this.practice.chart_data['visits'] = practice.daily_summaries.map((summary)=> ({label: summary.date, y: summary.visits}));
           //this setup ensures that the data is present when the chart is first rendered
-          this.show_bar = false;
+          this.show_loading = false;
           this.createChart();
           this.chart.render();
         }
@@ -113,53 +96,37 @@ export class PracticeSummariesComponent implements OnInit {
            visible: true,
            showInLegend: true,
            name: "Visits",
-           dataPoints: this.chart_visits_data
+           dataPoints: this.practice.chart_data.visits
          },
          {
            type: "spline",
            visible: true,
            showInLegend: true,
            name: "Workdays",
-           dataPoints: this.chart_workdays_data
+           dataPoints: this.practice.chart_data.workdays
          },
          {
            type: "spline",
            visible: true,
            showInLegend: true,
            name: "No Shows",
-           dataPoints: this.chart_noshows_data
+           dataPoints: this.practice.chart_data.noshows
          }
        ]
      });
   }
 
   selectNewYear(year) {
-    this.daily_summaries$ = null;
-    this.show_bar = true;
+    this.show_loading = true;
     this.dateService.selected_year$.next(year);
-    this.router.navigate(['practices/', this.practice_slug], {queryParams: {month: this.selected_month, year: year}});
+    this.router.navigate(['practices/', this.practice.slug], {queryParams: {month: this.selected_month, year: year}});
 
   }
 
   selectNewMonth(month){
-    this.daily_summaries$ = null;
-    this.show_bar = true;
+    this.show_loading = true;
     this.dateService.selected_month$.next(month);
-    this.router.navigate(['practices/', this.practice_slug], {queryParams: {month: month.value, year: this.selected_year}});
-    // this.route.paramMap.pipe(
-    // switchMap((params)=>this.practiceService.getPracticeSummaries(params.get('practiceSlug'), this.selected_year, month.value)))
-    //   .subscribe((summaries) => {
-    //     this.daily_summaries$ = summaries;
-    //     this.show_bar = false;
-    //     this.clearChartData();
-    //     this.createChartData();
-    //     this.chart.data[0].set('dataPoints', this.chart_visits_data);
-    //     this.chart.data[1].set('dataPoints', this.chart_workdays_data);
-    //     this.chart.data[2].set('dataPoints', this.chart_noshows_data);
-    //     this.chart.render();
-       
-    //    });
-
+    this.router.navigate(['practices/', this.practice.slug], {queryParams: {month: month.value, year: this.selected_year}});
   }
 
   toggleForm(){
@@ -167,24 +134,16 @@ export class PracticeSummariesComponent implements OnInit {
   }
 
   updateSummary(summary, summaryId) {
-   this.practiceService.patchSummary(summary, this.practiceSlug, summaryId)
+   this.practiceService.patchSummary(summary, this.practice.slug, summaryId)
      .subscribe(
        (resp)=> window.alert("Summary successfully updated"),
        (error)=> window.alert(error)
        );
-  //  this.daily_summaries$ = null;
-  //  this.show_bar = true;
-  //  this.route.paramMap.pipe(
-  //    switchMap((params)=>this.practiceService.getPracticeSummaries(params.get('practiceSlug'), this.selected_year, this.selected_month)))
-  //     .subscribe((summaries) => {
-  //       this.daily_summaries$ = summaries;
-  //       this.show_bar = false;
-  //      });
   }
 
   createSummary(summary) {
-    summary['practice'] = this.daily_summaries$[0].practice;
-    this.practiceService.postSummary(summary, this.practiceSlug)
+    summary['practice'] = this.practice.id
+    this.practiceService.postSummary(summary, this.practice.slug)
       .subscribe(
         (location)=> location, 
         (error)=> {

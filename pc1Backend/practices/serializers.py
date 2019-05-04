@@ -22,8 +22,11 @@ class DailySummarySerializer(serializers.ModelSerializer):
 
 class DailySummariesByMonthListSerializer(serializers.ListSerializer):
 	def to_representation(self, data):
-		data = data.filter(date__year=self.context['request'].query_params.get('year'), date__month=self.context['request'].query_params.get('month'))
-		return super().to_representation(data)
+		if self.context['request'].query_params.get('year') and self.context['request'].query_params.get('month'):
+			data = data.filter(date__year=self.context['request'].query_params.get('year'), date__month=self.context['request'].query_params.get('month'))
+			return super().to_representation(data)
+		else: 
+			return super().to_representation(data)
 
 
 class DailySummariesByMonthSerializer(serializers.ModelSerializer):
@@ -32,26 +35,6 @@ class DailySummariesByMonthSerializer(serializers.ModelSerializer):
 		model = DailySummary
 		fields = ('date', 'workdays', 'visits', 'noshows', 'provider')
 		
-
-#previous attempt using serializermethodfield
-# class DailySummariesByMonthSerializer(serializers.ModelSerializer):
-# 	daily_summaries = serializers.SerializerMethodField()
-
-# 	def get_daily_summaries(self, practice):
-# 		if self.context['request'].query_params.get('year') and self.context['request'].query_params.get('month'):
-# 			year = self.context['request'].query_params.get('year')
-# 			month = self.context['request'].query_params.get('month')
-# 			qs = DailySummary.objects.filter(practice=practice.slug, date__month=month, date__year=year)
-# 			serializer = DailySummarySerializer(instance=qs, many=True)
-# 			return serializer.data
-# 		if self.context['request'].query_params.get('year') is None:
-# 			qs = DailySummary.objects.filter(practice=practice.slug)
-# 			serializer = DailySummarySerializer(instance=qs, many=True)
-# 			return serializer.data
-
-# 	class Meta:
-# 		model = DailySummary 
-# 		fields = "__all__"
 
 class ProviderSerializer(serializers.ModelSerializer):
 	full_name = serializers.SerializerMethodField()

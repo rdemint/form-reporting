@@ -41,11 +41,8 @@ export class DateService implements OnInit {
 		return this.selected_year$.asObservable();
 	}
 
-	getQueryDateParams() {
-		let params: HttpParams = new HttpParams()
-			.append('year', this.selected_year$.getValue())
-			.append('month', this.selected_month$.getValue());
-		return params
+	getHttpParams() {
+		return this.httpParams;
 	}
 
 }
