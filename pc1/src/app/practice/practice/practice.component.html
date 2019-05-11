@@ -1,8 +1,19 @@
-<div>
-	<p class="text-muted">  Logged in as {{email}}. <a routerLink="/logout/">Log out  </a></p>
-</div>
 <div class="container">
-	<h1 style="text-align:center">{{practiceName}}</h1>
-<app-practice-summaries
-></app-practice-summaries>
+	<h1 style="text-align:center">{{practice.name}}</h1>
 </div>
+<h1>Select a provider to fill the dashboard</h1>
+<mat-form-field>
+	<mat-label>
+		<mat-select
+			placeholder='Select a provider'
+			[formControl]="providerForm"
+		>
+			<mat-select-trigger
+				selectChange = getProviderDailySummaries($event)>
+			</mat-select-trigger>
+			<mat-option *ngFor="let provider of practice.providers">
+				{{provider.full_name}}
+			</mat-option>
+		</mat-select>
+	</mat-label>
+</mat-form-field>

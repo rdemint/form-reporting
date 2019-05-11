@@ -1,11 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { User } from '../../models';
 import { UserService } from '../../user/user.service';
+import { ProviderService } from '../../provider/provider.service';
 import { PracticeService } from '../../practice/practice.service';
-import { Practice } from '../../models';
+
+import { Practice, DailySummary } from '../../models';
 
 import { Observable } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-practice',
@@ -13,24 +16,23 @@ import { first } from 'rxjs/operators';
   styleUrls: ['./practice.component.css']
 })
 export class PracticeComponent implements OnInit {
-	email: string;
-	practice$: Observable<Practice>;
-	
-  constructor(private userService: UserService, private practiceService: PracticeService) { }
+  @Input() practice: Practice;
+	providerForm = new FormControl();
+  providerDailySummaries: DailySummary[];
 
-  ngOnInit() {
-  	this.userService.loadUser().pipe(first())
-      .subscribe(
-        (user)=>{
-          this.email = user.email
-        }
+  constructor(private userService: UserService, 
+    private providerService: ProviderService,
+    private practiceService: PracticeService
+    ) { }
+
+  ngOnInit() {  }
+  
+
+  getProviderSummaries(event) {
+    this.providerDailySummaries = this.practice.daily_summaries.filter(
+        (summary) => summary.provider = event.value
       );
-    this.practice$ = this.practiceService.loadPractice().pipe(first())
-       // .subscribe(
-       // // (practice)=> {
-       //   this.practice = practice
-       // })      
-    ;
   }
+
 
 }

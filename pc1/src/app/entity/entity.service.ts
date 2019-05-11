@@ -17,13 +17,21 @@ export class EntityService implements OnInit {
   practice_list: Practice[] = [];
   summaries$ = new BehaviorSubject<DailySummary[]>(null);
   entity$ = new BehaviorSubject<Entity>(null);
+  params: HttpParams;
+  params2: HttpParams;
 
   constructor(private http:HttpClient, private dateService: DateService) {  }
 
-  ngOnInit() {  }
+  ngOnInit() { 
+    this.dateService.getHttpParams().subscribe((httpparams)=>this.params = httpparams);
+    this.params2 = new HttpParams()
+      .append('year', this.dateService.selected_year$.getValue())
+      .append('month', this.dateService.selected_month$.getValue())
+  }
 
   selectEntity(slug) {
-     this.http.get<Entity>(environment['entity_url'] + slug + '/').pipe(
+    console.log(this.params2)
+     this.http.get<Entity>(environment['entity_url'] + slug + '/', {params: this.params2}).pipe(
          first()).
            subscribe(
            (entity)=> {
@@ -32,7 +40,7 @@ export class EntityService implements OnInit {
          );
      }
 
-   loadEntity(){
+   loadEntity(): Observable<Entity> {
      return this.entity$.asObservable();
    }
  }

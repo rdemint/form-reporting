@@ -4,12 +4,15 @@
 <div class="container">
 <h1>{{entity.name}}</h1>
 	<ul *ngFor="let practice of entity.practices">
-		<mat-card>
+		<mat-card (click)=navigatePractice($event)>
 			<mat-card-title>{{practice.name}}</mat-card-title>
 			<mat-card-content>
-				<ul *ngFor="let provider of practice.providers">
-					<li>{{provider.full_name}}</li>
-				</ul>
+				<div class="container">
+					<app-chart
+						[sourceId]="practice.id"
+						[dailySummaries]="practice.daily_summaries"
+					></app-chart>
+				</div>
 			</mat-card-content>
 	</mat-card>
 	</ul>

@@ -14,6 +14,7 @@ import { appRoutes } from './routes';
 import { PracticeService } from './practice/practice.service';
 import { AuthService } from './auth/auth.service';
 import { EntityService } from './entity/entity.service';
+import { DateService } from './date.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppRoutingModule } from './app-routing.module';
@@ -32,6 +33,7 @@ import { LoginComponent } from './auth/login/login.component';
 import { LogoutComponent } from './auth/logout/logout.component';
 import { EntityComponent } from './entity/entity/entity.component';
 import { ChartComponent } from './chart/chart/chart.component';
+import { ProviderComponent } from './provider/provider/provider.component';
 
 @NgModule({
   declarations: [
@@ -43,6 +45,7 @@ import { ChartComponent } from './chart/chart/chart.component';
     LogoutComponent,
     EntityComponent,
     ChartComponent,
+    ProviderComponent
   ],
   imports: [
     ReactiveFormsModule,
@@ -73,6 +76,7 @@ import { ChartComponent } from './chart/chart/chart.component';
     PracticeService,
     AuthService, 
     EntityService,
+    DateService,
     AuthGuard,
     {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     {provide: HTTP_INTERCEPTORS, useClass: ResponseInterceptor, multi: true}

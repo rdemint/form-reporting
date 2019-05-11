@@ -44,7 +44,7 @@ export class PracticeService implements OnInit {
   
   loadPractice() {
     return this.selected_practice.asObservable();
-  }
+ }
 
   patchSummary(summary: DailySummary, practice_slug: string, summaryId) {
     return this.http.patch<DailySummary>(environment['daily_summary_url'] + summaryId + "/", summary)

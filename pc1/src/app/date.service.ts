@@ -10,7 +10,7 @@ export class DateService implements OnInit {
 	selected_month$ = new BehaviorSubject<string>(null);
   	selected_year$ = new BehaviorSubject<string>(null);
   	default_month = (new Date().getMonth()+1).toString();
-  	default_year = new Date().getFullYear().toString();
+  	default_year = (new Date().getFullYear()).toString();
   	YEAR_OPTIONS: string[] = ["2018", "2019"];
   	MONTH_OPTIONS: string[] = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];
   	httpParams: Observable<HttpParams>;
@@ -18,7 +18,9 @@ export class DateService implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  	console.log(this.default_month);
   	this.selected_month$.next(this.default_month);
+  	console.log(this.selected_month$.getValue())
     this.selected_year$.next(this.default_year);
 	this.httpParams = combineLatest(
 		this.selected_year$.asObservable(),
@@ -42,6 +44,7 @@ export class DateService implements OnInit {
 	}
 
 	getHttpParams() {
+		console.log(this.httpParams);
 		return this.httpParams;
 	}
 

@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { EntityService } from '../entity.service';
 import { UserService } from '../../user/user.service';
 import { DateService } from '../../date.service';
-import { Practice, DailySummary, Entity, User } from '../../models';
+import { Practice, DailySummary, Entity, User, Provider } from '../../models';
 import { Observable, combineLatest } from 'rxjs';
 import { first, map, tap } from 'rxjs/operators';
 @Component({
@@ -18,6 +18,7 @@ export class EntityComponent implements OnInit {
   month: Observable<Date>;
   year: Observable<Date>;
 
+
   constructor(
   	private entityService: EntityService, 
   	private http: HttpClient, 
@@ -30,6 +31,6 @@ export class EntityComponent implements OnInit {
   ngOnInit() {
   	this.userService.loadUser().pipe(first()).subscribe((user)=>this.user = user);
 	  this.entityService.loadEntity().subscribe((entity)=> this.entity = entity);
-   }
+  }
 
 }

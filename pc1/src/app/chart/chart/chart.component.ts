@@ -1,5 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Practice } from '../../models';
+import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { Practice, DailySummary } from '../../models';
+import { EntityService } from '../../entity/entity.service';
 import * as CanvasJs from '../../../../node_modules/canvasjs/canvasjs.min.js';
 
 @Component({
@@ -9,28 +12,29 @@ import * as CanvasJs from '../../../../node_modules/canvasjs/canvasjs.min.js';
 })
 
 
-export class ChartComponent implements OnInit {
-@Input() practice: Practice;
-chart: any;
-chart_data: any;
+export class ChartComponent implements OnInit, AfterViewInit {
+@Input() dailySummaries: DailySummary[];
+@Input() sourceId: string;
 
-  constructor() { }
+chart: any;
+chartName: string;
+chart_data: any = {
+  noshows: [],
+  workdays: [],
+  visits: [], 
+}
+
+  constructor(private entityService: EntityService) { }
 
   ngOnInit() {
-  	this.createChartData();
-  	this.createChart();
-  }
-
-    createChartData() {
-          this.chart_data['noshows'] = this.practice.daily_summaries.map((summary)=> ({label: summary.date, y: summary.noshows}));
-          this.chart_data['workdays'] = this.practice.daily_summaries.map((summary)=> ({label: summary.date, y: summary.workdays}));
-          this.chart_data['visits'] = this.practice.daily_summaries.map((summary)=> ({label: summary.date, y: summary.visits}));
-          this.createChart();
-          this.chart.render();
-        }
+    this.chart_data.visits = this.dailySummaries.map((summary)=> ({label: summary.date, y: summary.visits}));
+    this.chart_data.noshows = this.dailySummaries.map((summary)=> ({label: summary.date, y: summary.noshows})); 
+    this.chart_data.workdays = this.dailySummaries.map((summary)=> ({label: summary.date, y: summary.workdays}));
+    this.chartName = 'chartContainer'+ this.sourceId;
+    }        
 
   createChart() {
-       this.chart = new CanvasJs.Chart('chartContainer', {
+       this.chart = new CanvasJs.Chart(this.chartName, {
        theme: "light2",
        animationEnabled: false,
        exportEnabled: true,
@@ -54,24 +58,29 @@ chart_data: any;
            visible: true,
            showInLegend: true,
            name: "Visits",
-           dataPoints: this.practice.chart_data.visits
+           dataPoints: this.chart_data.visits
          },
          {
            type: "spline",
            visible: true,
            showInLegend: true,
            name: "Workdays",
-           dataPoints: this.practice.chart_data.workdays
+           dataPoints: this.chart_data.workdays
          },
          {
            type: "spline",
            visible: true,
            showInLegend: true,
            name: "No Shows",
-           dataPoints: this.practice.chart_data.noshows
+           dataPoints: this.chart_data.noshows
          }
        ]
      });
+  }
+
+  ngAfterViewInit() {
+    this.createChart();
+    this.chart.render()
   }
 
 }
