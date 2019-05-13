@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Practice } from '../../models';
+import { Practice, DailySummary } from '../../models';
 import * as CanvasJs from '../../../../node_modules/canvasjs/canvasjs.min.js';
 
 @Component({
@@ -10,7 +10,7 @@ import * as CanvasJs from '../../../../node_modules/canvasjs/canvasjs.min.js';
 
 
 export class ChartComponent implements OnInit {
-@Input() practice: Practice;
+@Input() dailySummaries: DailySummary[];
 chart: any;
 chart_data: any;
 
@@ -22,9 +22,9 @@ chart_data: any;
   }
 
     createChartData() {
-          this.chart_data['noshows'] = this.practice.daily_summaries.map((summary)=> ({label: summary.date, y: summary.noshows}));
-          this.chart_data['workdays'] = this.practice.daily_summaries.map((summary)=> ({label: summary.date, y: summary.workdays}));
-          this.chart_data['visits'] = this.practice.daily_summaries.map((summary)=> ({label: summary.date, y: summary.visits}));
+          this.chart_data['noshows'] = this.dailySummaries.map((summary)=> ({label: summary.date, y: summary.noshows}));
+          this.chart_data['workdays'] = this.dailySummaries.map((summary)=> ({label: summary.date, y: summary.workdays}));
+          this.chart_data['visits'] = this.dailySummaries.map((summary)=> ({label: summary.date, y: summary.visits}));
           this.createChart();
           this.chart.render();
         }
@@ -54,21 +54,21 @@ chart_data: any;
            visible: true,
            showInLegend: true,
            name: "Visits",
-           dataPoints: this.practice.chart_data.visits
+           dataPoints: this.chart_data.visits
          },
          {
            type: "spline",
            visible: true,
            showInLegend: true,
            name: "Workdays",
-           dataPoints: this.practice.chart_data.workdays
+           dataPoints: this.chart_data.workdays
          },
          {
            type: "spline",
            visible: true,
            showInLegend: true,
            name: "No Shows",
-           dataPoints: this.practice.chart_data.noshows
+           dataPoints: this.chart_data.noshows
          }
        ]
      });

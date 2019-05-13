@@ -1,8 +1,12 @@
-<div>
-	<p class="text-muted">  Logged in as {{email}}. <a routerLink="/logout/">Log out  </a></p>
-</div>
 <div class="container">
-	<h1 style="text-align:center">{{practiceName}}</h1>
-<app-practice-summaries
-></app-practice-summaries>
+	<h1 style="text-align:center">{{practice.name}}</h1>
+	<app-chart
+		[dailySummaries]="practice.daily_summaries"
+	>
+	</app-chart>
+	<br>
+	<p>Select a provider below to data by that provider</p>
+	<ul *ngFor="let provider of practice.providers">
+		<li>{{provider.full_name}}</li>
+	</ul>
 </div>

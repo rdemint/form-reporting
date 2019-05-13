@@ -8,87 +8,49 @@ from rest_framework.reverse import reverse
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.settings import api_settings
 from practices.models import Practice, DailySummary, User, Entity, Provider
-from practices.serializers import DailySummarySerializer, PracticeSerializer, UserSerializer, AuthTokenSerializer, EntitySerializer, PracticeListSerializer, ProviderSerializer
-# Create your views here.
+from practices.serializers import DailySummarySerializer, DailySummariesByMonthSerializer, ProviderSerializer, PracticeSummariesSerializer, ProviderSummariesSerializer, EntitySerializer, EntityProvidersSerializer, EntityPracticesSerializer, AuthTokenSerializer
+from django_filters import rest_framework as filters
 
 
-@api_view(['GET'])
-def api_root(request, format=None):
-	return Response({
-		'practices': reverse('practices:practice_list', request=request, format=format),
-		'daily_summaries': reverse('practices:daily_summary_list', request=request, format=format)
-		})
+class DailySummaryFilter(filters.FilterSet):
+	month = filters.NumberFilter(field_name="date", lookup_expr="month")
+	year = filters.NumberFilter(field_name="date", lookup_expr="year")
+	entity = filters.CharFilter(field_name="entity__slug", lookup_expr="iexact")
+	practice = filters.CharFilter(field_name="practice__slug", lookup_expr="iexact")
 
-class UserCreate(ListCreateAPIView):
-	serializer_class = UserSerializer
-	queryset = User.objects.all()
-	permission_classes = ()
-
-class UserDetail(RetrieveUpdateDestroyAPIView):
-	serializer_class = UserSerializer
-	permissions = IsAuthenticated
-	queryset = User.objects.all()
+	class Meta:
+		model = DailySummary
+		fields = ['month', 'year', 'entity', 'practice']
 
 
-class PracticeList(ListCreateAPIView):
-	serializer_class = PracticeListSerializer
-	queryset = Practice.objects.all()
-	permssion_classes = (IsAuthenticated,)
-
-
-class PracticeDetail(RetrieveUpdateDestroyAPIView):
-	serializer_class = PracticeSerializer
-	lookup_field = "slug"
-	permssion_classes = (IsAuthenticated,)
-	filter_fields = ('daily_summaries__visits')
-
-	def get_queryset(self):
-		return Practice.objects.filter(slug=self.kwargs['slug'])
-		
-
-
-class DailySummaryDetail(RetrieveUpdateDestroyAPIView):
-	serializer_class = DailySummarySerializer
+class FilteredDailySummaries(ListCreateAPIView):
 	queryset = DailySummary.objects.all()
-	permssion_classes = (IsAuthenticated,)
-	
-class ProviderList(ListCreateAPIView):
-	serializer_class = ProviderSerializer
-	queryset = Provider.objects.all()
-	permission_classes = (IsAuthenticated,)
-
-
-class ProviderDetail(RetrieveUpdateDestroyAPIView):
-	serializer_class = ProviderSerializer
-	queryset = Provider.objects.all()
-	permission_classes = (IsAuthenticated,)
+	serializer_class = DailySummarySerializer
+	filter_backends = (filters.DjangoFilterBackend,)
+	filterset_class = DailySummaryFilter
 
 
 class EntityList(ListCreateAPIView):
 	serializer_class = EntitySerializer
 	queryset = Entity.objects.all()
-	#permission_classes = (IsAuthenticated,)
 
 
-class EntityDetail(RetrieveUpdateDestroyAPIView):
-	serializer_class = EntitySerializer
-	queryset = Entity.objects.all()
-	#permission_classes = (IsAuthenticated,)
-	lookup_field = "slug"
+class EntityPractices(ListCreateAPIView):
+	serializer_class = EntityPracticesSerializer
 
 	def get_queryset(self):
 		return Entity.objects.filter(slug=self.kwargs['slug'])
 
-class EntitySummaryDetail(ListCreateAPIView):
-	serializer_class = DailySummarySerializer
-	queryset = DailySummary.objects.all()
-	lookup_field = "slug"
+class EntityProviders(ListCreateAPIView):
+	serializer_class = EntityProvidersSerializer
 
 	def get_queryset(self):
-		year = self.request.query_params.get('year', None)
-		month = self.request.query_params.get('month', None)		
-		return DailySummary.objects.filter(entity__slug=self.kwargs['slug'], date__year=year, date__month=month)
+		return Entity.objects.filter(slug=self.kwargs['slug'])
 
+
+class DailySummaries(ListCreateAPIView):
+	serializer_class = DailySummariesByMonthSerializer
+	queryset = DailySummary.objects.all()
 
 class CreateTokenView(ObtainAuthToken):
 	serializer_class = AuthTokenSerializer

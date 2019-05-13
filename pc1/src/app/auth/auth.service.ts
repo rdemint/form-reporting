@@ -82,7 +82,7 @@ export class AuthService {
 
 	getDataByType(data) { 
 		if (data['user_type'] == "admin") {
-			this.entityService.selectEntity(data['entity_slug']);
+			this.entityService.getEntitybyPractices(data['entity_slug']);
 		}
 
 		if (data['user_type'] == "staff") {

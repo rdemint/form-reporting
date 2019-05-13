@@ -11,6 +11,7 @@ export interface Practice {
 export interface Provider {
 	first_name: string;
 	last_name: string;
+	full_name: string;
 	credentials: string;
 }
 

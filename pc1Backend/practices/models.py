@@ -1,3 +1,4 @@
+import decimal
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.base_user import BaseUserManager
@@ -52,6 +53,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 	TYPE_CHOICES = (
 	('doctor', 'Doctor'),
 	('staff', 'Staff'),
+	('manager', 'Manager'),
 	('admin', 'Admin'))
 	first_name = models.CharField(max_length=100)
 	last_name = models.CharField(max_length=100)
@@ -73,6 +75,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 	def __str__(self):
 		return self.first_name + " " + self.last_name
 
+
 class Provider(models.Model):
 	first_name = models.CharField(max_length=256)
 	last_name = models.CharField(max_length=256)
@@ -85,18 +88,29 @@ class Provider(models.Model):
 		Entity, 
 		on_delete=models.CASCADE, 
 		related_name="providers")
+	specialty = models.CharField(max_length=200)
+	visits_goal = models.IntegerField(default=20)
 
 	def __str__(self):
+		return "{} {}, {}".format(self.first_name, self.last_name, self.credentials)
+
+	@property 
+	def full_name(self):
 		return "{} {}, {}".format(self.first_name, self.last_name, self.credentials)
 
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.first_name + ' ' + self.last_name)
 		super().save(*args, **kwargs)
 
-class DailySummaryManager(models.Manager):
+	class Meta:
+		unique_together = ('first_name', 'last_name', 'entity')
 
-	def get_queryset(self, year, month): 
-		return super().get_queryset().filter(date__month=self.request.kwargs['month'], date__year=self.request.kwargs['year'])
+# class DailySummaryManager(models.Manager):
+
+# 	def get_queryset(self, year, month): 
+# 		return super().get_queryset().filter(date__month=self.request.kwargs['month'], date__year=self.request.kwargs['year'])
+#very interesting but I do not need this now
+
 
 class DailySummary(models.Model):
 	'''submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)'''
@@ -112,14 +126,19 @@ class DailySummary(models.Model):
 	
 
 	objects = models.Manager()
-	monthly_summaries = DailySummaryManager() 
 
 	class Meta:
 		unique_together = (('date', 'provider'))
 
+	@property
+	def visits_per_workdays(self):
+		return round(decimal.Decimal(self.visits/self.workdays), 1)
+	
 	def save(self, *args, **kwargs):
 		entity = self.practice.entity
 		super().save(*args, **kwargs)
+
+
 
 
 
