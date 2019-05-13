@@ -14,57 +14,29 @@ import { map, take, first } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class EntityService implements OnInit {
-  summaries$ = new BehaviorSubject<DailySummary[]>(null);
+  dailySummaries$ = new BehaviorSubject<DailySummary[]>(null);
   entity$ = new BehaviorSubject<Entity>(null);
   params: HttpParams;
   params2: HttpParams;
 
-
-
   constructor(private http:HttpClient, private dateService: DateService) {  }
 
-<<<<<<< HEAD
-  ngOnInit() { 
-    this.dateService.getHttpParams().subscribe((httpparams)=>this.params = httpparams);
-    this.params2 = new HttpParams()
-      .append('year', this.dateService.selected_year$.getValue())
-      .append('month', this.dateService.selected_month$.getValue())
-  }
+  ngOnInit() {}
 
   selectEntity(slug) {
-    console.log(this.params2)
-     this.http.get<Entity>(environment['entity_url'] + slug + '/', {params: this.params2}).pipe(
-         first()).
-           subscribe(
-           (entity)=> {
-             this.entity$.next(entity);
-           }
-         );
-     }
+    this.http.get<Entity>(environment['entity_url'] + slug).subscribe((entity)=> this.selectedEntity.next(entity));
+  }
 
-   loadEntity(): Observable<Entity> {
-=======
-  ngOnInit() {   }
+  getEntity() {}
 
-  getEntitybyPractices(slug) {
-     this.http.get<Entity>(environment['entity_url'] + slug + '/practices')
-           .subscribe(
-           (entity)=> { this.entity$.next(entity[0]);
-         });
-     }
+  loadEntity() {
+    return this.entity$.asObservable();
+  }
 
-   getEntitybyProviders(slug) {
-      this.http.get<Entity>(environment['entity_url'] + slug + '/providers').pipe(
-     first()).
-       subscribe(
-       (entity)=> {
-         this.entity$.next(entity[0]);
-       }
-     );
-   }
+  getDailySummaries() {}
 
-   loadEntity(){
->>>>>>> dailySummaryRefactor
-     return this.entity$.asObservable();
-   }
+  loadDailySummaries() {
+    return this.dailySummaries$.asObservable();
+  }
+
  }

@@ -1,13 +1,8 @@
-<<<<<<< HEAD
 import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Practice, DailySummary } from '../../models';
 import { EntityService } from '../../entity/entity.service';
-=======
-import { Component, OnInit, Input } from '@angular/core';
-import { Practice, DailySummary } from '../../models';
->>>>>>> dailySummaryRefactor
 import * as CanvasJs from '../../../../node_modules/canvasjs/canvasjs.min.js';
 
 @Component({
@@ -15,17 +10,9 @@ import * as CanvasJs from '../../../../node_modules/canvasjs/canvasjs.min.js';
   templateUrl: './chart.component.html',
   styleUrls: ['./chart.component.css']
 })
-
-
-<<<<<<< HEAD
 export class ChartComponent implements OnInit, AfterViewInit {
 @Input() dailySummaries: DailySummary[];
-@Input() sourceId: string;
 
-=======
-export class ChartComponent implements OnInit {
-@Input() dailySummaries: DailySummary[];
->>>>>>> dailySummaryRefactor
 chart: any;
 chartName: string;
 chart_data: any = {
@@ -37,13 +24,6 @@ chart_data: any = {
   constructor(private entityService: EntityService) { }
 
   ngOnInit() {
-<<<<<<< HEAD
-    this.chart_data.visits = this.dailySummaries.map((summary)=> ({label: summary.date, y: summary.visits}));
-    this.chart_data.noshows = this.dailySummaries.map((summary)=> ({label: summary.date, y: summary.noshows})); 
-    this.chart_data.workdays = this.dailySummaries.map((summary)=> ({label: summary.date, y: summary.workdays}));
-    this.chartName = 'chartContainer'+ this.sourceId;
-    }        
-=======
   	this.createChartData();
   	this.createChart();
   }
@@ -55,56 +35,55 @@ chart_data: any = {
           this.createChart();
           this.chart.render();
         }
->>>>>>> dailySummaryRefactor
 
-  createChart() {
-       this.chart = new CanvasJs.Chart(this.chartName, {
-       theme: "light2",
-       animationEnabled: false,
-       exportEnabled: true,
-       axisX : {
-         title: "Date",
-         includeZero: false
-       },
-       axisY : {
-         includeZero: false,
-         title: "Count",
-       },
-       tooltip: {
-         cursor: "pointer"
-       },
-       legend: {
-         cursor: "pointer"
-       },
-       data: [
-         {
-           type: "spline",
-           visible: true,
-           showInLegend: true,
-           name: "Visits",
-           dataPoints: this.chart_data.visits
+    createChart() {
+         this.chart = new CanvasJs.Chart(this.chartName, {
+         theme: "light2",
+         animationEnabled: false,
+         exportEnabled: true,
+         axisX : {
+           title: "Date",
+           includeZero: false
          },
-         {
-           type: "spline",
-           visible: true,
-           showInLegend: true,
-           name: "Workdays",
-           dataPoints: this.chart_data.workdays
+         axisY : {
+           includeZero: false,
+           title: "Count",
          },
-         {
-           type: "spline",
-           visible: true,
-           showInLegend: true,
-           name: "No Shows",
-           dataPoints: this.chart_data.noshows
-         }
-       ]
-     });
-  }
+         tooltip: {
+           cursor: "pointer"
+         },
+         legend: {
+           cursor: "pointer"
+         },
+         data: [
+           {
+             type: "spline",
+             visible: true,
+             showInLegend: true,
+             name: "Visits",
+             dataPoints: this.chart_data.visits
+           },
+           {
+             type: "spline",
+             visible: true,
+             showInLegend: true,
+             name: "Workdays",
+             dataPoints: this.chart_data.workdays
+           },
+           {
+             type: "spline",
+             visible: true,
+             showInLegend: true,
+             name: "No Shows",
+             dataPoints: this.chart_data.noshows
+           }
+         ]
+       });
+    }
 
-  ngAfterViewInit() {
-    this.createChart();
-    this.chart.render()
-  }
+    ngAfterViewInit() {
+      this.createChart();
+      this.chart.render()
+    }
 
 }

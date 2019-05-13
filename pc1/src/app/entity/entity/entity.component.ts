@@ -15,29 +15,22 @@ import { first, map, tap } from 'rxjs/operators';
   styleUrls: ['./entity.component.css']
 })
 export class EntityComponent implements OnInit {
+  user: User;
   entity: any;
-  entity2: any;
   entity$: Observable<Entity>;
 
 
   constructor(
   	private entityService: EntityService,
+    private userService: UserService,
     private route: ActivatedRoute,
     private router: Router,
-    private cd: ChangeDetectorRef
     ) {}
 
   ngOnInit() {
-<<<<<<< HEAD
   	this.userService.loadUser().pipe(first()).subscribe((user)=>this.user = user);
 	  this.entityService.loadEntity().subscribe((entity)=> this.entity = entity);
   }
-=======
-    this.entityService.loadEntity().subscribe((entity)=> this.entity = entity);
-    this.entity$ = this.entityService.loadEntity();
-    console.log(this.entity$);
-   }
->>>>>>> dailySummaryRefactor
 
  }
 

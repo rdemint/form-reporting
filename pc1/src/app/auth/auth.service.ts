@@ -68,7 +68,6 @@ export class AuthService {
 	updateData(data) {
 		this.getDataByType(data);
 		this.userService.selectUser({	
-			token: data['token'], 
 	  		email: data['email'],
 	  		user_type: data['user_type'],
 	  	});
@@ -82,7 +81,7 @@ export class AuthService {
 
 	getDataByType(data) { 
 		if (data['user_type'] == "admin") {
-			this.entityService.getEntitybyPractices(data['entity_slug']);
+			this.entityService.selectEntity(data['entity_slug']);
 		}
 
 		if (data['user_type'] == "staff") {

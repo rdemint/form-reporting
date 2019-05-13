@@ -5,35 +5,6 @@ from rest_framework.validators import UniqueTogetherValidator
 from practices.models import Practice, DailySummary, User, Entity, Provider
 from django.contrib.auth import get_user_model, authenticate
 
-class DailySummariesByMonthListSerializer(serializers.ListSerializer):
-	def to_representation(self, data):
-		print(self.context['request'].query_params)
-
-		if self.context['request'].query_params.get('entity'):
-			entity_param = self.context['request'].query_params.get('entity')
-			data.filter(entity__slug = entity_param)
-
-		if self.context['request'].query_params.get('practice'):
-			practice_param = self.context['request'].query_params.get('practice')
-			print(practice_param)
-			data.filter(practice__slug = practice_param)
-
-		if self.context['request'].query_params.get('year') and self.context['request'].query_params.get('month'):
-			data = data.filter(date__year=self.context['request'].query_params.get('year'), date__month=self.context['request'].query_params.get('month'))
-			return super().to_representation(data)
-		else: 
-			return super().to_representation(data)
-
-
-class DailySummariesByMonthSerializer(serializers.ModelSerializer):
-	provider = serializers.SlugRelatedField(slug_field='full_name', many=False, read_only=True)
-	practice = serializers.SlugRelatedField(slug_field="slug", many = False, read_only=True)
-
-	class Meta:
-		list_serializer_class = DailySummariesByMonthListSerializer
-		model = DailySummary
-		fields = ('date', 'workdays', 'visits', 'noshows', 'visits_per_workdays', 'provider', 'practice')
-
 		
 class DailySummarySerializer(serializers.ModelSerializer):
 	practice = serializers.StringRelatedField(many=False)
@@ -51,55 +22,28 @@ class DailySummarySerializer(serializers.ModelSerializer):
 		]
 
 class ProviderSerializer(serializers.ModelSerializer):
-	# full_name = serializers.SerializerMethodField()
-
-	# def get_full_name(self, provider):
-	# 	return "{}, {} {}".format(provider.last_name, provider.first_name, provider.credentials) 
+	practices = serializers.SlugRelatedField(slug_field='practices__name', many=True, read_only=True)
 
 	class Meta:
 		model = Provider	
-		fields = ('id', 'full_name', 'first_name', 'last_name', 'credentials')
+		fields = ('id', 'full_name', 'first_name', 'last_name', 'credentials', 'practices')
 
 
-class PracticeSummariesSerializer(serializers.ModelSerializer):
-	#providers = serializers.SlugRelatedField(slug_field='full_name', many=True, read_only=True)
-	daily_summaries = DailySummariesByMonthSerializer(many=True, read_only=True)
-	providers = ProviderSerializer(many=True, read_only=True)
-
+class PracticeSerializer(serializers.ModelSerializer):
+	providers = serializers.SlugRelatedField(slug_field='provider__full_name', many=True, read_only=True)
 
 	class Meta:
 		model = Practice 
-		fields = ('id', 'name', 'slug', 'providers', 'daily_summaries')
-
-class ProviderSummariesSerializer(serializers.ModelSerializer):
-	daily_summaries = DailySummariesByMonthSerializer(many=True, read_only=True)
-	practices = serializers.SlugRelatedField(slug_field='name', many=True, read_only=True)
-
-	class Meta:
-		model = Provider 
-		fields = ('id', 'first_name', 'last_name', 'full_name', 'daily_summaries', 'practices')
+		fields = ('id', 'name', 'slug', 'providers')
 
 
 class EntitySerializer(serializers.ModelSerializer):
-
+	practices = serializers.SlugRelatedField(slug_field="practice__name", read_only=True, many=False)
+	providers = serializers.SlugRelatedField(slug_field="provider__full_name", read_only=True, many=False)
+	
 	class Meta:
 		model = Entity
-		fields = ('name', 'slug')
-
-
-class EntityPracticesSerializer(serializers.ModelSerializer):
-	practices = PracticeSummariesSerializer(many=True, read_only=True)
-
-	class Meta:
-		model = Entity 
 		fields = ('name', 'slug', 'practices')
-
-class EntityProvidersSerializer(serializers.ModelSerializer):
-	providers = ProviderSummariesSerializer(many=True, read_only=True)
-
-	class Meta:
-		model = Entity 
-		fields = ('name', 'slug', 'providers')
 
 
 class AuthTokenSerializer(serializers.Serializer):
