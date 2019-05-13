@@ -47,15 +47,15 @@ class Command(BaseCommand):
 								)
 			
 						except IntegrityError as e:
-							print('{} on row {} with slug="{}", first_name="{}", last_name="{}", practice="{}"'
-								.format(e, linenum-1, line[5], line[6], line[7], practice))
+							# print('{} on row {} with slug="{}", first_name="{}", last_name="{}", practice="{}"'
+								# .format(e, linenum-1, line[5], line[6], line[7], practice))
 							integrity_error = True
 							duplicate_dates.append(line[0]) 
 							total_skipped += 1
 							skipped_lines.append(line[0])
 						except Exception as e:
-							print('{} on row {} with slug="{}", first_name="{}", last_name="{}", practice="{}"'
-								.format(e, linenum-1, line[5], line[6], line[7], practice))
+							# print('{} on row {} with slug="{}", first_name="{}", last_name="{}", practice="{}"'
+							# 	.format(e, linenum-1, line[5], line[6], line[7], practice))
 							total_skipped += 1
 							skipped_lines.append(line[0])
 						else: 

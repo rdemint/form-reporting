@@ -1,6 +1,14 @@
-<div>
-	<p class="text-muted">  Logged in as {{user.email}}. <a routerLink="/logout/">Log out  </a></p>
+<app-user></app-user>
+<div *ngIf="entity">
+		<h1>{{entity.name}}</h1>
+		<ul *ngFor="let practice of entity.practices">
+			<app-practice
+				[practice]="practice"
+			>
+			</app-practice>
+		</ul>
 </div>
+<<<<<<< HEAD
 <div class="container">
 <h1>{{entity.name}}</h1>
 	<ul *ngFor="let practice of entity.practices">
@@ -16,5 +24,24 @@
 			</mat-card-content>
 	</mat-card>
 	</ul>
+=======
+>>>>>>> dailySummaryRefactor
 
-</div>
+<br>
+<div *ngIf="entity$ | async as entity2; else loading">
+	<h1>{{entity$}}</h1>
+	<h1>{{entity2}}</h1>
+	<h1>{{entity2.name}}</h1>
+		<ul *ngFor="let practice of entity2.practices">
+			<li>
+				<app-practice
+					[practice]="practice | async"
+				>
+				</app-practice>
+			</li>
+		</ul>
+</div>	
+
+<ng-template #loading>
+	Loading Entity...
+</ng-template>

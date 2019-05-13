@@ -1,10 +1,15 @@
 import { Component, OnInit, Input } from '@angular/core';
+<<<<<<< HEAD
 import { FormControl } from '@angular/forms';
 import { User } from '../../models';
 import { UserService } from '../../user/user.service';
 import { ProviderService } from '../../provider/provider.service';
 import { PracticeService } from '../../practice/practice.service';
 
+=======
+import { User } from '../../models';
+import { PracticeService } from '../../practice/practice.service';
+>>>>>>> dailySummaryRefactor
 import { Practice, DailySummary } from '../../models';
 
 import { Observable } from 'rxjs';
@@ -17,6 +22,7 @@ import { first, map } from 'rxjs/operators';
 })
 export class PracticeComponent implements OnInit {
   @Input() practice: Practice;
+<<<<<<< HEAD
 	providerForm = new FormControl();
   providerDailySummaries: DailySummary[];
 
@@ -33,6 +39,12 @@ export class PracticeComponent implements OnInit {
         (summary) => summary.provider = event.value
       );
   }
+=======
+  
+  constructor(private practiceService: PracticeService) { }
+
+  ngOnInit() { }
+>>>>>>> dailySummaryRefactor
 
 
 }

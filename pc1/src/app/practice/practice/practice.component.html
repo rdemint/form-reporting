@@ -1,5 +1,6 @@
 <div class="container">
 	<h1 style="text-align:center">{{practice.name}}</h1>
+<<<<<<< HEAD
 </div>
 <h1>Select a provider to fill the dashboard</h1>
 <mat-form-field>
@@ -17,3 +18,15 @@
 		</mat-select>
 	</mat-label>
 </mat-form-field>
+=======
+	<app-chart
+		[dailySummaries]="practice.daily_summaries"
+	>
+	</app-chart>
+	<br>
+	<p>Select a provider below to data by that provider</p>
+	<ul *ngFor="let provider of practice.providers">
+		<li>{{provider.full_name}}</li>
+	</ul>
+</div>
+>>>>>>> dailySummaryRefactor

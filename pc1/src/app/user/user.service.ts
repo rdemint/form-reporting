@@ -7,17 +7,17 @@ import { User } from '../models';
 })
 export class UserService {
 	anonymousUser = {email: ''};
-	user = new BehaviorSubject<User>(this.anonymousUser);
+	user$ = new BehaviorSubject<User>(this.anonymousUser);
   
   constructor() { }
 
   ngOnInit() { }
 
   loadUser() {
-  	return this.user.asObservable();
+  	return this.user$.asObservable();
   }
 
   selectUser(user) {
-  	this.user.next(user);
+  	this.user$.next(user);
   }
 }

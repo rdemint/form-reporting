@@ -14,14 +14,16 @@ import { map, take, first } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class EntityService implements OnInit {
-  practice_list: Practice[] = [];
   summaries$ = new BehaviorSubject<DailySummary[]>(null);
   entity$ = new BehaviorSubject<Entity>(null);
   params: HttpParams;
   params2: HttpParams;
 
+
+
   constructor(private http:HttpClient, private dateService: DateService) {  }
 
+<<<<<<< HEAD
   ngOnInit() { 
     this.dateService.getHttpParams().subscribe((httpparams)=>this.params = httpparams);
     this.params2 = new HttpParams()
@@ -41,6 +43,28 @@ export class EntityService implements OnInit {
      }
 
    loadEntity(): Observable<Entity> {
+=======
+  ngOnInit() {   }
+
+  getEntitybyPractices(slug) {
+     this.http.get<Entity>(environment['entity_url'] + slug + '/practices')
+           .subscribe(
+           (entity)=> { this.entity$.next(entity[0]);
+         });
+     }
+
+   getEntitybyProviders(slug) {
+      this.http.get<Entity>(environment['entity_url'] + slug + '/providers').pipe(
+     first()).
+       subscribe(
+       (entity)=> {
+         this.entity$.next(entity[0]);
+       }
+     );
+   }
+
+   loadEntity(){
+>>>>>>> dailySummaryRefactor
      return this.entity$.asObservable();
    }
  }

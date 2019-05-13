@@ -33,7 +33,13 @@ import { LoginComponent } from './auth/login/login.component';
 import { LogoutComponent } from './auth/logout/logout.component';
 import { EntityComponent } from './entity/entity/entity.component';
 import { ChartComponent } from './chart/chart/chart.component';
+<<<<<<< HEAD
 import { ProviderComponent } from './provider/provider/provider.component';
+=======
+import { PracticeContainerComponent } from './practice/practice-container/practice-container.component';
+import { UserComponent } from './user/user/user.component';
+
+>>>>>>> dailySummaryRefactor
 
 @NgModule({
   declarations: [
@@ -45,7 +51,12 @@ import { ProviderComponent } from './provider/provider/provider.component';
     LogoutComponent,
     EntityComponent,
     ChartComponent,
+<<<<<<< HEAD
     ProviderComponent
+=======
+    PracticeContainerComponent,
+    UserComponent,
+>>>>>>> dailySummaryRefactor
   ],
   imports: [
     ReactiveFormsModule,
