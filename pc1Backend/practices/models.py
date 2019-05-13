@@ -22,6 +22,8 @@ class Practice(models.Model):
 	entity = models.ForeignKey(to=Entity, on_delete=models.CASCADE, default=None, null=True, related_name='practices')
 
 	def save(self, *args, **kwargs):
+		if self.entity == "None" or self.entity=="":
+			self.entity = None
 		self.slug=slugify(self.name)
 		super().save(*args, **kwargs)
 
@@ -76,6 +78,18 @@ class User(AbstractBaseUser, PermissionsMixin):
 		return self.first_name + " " + self.last_name
 
 
+class Specialty(models.Model):
+	name = models.CharField(max_length=150, unique=True)
+	slug = models.SlugField(null=False)
+
+	def save(self, *args, **kwargs):
+		self.slug = slugify(self.name)
+		super().save(*args, **kwargs)
+
+	def __str__(self):
+		return self.name
+
+
 class Provider(models.Model):
 	first_name = models.CharField(max_length=256)
 	last_name = models.CharField(max_length=256)
@@ -88,7 +102,7 @@ class Provider(models.Model):
 		Entity, 
 		on_delete=models.CASCADE, 
 		related_name="providers")
-	specialty = models.CharField(max_length=200)
+	specialties = models.ManyToManyField(Specialty, related_name='providers')
 	visits_goal = models.IntegerField(default=20)
 
 	def __str__(self):
@@ -117,6 +131,7 @@ class DailySummary(models.Model):
 	'''provider = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="daily_summaries") '''
 	practice = models.ForeignKey(Practice, on_delete=models.CASCADE, related_name="daily_summaries")
 	entity = models.ForeignKey(Entity, null=True, default=None, on_delete=models.CASCADE, related_name="daily_summaries")
+	specialty = models.ForeignKey(Specialty, null=True, on_delete=models.CASCADE, related_name="daily_summaries")
 	date = models.DateField(null=True)
 	last_updated = models.DateTimeField(auto_now_add=True)
 	visits = models.IntegerField(null=False)
@@ -136,7 +151,11 @@ class DailySummary(models.Model):
 	
 	def save(self, *args, **kwargs):
 		entity = self.practice.entity
-		super().save(*args, **kwargs)
+		if self.specialty in self.provider.specialties.all():
+			super().save(*args, **kwargs)
+		else:
+			print('That specialty is not associated with that provider. Please add it before trying again.')
+			raise Exception
 
 
 

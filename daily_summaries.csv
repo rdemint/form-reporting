@@ -1,94 +1,98 @@
-Date,Visits,Workdays,NoShows,Entity Slug,Practice Slug,Provider First Name,Provider Last Name
-2019-02-01,6,8,0,tri-state-inc,carolina-health,John,Smith
-2019-02-02,4,12,3,tri-state-inc,carolina-health,Nicole,Yang
-2019-02-03,6,7,2,tri-state-inc,blue-ridge-health-practice,John ,Smith
-2019-02-04,11,6,1,tri-state-inc,son-son-health-practice,Bob,Alps
-2019-02-05,8,11,2,tri-state-inc,son-son-health-practice,Jamie,Young
-2019-02-06,4,12,3,tri-state-inc,carolina-health,John,Smith
-2019-02-07,3,6,3,tri-state-inc,carolina-health,Nicole,Yang
-2019-02-08,3,10,2,tri-state-inc,blue-ridge-health-practice,John ,Smith
-2019-02-09,5,7,2,tri-state-inc,son-son-health-practice,Bob,Alps
-2019-02-10,5,9,0,tri-state-inc,son-son-health-practice,Jamie,Young
-2019-02-11,5,6,2,tri-state-inc,carolina-health,John,Smith
-2019-02-12,5,8,2,tri-state-inc,carolina-health,Nicole,Yang
-2019-02-13,5,9,5,tri-state-inc,blue-ridge-health-practice,John ,Smith
-2019-02-14,5,6,0,tri-state-inc,son-son-health-practice,Bob,Alps
-2019-02-15,3,10,1,tri-state-inc,son-son-health-practice,Jamie,Young
-2019-02-16,5,12,6,tri-state-inc,carolina-health,John,Smith
-2019-02-17,3,9,6,tri-state-inc,carolina-health,Nicole,Yang
-2019-02-18,4,10,1,tri-state-inc,blue-ridge-health-practice,John ,Smith
-2019-02-19,4,12,3,tri-state-inc,son-son-health-practice,Bob,Alps
-2019-02-20,4,10,6,tri-state-inc,son-son-health-practice,Jamie,Young
-2019-02-21,4,12,3,tri-state-inc,carolina-health,John,Smith
-2019-02-22,5,8,5,tri-state-inc,carolina-health,Nicole,Yang
-2019-02-23,3,9,4,tri-state-inc,blue-ridge-health-practice,John ,Smith
-2019-02-24,5,7,4,tri-state-inc,son-son-health-practice,Bob,Alps
-2019-02-25,5,12,4,tri-state-inc,son-son-health-practice,Jamie,Young
-2019-02-26,5,8,1,tri-state-inc,carolina-health,John,Smith
-2019-02-27,5,6,4,tri-state-inc,carolina-health,Nicole,Yang
-2019-02-28,4,8,3,tri-state-inc,blue-ridge-health-practice,John ,Smith
-2019-03-01,4,8,0,tri-state-inc,son-son-health-practice,Bob,Alps
-2019-03-02,5,10,4,tri-state-inc,son-son-health-practice,Jamie,Young
-2019-03-03,5,12,1,tri-state-inc,carolina-health,John,Smith
-2019-03-04,5,10,0,tri-state-inc,carolina-health,Nicole,Yang
-2019-03-05,3,12,4,tri-state-inc,blue-ridge-health-practice,John ,Smith
-2019-03-06,3,12,2,tri-state-inc,son-son-health-practice,Bob,Alps
-2019-03-07,5,8,0,tri-state-inc,son-son-health-practice,Jamie,Young
-2019-03-08,3,11,1,tri-state-inc,carolina-health,John,Smith
-2019-03-09,5,9,6,tri-state-inc,carolina-health,Nicole,Yang
-2019-03-10,5,6,0,tri-state-inc,blue-ridge-health-practice,John ,Smith
-2019-03-11,3,8,3,tri-state-inc,son-son-health-practice,Bob,Alps
-2019-03-12,5,10,6,tri-state-inc,son-son-health-practice,Jamie,Young
-2019-03-13,3,7,0,tri-state-inc,carolina-health,John,Smith
-2019-03-14,5,9,0,tri-state-inc,carolina-health,Nicole,Yang
-2019-03-15,3,7,6,tri-state-inc,blue-ridge-health-practice,John ,Smith
-2019-03-16,4,7,3,tri-state-inc,son-son-health-practice,Bob,Alps
-2019-03-17,5,10,3,tri-state-inc,son-son-health-practice,Jamie,Young
-2019-03-18,5,8,6,tri-state-inc,carolina-health,John,Smith
-2019-03-19,5,7,3,tri-state-inc,carolina-health,Nicole,Yang
-2019-03-20,5,8,2,tri-state-inc,blue-ridge-health-practice,John ,Smith
-2019-03-21,3,7,4,tri-state-inc,son-son-health-practice,Bob,Alps
-2019-03-22,3,11,3,tri-state-inc,son-son-health-practice,Jamie,Young
-2019-03-23,3,7,3,tri-state-inc,carolina-health,John,Smith
-2019-03-24,4,6,3,tri-state-inc,carolina-health,Nicole,Yang
-2019-03-25,5,8,5,tri-state-inc,blue-ridge-health-practice,John ,Smith
-2019-03-26,5,7,6,tri-state-inc,son-son-health-practice,Bob,Alps
-2019-03-27,4,6,3,tri-state-inc,son-son-health-practice,Jamie,Young
-2019-03-28,3,9,2,tri-state-inc,carolina-health,John,Smith
-2019-03-29,4,8,1,tri-state-inc,carolina-health,Nicole,Yang
-2019-03-30,5,12,0,tri-state-inc,blue-ridge-health-practice,John ,Smith
-2019-03-31,5,6,1,tri-state-inc,son-son-health-practice,Bob,Alps
-2019-04-01,3,7,1,tri-state-inc,son-son-health-practice,Jamie,Young
-2019-04-02,3,7,4,tri-state-inc,carolina-health,John,Smith
-2019-04-03,5,6,3,tri-state-inc,carolina-health,Nicole,Yang
-2019-04-04,3,6,3,tri-state-inc,blue-ridge-health-practice,John ,Smith
-2019-04-05,3,7,3,tri-state-inc,son-son-health-practice,Bob,Alps
-2019-04-06,4,8,0,tri-state-inc,son-son-health-practice,Jamie,Young
-2019-04-07,3,7,1,tri-state-inc,carolina-health,John,Smith
-2019-04-08,4,12,0,tri-state-inc,carolina-health,Nicole,Yang
-2019-04-09,5,11,4,tri-state-inc,blue-ridge-health-practice,John ,Smith
-2019-04-10,3,9,2,tri-state-inc,son-son-health-practice,Bob,Alps
-2019-04-11,5,6,4,tri-state-inc,son-son-health-practice,Jamie,Young
-2019-04-12,3,7,4,tri-state-inc,carolina-health,John,Smith
-2019-04-13,3,12,1,tri-state-inc,carolina-health,Nicole,Yang
-2019-04-14,5,10,2,tri-state-inc,blue-ridge-health-practice,John ,Smith
-2019-04-15,5,10,1,tri-state-inc,son-son-health-practice,Bob,Alps
-2019-04-16,4,7,4,tri-state-inc,son-son-health-practice,Jamie,Young
-2019-04-17,5,9,2,tri-state-inc,carolina-health,John,Smith
-2019-04-18,3,6,1,tri-state-inc,carolina-health,Nicole,Yang
-2019-04-19,4,12,0,tri-state-inc,blue-ridge-health-practice,John ,Smith
-2019-04-20,3,8,1,tri-state-inc,son-son-health-practice,Bob,Alps
-2019-04-21,4,7,0,tri-state-inc,son-son-health-practice,Jamie,Young
-2019-04-22,5,12,4,tri-state-inc,carolina-health,John,Smith
-2019-04-23,3,10,3,tri-state-inc,carolina-health,Nicole,Yang
-2019-04-24,3,7,6,tri-state-inc,blue-ridge-health-practice,John ,Smith
-2019-04-25,4,10,4,tri-state-inc,son-son-health-practice,Bob,Alps
-2019-04-26,5,6,2,tri-state-inc,son-son-health-practice,Jamie,Young
-2019-04-27,4,12,2,tri-state-inc,carolina-health,John,Smith
-2019-04-28,3,8,4,tri-state-inc,carolina-health,Nicole,Yang
-2019-04-29,3,11,3,tri-state-inc,blue-ridge-health-practice,John ,Smith
-2019-04-30,3,7,0,tri-state-inc,son-son-health-practice,Bob,Alps
-2019-05-01,4,7,3,tri-state-inc,son-son-health-practice,Jamie,Young
-2019-05-02,3,11,4,tri-state-inc,carolina-health,John,Smith
-2019-05-03,4,7,2,tri-state-inc,carolina-health,Nicole,Yang
-2019-05-04,3,8,0,tri-state-inc,blue-ridge-health-practice,John ,Smith
+Date,Visits,Workdays,NoShows,Entity Slug,Practice Slug,Provider First Name,Provider Last Name,Specialty
+2019-02-01,6,8,0,tri-state-inc,carolina-health,John,Smith,Family Medicine
+2019-02-02,4,12,3,tri-state-inc,carolina-health,Nicole,Yang,Pediatrics
+2019-02-03,6,7,2,tri-state-inc,blue-ridge-health-practice,John ,Smith,Family Medicine
+2019-02-04,11,6,1,tri-state-inc,son-son-health-practice,Bob,Alps,Neurology
+2019-02-05,8,11,2,tri-state-inc,son-son-health-practice,Jamie,Young,Internal Medicine
+2019-02-06,4,12,3,tri-state-inc,carolina-health,John,Smith,Family Medicine
+2019-02-07,3,6,3,tri-state-inc,carolina-health,Nicole,Yang,Pediatrics
+2019-02-08,3,10,2,tri-state-inc,blue-ridge-health-practice,John ,Smith,Family Medicine
+2019-02-09,5,7,2,tri-state-inc,son-son-health-practice,Bob,Alps,Neurology
+2019-02-10,5,9,0,tri-state-inc,son-son-health-practice,Jamie,Young,Internal Medicine
+2019-02-11,5,6,2,tri-state-inc,carolina-health,John,Smith,Family Medicine
+2019-02-12,5,8,2,tri-state-inc,carolina-health,Nicole,Yang,Pediatrics
+2019-02-13,5,9,5,tri-state-inc,blue-ridge-health-practice,John ,Smith,Family Medicine
+2019-02-14,5,6,0,tri-state-inc,son-son-health-practice,Bob,Alps,Neurology
+2019-02-15,3,10,1,tri-state-inc,son-son-health-practice,Jamie,Young,Internal Medicine
+2019-02-16,5,12,6,tri-state-inc,carolina-health,John,Smith,Family Medicine
+2019-02-17,3,9,6,tri-state-inc,carolina-health,Nicole,Yang,Pediatrics
+2019-02-18,4,10,1,tri-state-inc,blue-ridge-health-practice,John ,Smith,Family Medicine
+2019-02-19,4,12,3,tri-state-inc,son-son-health-practice,Bob,Alps,Neurology
+2019-02-20,4,10,6,tri-state-inc,son-son-health-practice,Jamie,Young,Internal Medicine
+2019-02-21,4,12,3,tri-state-inc,carolina-health,John,Smith,Family Medicine
+2019-02-22,5,8,5,tri-state-inc,carolina-health,Nicole,Yang,Pediatrics
+2019-02-23,3,9,4,tri-state-inc,blue-ridge-health-practice,John ,Smith,Family Medicine
+2019-02-24,5,7,4,tri-state-inc,son-son-health-practice,Bob,Alps,Neurology
+2019-02-25,5,12,4,tri-state-inc,son-son-health-practice,Jamie,Young,Internal Medicine
+2019-02-26,5,8,1,tri-state-inc,carolina-health,John,Smith,Family Medicine
+2019-02-27,5,6,4,tri-state-inc,carolina-health,Nicole,Yang,Pediatrics
+2019-02-28,4,8,3,tri-state-inc,blue-ridge-health-practice,John ,Smith,Family Medicine
+2019-03-01,4,8,0,tri-state-inc,son-son-health-practice,Bob,Alps,Neurology
+2019-03-02,5,10,4,tri-state-inc,son-son-health-practice,Jamie,Young,Internal Medicine
+2019-03-03,5,12,1,tri-state-inc,carolina-health,John,Smith,Family Medicine
+2019-03-04,5,10,0,tri-state-inc,carolina-health,Nicole,Yang,Pediatrics
+2019-03-05,3,12,4,tri-state-inc,blue-ridge-health-practice,John ,Smith,Family Medicine
+2019-03-06,3,12,2,tri-state-inc,son-son-health-practice,Bob,Alps,Neurology
+2019-03-07,5,8,0,tri-state-inc,son-son-health-practice,Jamie,Young,Internal Medicine
+2019-03-08,3,11,1,tri-state-inc,carolina-health,John,Smith,Family Medicine
+2019-03-09,5,9,6,tri-state-inc,carolina-health,Nicole,Yang,Pediatrics
+2019-03-10,5,6,0,tri-state-inc,blue-ridge-health-practice,John ,Smith,Family Medicine
+2019-03-11,3,8,3,tri-state-inc,son-son-health-practice,Bob,Alps,Neurology
+2019-03-12,5,10,6,tri-state-inc,son-son-health-practice,Jamie,Young,Internal Medicine
+2019-03-13,3,7,0,tri-state-inc,carolina-health,John,Smith,Family Medicine
+2019-03-14,5,9,0,tri-state-inc,carolina-health,Nicole,Yang,Pediatrics
+2019-03-15,3,7,6,tri-state-inc,blue-ridge-health-practice,John ,Smith,Family Medicine
+2019-03-16,4,7,3,tri-state-inc,son-son-health-practice,Bob,Alps,Neurology
+2019-03-17,5,10,3,tri-state-inc,son-son-health-practice,Jamie,Young,Internal Medicine
+2019-03-18,5,8,6,tri-state-inc,carolina-health,John,Smith,Family Medicine
+2019-03-19,5,7,3,tri-state-inc,carolina-health,Nicole,Yang,Pediatrics
+2019-03-20,5,8,2,tri-state-inc,blue-ridge-health-practice,John ,Smith,Family Medicine
+2019-03-21,3,7,4,tri-state-inc,son-son-health-practice,Bob,Alps,Neurology
+2019-03-22,3,11,3,tri-state-inc,son-son-health-practice,Jamie,Young,Internal Medicine
+2019-03-23,3,7,3,tri-state-inc,carolina-health,John,Smith,Family Medicine
+2019-03-24,4,6,3,tri-state-inc,carolina-health,Nicole,Yang,Pediatrics
+2019-03-25,5,8,5,tri-state-inc,blue-ridge-health-practice,John ,Smith,Family Medicine
+2019-03-26,5,7,6,tri-state-inc,son-son-health-practice,Bob,Alps,Neurology
+2019-03-27,4,6,3,tri-state-inc,son-son-health-practice,Jamie,Young,Internal Medicine
+2019-03-28,3,9,2,tri-state-inc,carolina-health,John,Smith,Family Medicine
+2019-03-29,4,8,1,tri-state-inc,carolina-health,Nicole,Yang,Pediatrics
+2019-03-30,5,12,0,tri-state-inc,blue-ridge-health-practice,John ,Smith,Family Medicine
+2019-03-31,5,6,1,tri-state-inc,son-son-health-practice,Bob,Alps,Neurology
+2019-04-01,3,7,1,tri-state-inc,son-son-health-practice,Jamie,Young,Internal Medicine
+2019-04-02,3,7,4,tri-state-inc,carolina-health,John,Smith,Family Medicine
+2019-04-03,5,6,3,tri-state-inc,carolina-health,Nicole,Yang,Pediatrics
+2019-04-04,3,6,3,tri-state-inc,blue-ridge-health-practice,John ,Smith,Family Medicine
+2019-04-05,3,7,3,tri-state-inc,son-son-health-practice,Bob,Alps,Neurology
+2019-04-06,4,8,0,tri-state-inc,son-son-health-practice,Jamie,Young,Internal Medicine
+2019-04-07,3,7,1,tri-state-inc,carolina-health,John,Smith,Family Medicine
+2019-04-08,4,12,0,tri-state-inc,carolina-health,Nicole,Yang,Pediatrics
+2019-04-09,5,11,4,tri-state-inc,blue-ridge-health-practice,John ,Smith,Family Medicine
+2019-04-10,3,9,2,tri-state-inc,son-son-health-practice,Bob,Alps,Neurology
+2019-04-11,5,6,4,tri-state-inc,son-son-health-practice,Jamie,Young,Internal Medicine
+2019-04-12,3,7,4,tri-state-inc,carolina-health,John,Smith,Family Medicine
+2019-04-13,3,12,1,tri-state-inc,carolina-health,Nicole,Yang,Pediatrics
+2019-04-14,5,10,2,tri-state-inc,blue-ridge-health-practice,John ,Smith,Family Medicine
+2019-04-15,5,10,1,tri-state-inc,son-son-health-practice,Bob,Alps,Neurology
+2019-04-16,4,7,4,tri-state-inc,son-son-health-practice,Jamie,Young,Internal Medicine
+2019-04-17,5,9,2,tri-state-inc,carolina-health,John,Smith,Family Medicine
+2019-04-18,3,6,1,tri-state-inc,carolina-health,Nicole,Yang,Pediatrics
+2019-04-19,4,12,0,tri-state-inc,blue-ridge-health-practice,John ,Smith,Family Medicine
+2019-04-20,3,8,1,tri-state-inc,son-son-health-practice,Bob,Alps,Neurology
+2019-04-21,4,7,0,tri-state-inc,son-son-health-practice,Jamie,Young,Internal Medicine
+2019-04-22,5,12,4,tri-state-inc,carolina-health,John,Smith,Family Medicine
+2019-04-23,3,10,3,tri-state-inc,carolina-health,Nicole,Yang,Pediatrics
+2019-04-24,3,7,6,tri-state-inc,blue-ridge-health-practice,John ,Smith,Family Medicine
+2019-04-25,4,10,4,tri-state-inc,son-son-health-practice,Bob,Alps,Neurology
+2019-04-26,5,6,2,tri-state-inc,son-son-health-practice,Jamie,Young,Internal Medicine
+2019-04-27,4,12,2,tri-state-inc,carolina-health,John,Smith,Family Medicine
+2019-04-28,3,8,4,tri-state-inc,carolina-health,Nicole,Yang,Pediatrics
+2019-04-29,3,11,3,tri-state-inc,blue-ridge-health-practice,John ,Smith,Family Medicine
+2019-04-30,3,7,0,tri-state-inc,son-son-health-practice,Bob,Alps,Neurology
+2019-05-01,4,7,3,tri-state-inc,son-son-health-practice,Jamie,Young,Internal Medicine
+2019-05-02,3,11,4,tri-state-inc,carolina-health,John,Smith,Family Medicine
+2019-05-03,4,7,2,tri-state-inc,carolina-health,Nicole,Yang,Pediatrics
+2019-05-04,3,8,0,tri-state-inc,blue-ridge-health-practice,John ,Smith,Family Medicine
+2019-05-05,3,7,3,None,carolina-wellness,Jane,Sloane,Internal Medicine
+2019-05-06,4,11,4,None,carolina-wellness,Jane,Sloane,Internal Medicine
+2019-05-07,5,7,2,None,carolina-wellness,Jane,Sloane,Pediatrics
+2019-05-08,3,8,0,None,be-well-health-group,Joe,Heffer,Family Medicine

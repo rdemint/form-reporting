@@ -2,13 +2,20 @@
 from rest_framework import serializers
 from rest_framework.validators import UniqueTogetherValidator
 
-from practices.models import Practice, DailySummary, User, Entity, Provider
+from practices.models import Practice, DailySummary, User, Entity, Provider, Specialty
 from django.contrib.auth import get_user_model, authenticate
 
-		
+
+class SpecialtySerializer(serializers.ModelSerializer):
+
+	class Meta:
+		model = Specialty 
+		fields = ('name', 'slug')
+	
 class DailySummarySerializer(serializers.ModelSerializer):
 	practice = serializers.StringRelatedField(many=False)
 	provider = serializers.SlugRelatedField(slug_field='slug', many=False, read_only=True)
+
 	visits_per_workdays = serializers.ReadOnlyField()
 
 	class Meta:
@@ -22,7 +29,8 @@ class DailySummarySerializer(serializers.ModelSerializer):
 		]
 
 class ProviderSerializer(serializers.ModelSerializer):
-	practices = serializers.SlugRelatedField(slug_field='practices__name', many=True, read_only=True)
+	practices = serializers.SlugRelatedField(slug_field="name", read_only=True, many=True)
+	specialties = serializers.StringRelatedField(many=True)
 
 	class Meta:
 		model = Provider	
@@ -30,20 +38,22 @@ class ProviderSerializer(serializers.ModelSerializer):
 
 
 class PracticeSerializer(serializers.ModelSerializer):
-	providers = serializers.SlugRelatedField(slug_field='provider__full_name', many=True, read_only=True)
+	providers = ProviderSerializer(read_only=True, many=True)
+	specialties = SpecialtySerializer(read_only=True, many=True)
 
 	class Meta:
 		model = Practice 
-		fields = ('id', 'name', 'slug', 'providers')
+		fields = ('id', 'name', 'slug', 'providers', 'specialties')
 
 
 class EntitySerializer(serializers.ModelSerializer):
-	practices = serializers.SlugRelatedField(slug_field="practice__name", read_only=True, many=False)
-	providers = serializers.SlugRelatedField(slug_field="provider__full_name", read_only=True, many=False)
-	
+	practices = PracticeSerializer(many=True, read_only=True)
+	providers = ProviderSerializer(many=True, read_only=True)
+	specialties = SpecialtySerializer(many=True, read_only = True)
+
 	class Meta:
 		model = Entity
-		fields = ('name', 'slug', 'practices')
+		fields = ('name', 'slug', 'providers', 'practices', 'specialties')
 
 
 class AuthTokenSerializer(serializers.Serializer):

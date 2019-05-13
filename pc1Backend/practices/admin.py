@@ -3,7 +3,7 @@ from django.contrib.auth.forms import ReadOnlyPasswordHashField
 from django.contrib.auth.admin import UserAdmin
 from django import forms 
 
-from practices.models import Practice, DailySummary, User, Entity, Provider
+from practices.models import Practice, DailySummary, User, Entity, Provider, Specialty
 # Register your models here.
 
 class EntityAdmin(admin.ModelAdmin):
@@ -20,8 +20,11 @@ class DailySummaryAdmin(admin.ModelAdmin):
 
 class ProviderAdmin(admin.ModelAdmin):
 	fields = ('first_name', 'last_name', 'slug',
-		'credentials', 'practices', 'alias_1', 'alias_2',
+		'credentials', 'practices', 'specialties', 'alias_1', 'alias_2',
 		'entity')
+
+class SpecialtyAdmin(admin.ModelAdmin):
+	fields = ('name',)
 
 class CreateUserForm(forms.ModelForm):
 	password1 = forms.CharField(
@@ -87,3 +90,4 @@ admin.site.register(DailySummary, DailySummaryAdmin)
 admin.site.register(User, CustomUserAdmin)
 admin.site.register(Provider, ProviderAdmin)
 admin.site.register(Entity, EntityAdmin)
+admin.site.register(Specialty, SpecialtyAdmin)

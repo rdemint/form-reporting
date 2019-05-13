@@ -38,16 +38,18 @@ class EntityList(ListCreateAPIView):
 
 class EntityDetail(RetrieveUpdateDestroyAPIView):
 	serializer_class = EntitySerializer 
+	lookup_field = "slug"
 
 	def get_queryset(self):
-		return Entity.objects.filter(slug=self.request['kwargs'].get('slug'))
+		return Entity.objects.filter(slug=self.kwargs.get('slug'))
 
 
 class PracticeDetail(RetrieveUpdateDestroyAPIView):
 	serializer_class = PracticeSerializer
+	lookup_field = "slug"
 
 	def get_queryset(self):
-		return Entity.objects.filter(slug=self.request['kwargs'].get('slug'))
+		return Practice.objects.filter(slug=self.kwargs.get('slug'))
 
 class CreateTokenView(ObtainAuthToken):
 	serializer_class = AuthTokenSerializer
