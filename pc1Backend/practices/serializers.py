@@ -10,17 +10,19 @@ class SpecialtySerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Specialty 
-		fields = ('name', 'slug')
+		fields = "__all__"
 	
 class DailySummarySerializer(serializers.ModelSerializer):
 	practice = serializers.StringRelatedField(many=False)
-	provider = serializers.SlugRelatedField(slug_field='slug', many=False, read_only=True)
+	provider = serializers.SlugRelatedField(slug_field='name', many=False, read_only=True)
+	specialty = serializers.StringRelatedField(many=False, read_only=True)
 
 	visits_per_workdays = serializers.ReadOnlyField()
 
 	class Meta:
 		model = DailySummary
-		fields = ('date', 'entity', 'practice', 'provider', 'visits', 'workdays', 'noshows', 'visits_per_workdays')
+		fields = ('date', 'entity', 'practice', 'provider', 'specialty', 'visits', 
+			'workdays', 'noshows', 'visits_per_workdays')
 		validators=[UniqueTogetherValidator(
 				queryset=DailySummary.objects.all(),
 				fields=('practice', 'date'),
@@ -34,7 +36,8 @@ class ProviderSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Provider	
-		fields = ('id', 'full_name', 'first_name', 'last_name', 'credentials', 'practices')
+		fields = ('id', 'name', 'first_name', 'last_name', 'credentials', 
+			'practices', 'specialties')
 
 
 class PracticeSerializer(serializers.ModelSerializer):
@@ -49,7 +52,7 @@ class PracticeSerializer(serializers.ModelSerializer):
 class EntitySerializer(serializers.ModelSerializer):
 	practices = PracticeSerializer(many=True, read_only=True)
 	providers = ProviderSerializer(many=True, read_only=True)
-	specialties = SpecialtySerializer(many=True, read_only = True)
+	specialties = SpecialtySerializer(many=True, read_only=True)
 
 	class Meta:
 		model = Entity

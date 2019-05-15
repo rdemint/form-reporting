@@ -1,47 +1,38 @@
 <app-user></app-user>
-<div *ngIf="entity">
-		<h1>{{entity.name}}</h1>
-		<ul *ngFor="let practice of entity.practices">
-			<app-practice
-				[practice]="practice"
-			>
-			</app-practice>
-		</ul>
-</div>
-<<<<<<< HEAD
-<div class="container">
-<h1>{{entity.name}}</h1>
-	<ul *ngFor="let practice of entity.practices">
-		<mat-card (click)=navigatePractice($event)>
-			<mat-card-title>{{practice.name}}</mat-card-title>
-			<mat-card-content>
-				<div class="container">
-					<app-chart
-						[sourceId]="practice.id"
-						[dailySummaries]="practice.daily_summaries"
-					></app-chart>
-				</div>
-			</mat-card-content>
-	</mat-card>
-	</ul>
-=======
->>>>>>> dailySummaryRefactor
+<div *ngIf="entity else loading">
+	<h1 style="text-align: center">{{entity.name}}</h1>
+	<mat-tab-group mat-align-tabs="center">
+		<mat-tab>
+			<ng-template mat-tab-label>
+				<h4>Practices</h4>
+			</ng-template>
+			<ng-template matTabContent>
+				<app-practice-list [practices]="entity.practices"></app-practice-list>
+			</ng-template>
+		</mat-tab>
 
-<br>
-<div *ngIf="entity$ | async as entity2; else loading">
-	<h1>{{entity$}}</h1>
-	<h1>{{entity2}}</h1>
-	<h1>{{entity2.name}}</h1>
-		<ul *ngFor="let practice of entity2.practices">
-			<li>
-				<app-practice
-					[practice]="practice | async"
-				>
-				</app-practice>
-			</li>
-		</ul>
-</div>	
+		<mat-tab>
+			<ng-template mat-tab-label>
+				<h4>Providers</h4>
+			</ng-template>
+			<ng-template matTabContent>
+				<p>Provider list goes here</p>
+			</ng-template>
+		</mat-tab>
+
+		<mat-tab>
+			<ng-template mat-tab-label>
+				<h4>Specialties</h4>
+			</ng-template>
+			<ng-template matTabContent>
+				<p>Specialties</p>
+			</ng-template>
+		</mat-tab>
+	</mat-tab-group>
+</div>
+
+
 
 <ng-template #loading>
-	Loading Entity...
+	<p>Loading...</p>
 </ng-template>

@@ -8,6 +8,7 @@ from django.utils.text import slugify
 class Entity(models.Model):
 	name = models.CharField(max_length=200)
 	slug = models.SlugField(unique=True)
+	# specialties = models.ManyToManyField(to='Specialty', through='DailySummary', through_fields=('entity', 'specialty',), related_name='specialties')
 
 	def save(self, *args, **kwargs):
 		self.slug=slugify(self.name)
@@ -109,8 +110,8 @@ class Provider(models.Model):
 		return "{} {}, {}".format(self.first_name, self.last_name, self.credentials)
 
 	@property 
-	def full_name(self):
-		return "{} {}, {}".format(self.first_name, self.last_name, self.credentials)
+	def name(self):
+		return "{}, {} {}".format(self.last_name, self.first_name, self.credentials)
 
 	def save(self, *args, **kwargs):
 		self.slug = slugify(self.first_name + ' ' + self.last_name)

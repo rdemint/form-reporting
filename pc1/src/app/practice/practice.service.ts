@@ -26,11 +26,7 @@ export class PracticeService implements OnInit {
    { }
 
   ngOnInit(){
-    this.dateService.getHttpParams().subscribe((params)=> this.httpparams = params);
-  }
-
-  selectPractice(slug:string) {
-    this.getPractice(slug);
+    this.dateService.loadHttpDateParams().subscribe((params)=> this.httpparams = params);
   }
 
   getPractice(slug:string) {

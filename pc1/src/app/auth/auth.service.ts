@@ -1,9 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { User, Practice, Entity } from '../models';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 
 import { environment } from '../../environments/environment';
 import { DateService } from '../date.service';
@@ -14,18 +14,13 @@ import { UserService } from '../user/user.service';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
-
-	httpOptions: {headers: HttpHeaders};
+export class AuthService implements OnInit {
 	queryParams: any;
 	errors: any = [];
-	authHeader: HttpHeaders;
 	isAuthenticated: boolean = false;
-	private initial_month: string;
-	private initial_year: string;
-
-	//refactoring
-	user = new BehaviorSubject<User>(null);
+	authHeader: any;
+	month: string;
+  	year: string;
 
   constructor(
   	private http:HttpClient, 
@@ -33,15 +28,13 @@ export class AuthService {
   	private dateService: DateService,
   	private practiceService: PracticeService,
   	private entityService: EntityService, 
-  	private userService: UserService) {
-  	this.dateService.getMonth().pipe(first())
-  		.subscribe((month)=>this.initial_month=month);
-  	this.dateService.getYear().pipe(first())
-  		.subscribe((year)=>this.initial_year=year);
-  	this.queryParams = {queryParams: { 
-  		year: this.initial_year,
-  		month: this.initial_month
-  		  }}
+  	private userService: UserService,
+  	) {
+  }
+
+  ngOnInit() {
+  	this.dateService.loadMonth().subscribe((month)=> this.month=month);
+  	this.dateService.loadYear().subscribe((year)=> this.year=year);
   }
 
   signup(user) {  }
@@ -71,38 +64,40 @@ export class AuthService {
 	  		email: data['email'],
 	  		user_type: data['user_type'],
 	  	});
-		localStorage.setItem("token", this.user['token']);
+		localStorage.setItem("token", data['token']);
 		this.errors = [];
-		this.authHeader = new HttpHeaders().set("Authorization", "Token " + localStorage['token'])
-		this.httpOptions = {
-			headers: this.authHeader,
-		};
+		this.authHeader = new HttpHeaders().set("Authorization", "Token " + localStorage['token']);
 	}
 
 	getDataByType(data) { 
 		if (data['user_type'] == "admin") {
-			this.entityService.selectEntity(data['entity_slug']);
+			this.entityService.getEntity(data['entity_slug']);
 		}
 
 		if (data['user_type'] == "staff") {
-			this.practiceService.selectPractice(data['practice_slug']);
+			this.practiceService.getPractice(data['practice_slug']);
 		}
 	}
 
 	navigateByUserType(data){
+		let navExtras: NavigationExtras = { queryParams: {} }
+		navExtras['queryParams'] = {
+ 			year: '2019',
+ 			month: '4',
+			}
  		if (data['user_type'] == "admin") {
+ 				navExtras['queryParams']['entity'] = data['entity_slug']
 			this.router.navigate(
-				['entities', data['entity_slug']], this.queryParams);
+				['entities', data['entity_slug']], navExtras
+			);
 		}
 		else {
 			this.router.navigate(
-				['practices', data['practice_slug']], this.queryParams);
+				['practices', data['practice_slug']], {queryParams: {year: this.year, month: this.month}}
+			);
 		}
   	}
 
-	getHttpOptions() {
-		return this.httpOptions;
-	}
 
 }
 

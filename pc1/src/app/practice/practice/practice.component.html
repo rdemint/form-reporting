@@ -1,32 +1,5 @@
-<div class="container">
-	<h1 style="text-align:center">{{practice.name}}</h1>
-<<<<<<< HEAD
-</div>
-<h1>Select a provider to fill the dashboard</h1>
-<mat-form-field>
-	<mat-label>
-		<mat-select
-			placeholder='Select a provider'
-			[formControl]="providerForm"
-		>
-			<mat-select-trigger
-				selectChange = getProviderDailySummaries($event)>
-			</mat-select-trigger>
-			<mat-option *ngFor="let provider of practice.providers">
-				{{provider.full_name}}
-			</mat-option>
-		</mat-select>
-	</mat-label>
-</mat-form-field>
-=======
-	<app-chart
-		[dailySummaries]="practice.daily_summaries"
-	>
-	</app-chart>
-	<br>
-	<p>Select a provider below to data by that provider</p>
-	<ul *ngFor="let provider of practice.providers">
-		<li>{{provider.full_name}}</li>
-	</ul>
-</div>
->>>>>>> dailySummaryRefactor
+<mat-card>
+	<mat-card-title>{{practice.name}}</mat-card-title>
+	<mat-card-content>
+	</mat-card-content>
+</mat-card>

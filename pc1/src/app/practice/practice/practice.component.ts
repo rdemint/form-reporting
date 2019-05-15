@@ -16,8 +16,7 @@ import { first, map } from 'rxjs/operators';
 })
 export class PracticeComponent implements OnInit {
   @Input() practice: Practice;
-	providerForm = new FormControl();
-  providerDailySummaries: DailySummary[];
+	@Input() dailySummaries: DailySummary[];
 
   constructor(private userService: UserService, 
     private providerService: ProviderService,
@@ -25,12 +24,5 @@ export class PracticeComponent implements OnInit {
     ) { }
 
   ngOnInit() {  }
-  
-
-  getProviderSummaries(event) {
-    this.providerDailySummaries = this.practice.daily_summaries.filter(
-        (summary) => summary.provider = event.value
-      );
-  }
 
 }

@@ -1,9 +1,5 @@
-<div *ngIf="user">
+<div *ngIf="user ; else loading">
 	<p class="text-muted">  Logged in as {{user.email}}. <a routerLink="/logout/">Log out  </a></p>
-</div>
-
-<div *ngIf="user$ | async ; else loading">
-	<p class="text-muted">  Logged in as {{user$.email}}. <a routerLink="/logout/">Log out  </a></p>
 </div>
 
 <ng-template #loading>
