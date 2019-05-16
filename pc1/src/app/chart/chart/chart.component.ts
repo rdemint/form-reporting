@@ -3,7 +3,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Practice, DailySummary } from '../../models';
 import { EntityService } from '../../entity/entity.service';
-import * as CanvasJs from '../../../../node_modules/canvasjs/canvasjs.min.js';
+import * as CanvasJs from '../../../../node_modules/canvasjs-2.3.1/canvasjs.min.js';
 
 @Component({
   selector: 'app-chart',
