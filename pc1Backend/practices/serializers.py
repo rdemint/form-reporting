@@ -36,7 +36,7 @@ class ProviderSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Provider	
-		fields = ('id', 'name', 'first_name', 'last_name', 'credentials', 
+		fields = ('id', 'name', 'slug', 'first_name', 'last_name', 'credentials', 
 			'practices', 'specialties')
 
 

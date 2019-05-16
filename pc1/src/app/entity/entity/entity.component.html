@@ -1,5 +1,5 @@
 <app-user></app-user>
-<div *ngIf="entity else loading">
+<div *ngIf="entity && dailySummaries else loading">
 	<h1 style="text-align: center">{{entity.name}}</h1>
 	<mat-tab-group mat-align-tabs="center">
 		<mat-tab>
@@ -7,7 +7,7 @@
 				<h4>Practices</h4>
 			</ng-template>
 			<ng-template matTabContent>
-				<app-practice-list [practices]="entity.practices"></app-practice-list>
+				<app-practice-list [practices]="entity.practices" [dailySummaries]="dailySummaries"></app-practice-list>
 			</ng-template>
 		</mat-tab>
 
@@ -16,7 +16,7 @@
 				<h4>Providers</h4>
 			</ng-template>
 			<ng-template matTabContent>
-				<p>Provider list goes here</p>
+				<app-provider-list [providers]="entity.providers" [dailySummaries]="dailySummaries"></app-provider-list>
 			</ng-template>
 		</mat-tab>
 

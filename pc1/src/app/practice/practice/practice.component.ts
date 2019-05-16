@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { User } from '../../models';
 import { UserService } from '../../user/user.service';
@@ -12,7 +12,8 @@ import { first, map } from 'rxjs/operators';
 @Component({
   selector: 'app-practice',
   templateUrl: './practice.component.html',
-  styleUrls: ['./practice.component.css']
+  styleUrls: ['./practice.component.css'],
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PracticeComponent implements OnInit {
   @Input() practice: Practice;
@@ -23,6 +24,8 @@ export class PracticeComponent implements OnInit {
     private practiceService: PracticeService
     ) { }
 
-  ngOnInit() {  }
+  ngOnInit() { 
+    this.dailySummaries = this.dailySummaries.filter((summary)=> summary.practice == this.practice.name)
+  }
 
 }

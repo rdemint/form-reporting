@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, OnChanges, SimpleChanges } from '@angular/core';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Practice, DailySummary } from '../../models';
@@ -12,9 +12,9 @@ import * as CanvasJs from '../../../../node_modules/canvasjs/canvasjs.min.js';
 })
 export class ChartComponent implements OnInit, AfterViewInit {
 @Input() dailySummaries: DailySummary[];
+@Input() chartName: string;
 
 chart: any;
-chartName: string;
 chart_data: any = {
   noshows: [],
   workdays: [],
@@ -25,15 +25,12 @@ chart_data: any = {
 
   ngOnInit() {
   	this.createChartData();
-  	this.createChart();
   }
 
     createChartData() {
           this.chart_data['noshows'] = this.dailySummaries.map((summary)=> ({label: summary.date, y: summary.noshows}));
           this.chart_data['workdays'] = this.dailySummaries.map((summary)=> ({label: summary.date, y: summary.workdays}));
           this.chart_data['visits'] = this.dailySummaries.map((summary)=> ({label: summary.date, y: summary.visits}));
-          this.createChart();
-          this.chart.render();
         }
 
     createChart() {
@@ -83,7 +80,7 @@ chart_data: any = {
 
     ngAfterViewInit() {
       this.createChart();
-      this.chart.render()
+      this.chart.render();
     }
 
 }

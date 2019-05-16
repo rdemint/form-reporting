@@ -37,6 +37,7 @@ import { PracticeContainerComponent } from './practice/practice-container/practi
 import { UserComponent } from './user/user/user.component';
 import { PracticeListComponent } from './practice/practice-list/practice-list.component';
 import { ProviderListComponent } from './provider/provider-list/provider-list.component';
+import { ProviderComponent } from './provider/provider/provider.component';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,7 @@ import { ProviderListComponent } from './provider/provider-list/provider-list.co
     UserComponent,
     PracticeListComponent,
     ProviderListComponent,
+    ProviderComponent,
   ],
   imports: [
     ReactiveFormsModule,

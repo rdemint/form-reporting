@@ -44,7 +44,9 @@ export class EntityComponent implements OnInit {
 
   getDailySummaries() {
     this.dailySummaryService.getDailySummaries({'entity': this.entity.slug, 'year': this.year, 'month': this.month})
-        .subscribe((dailySummaries)=> this.dailySummaries = dailySummaries);
+        .subscribe((dailySummaries)=> {
+          this.dailySummaries = dailySummaries;
+        });
   }
 }
 

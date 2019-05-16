@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Input, Component, OnInit } from '@angular/core';
+import { Provider, DailySummary } from '../../models';
 
 @Component({
   selector: 'app-provider-list',
@@ -6,7 +7,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./provider-list.component.css']
 })
 export class ProviderListComponent implements OnInit {
-
+	@Input() providers: Provider[]
+	@Input() dailySummaries: DailySummary[];
+	
   constructor() { }
 
   ngOnInit() {

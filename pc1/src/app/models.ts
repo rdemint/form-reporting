@@ -10,7 +10,7 @@ export interface Practice {
 export interface Provider {
 	first_name: string;
 	last_name: string;
-	full_name: string;
+	name: string;
 	credentials: string;
 }
 
@@ -28,9 +28,9 @@ export interface DailySummary {
 	visits: number;
 	workdays: number;
 	noshows: number;
-	practice: number;
-	provider: Provider;
-	specialty: Specialty;
+	practice: string;
+	provider: string;
+	specialty: string;
 }
 
 export interface User {
@@ -41,7 +41,7 @@ export interface User {
 }
 
 export interface Entity {
-	name?: string;
+	name: string;
 	slug?: string;
 	practices?: Practice[];
 	providers?: Provider[];

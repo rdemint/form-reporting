@@ -1,3 +1,7 @@
-<p>
-  provider works!
-</p>
+<mat-card>
+	<mat-card-title>{{provider.name}}</mat-card-title>
+	<mat-card-content>
+		<app-chart [dailySummaries]="dailySummaries" [chartName]="provider.slug">
+		</app-chart>
+	</mat-card-content>
+</mat-card>
