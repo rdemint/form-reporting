@@ -1,3 +1,3 @@
-<div *ngIf="!user.name == '' ; else loading">
+<div *ngIf="user">
 	<p class="text-muted">  Logged in as {{user.email}}. <a routerLink="/logout/">Log out  </a></p>
 </div>

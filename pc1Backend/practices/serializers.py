@@ -44,6 +44,8 @@ class PracticeSerializer(serializers.ModelSerializer):
 	providers = ProviderSerializer(read_only=True, many=True)
 	specialties = SpecialtySerializer(read_only=True, many=True)
 
+
+
 	class Meta:
 		model = Practice 
 		fields = ('id', 'name', 'slug', 'providers', 'specialties')

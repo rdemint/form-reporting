@@ -38,6 +38,12 @@ import { UserComponent } from './user/user/user.component';
 import { PracticeListComponent } from './practice/practice-list/practice-list.component';
 import { ProviderListComponent } from './provider/provider-list/provider-list.component';
 import { ProviderComponent } from './provider/provider/provider.component';
+import { SpecialtyComponent } from './specialty/specialty/specialty.component';
+import { SpecialtyListComponent } from './specialty/specialty-list/specialty-list.component';
+import { DailySummaryComponent } from './daily-summary/daily-summary/daily-summary.component';
+import { DailySummaryFormComponent } from './daily-summary/daily-summary-form/daily-summary-form.component';
+import { DailySummaryFormContainerComponent } from './daily-summary/daily-summary-form-container/daily-summary-form-container.component';
+import { DailySummaryContainerComponent } from './daily-summary/daily-summary-container/daily-summary-container.component';
 
 @NgModule({
   declarations: [
@@ -53,6 +59,12 @@ import { ProviderComponent } from './provider/provider/provider.component';
     PracticeListComponent,
     ProviderListComponent,
     ProviderComponent,
+    SpecialtyComponent,
+    SpecialtyListComponent,
+    DailySummaryComponent,
+    DailySummaryFormComponent,
+    DailySummaryFormContainerComponent,
+    DailySummaryContainerComponent,
   ],
   imports: [
     ReactiveFormsModule,

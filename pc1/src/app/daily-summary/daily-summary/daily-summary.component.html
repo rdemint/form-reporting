@@ -1,0 +1,19 @@
+<h4>{{practice.name}}</h4>
+<mat-tab-group mat-align-tabs="center">
+	<div *ngFor="let provider of practice.providers">
+		<mat-tab>
+			<ng-template mat-tab-label>
+				<h4>{{provider.last_name}}</h4>
+			</ng-template>
+				<mat-card>
+					<mat-card-title>{{provider.name}}</mat-card-title>
+					<mat-card-content>
+						<app-form>
+						</app-form>
+					</mat-card-content>
+				</mat-card>
+		</mat-tab>
+	</div>
+	<mat-tab-group>
+
+

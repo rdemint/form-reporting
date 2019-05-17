@@ -8,14 +8,23 @@ from django.utils.text import slugify
 class Entity(models.Model):
 	name = models.CharField(max_length=200)
 	slug = models.SlugField(unique=True)
-	# specialties = models.ManyToManyField(to='Specialty', through='DailySummary', through_fields=('entity', 'specialty',), related_name='specialties')
+	# specialties = models.ManyToManyRel(to=Specialty, through='DailySummary', related_name='specialties')
 
+	@property
+	def specialties(self):
+		qs = Specialty.objects.filter(providers__entity=self).all()
+		return list(qs)
+	
 	def save(self, *args, **kwargs):
 		self.slug=slugify(self.name)
 		super().save(*args, **kwargs)
 
 	def __str__(self):
 		return  self.name
+
+	class Meta:	
+		ordering=['name']
+
 
 class Practice(models.Model):
 	name = models.CharField(max_length=200)
@@ -33,7 +42,10 @@ class Practice(models.Model):
 		return DailySummary.objects.filter(practice=self, date__year=self.request.GET('year', None), date__month=self.request.GET('month', None))
 
 	def __str__(self):
-		return self.name 
+		return self.name
+
+	class Meta:
+		ordering=['name']
 
 
 class UserManager(BaseUserManager):
@@ -90,6 +102,8 @@ class Specialty(models.Model):
 	def __str__(self):
 		return self.name
 
+	class Meta: 
+		ordering=['name']
 
 class Provider(models.Model):
 	first_name = models.CharField(max_length=256)
@@ -119,6 +133,7 @@ class Provider(models.Model):
 
 	class Meta:
 		unique_together = ('first_name', 'last_name', 'entity')
+		ordering=['last_name']
 
 # class DailySummaryManager(models.Manager):
 
@@ -145,6 +160,7 @@ class DailySummary(models.Model):
 
 	class Meta:
 		unique_together = (('date', 'provider'))
+		ordering=['-date']
 
 	@property
 	def visits_per_workdays(self):
@@ -157,10 +173,6 @@ class DailySummary(models.Model):
 		else:
 			print('That specialty is not associated with that provider. Please add it before trying again.')
 			raise Exception
-
-
-
-
 
 	def __str__(self):
 		return self.practice.__str__() + ': Daily for ' + self.date.strftime('%A') +', ' + self.date.strftime('%m/%d/%Y')

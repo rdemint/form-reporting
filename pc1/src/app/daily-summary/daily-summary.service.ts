@@ -21,4 +21,12 @@ export class DailySummaryService {
   	return this.http.get<DailySummary[]>(environment['daily_summary_url'], {params: httpParams});
 
   }
+
+  patchSummary(summary: DailySummary, practice_slug: string, summaryId) {
+    return this.http.patch<DailySummary>(environment['daily_summary_url'] + summaryId + "/", summary)
+  }
+
+  postSummary(summary: DailySummary, practice_slug: string) {
+    return this.http.post<DailySummary>(environment['daily_summary_url'], summary)
+  }
 }

@@ -25,7 +25,7 @@
 				<h4>Specialties</h4>
 			</ng-template>
 			<ng-template matTabContent>
-				<p>Specialties</p>
+				<app-specialty-list [specialties]="entity.specialties" [dailySummaries]="dailySummaries"></app-specialty-list>
 			</ng-template>
 		</mat-tab>
 	</mat-tab-group>

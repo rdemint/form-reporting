@@ -31,23 +31,11 @@ export class PracticeService implements OnInit {
 
   getPractice(slug:string) {
     return this.http.get<Practice>(
-        environment['practice_url'] + slug + '/', 
-        {params: this.httpparams})
-          .subscribe(
-            (practice) => this.selected_practice.next(practice)
-          );
+        environment['practice_url'] + slug + '/')
   }
   
   loadPractice() {
     return this.selected_practice.asObservable();
  }
-
-  patchSummary(summary: DailySummary, practice_slug: string, summaryId) {
-    return this.http.patch<DailySummary>(environment['daily_summary_url'] + summaryId + "/", summary)
-  }
-
-  postSummary(summary: DailySummary, practice_slug: string) {
-    return this.http.post<DailySummary>(environment['daily_summary_url'], summary)
-  }
 
 }

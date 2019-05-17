@@ -1,0 +1,7 @@
+<mat-card>
+	<mat-card-title>{{specialty.name}}</mat-card-title>
+	<mat-card-content>
+		<app-chart [dailySummaries]="dailySummaries" [chartName]="specialty.slug">
+		</app-chart>
+	</mat-card-content>
+</mat-card>

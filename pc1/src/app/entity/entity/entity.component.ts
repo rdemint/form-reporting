@@ -1,13 +1,10 @@
-import { Component, OnInit, ChangeDetectorRef, OnChanges } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { EntityService } from '../entity.service';
 import { UserService } from '../../user/user.service';
 import { DateService } from '../../date.service';
-import { DailySummaryService } from '../../dailySummary/daily-summary.service';
+import { DailySummaryService } from '../../daily-summary/daily-summary.service';
 import { DailySummary, Entity, User } from '../../models';
-import { Observable, BehaviorSubject, combineLatest } from 'rxjs';
-import { first, map, tap } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 
 @Component({
@@ -31,7 +28,6 @@ export class EntityComponent implements OnInit {
     private userService: UserService,
     private route: ActivatedRoute,
     private router: Router,
-    private cd: ChangeDetectorRef,
     ) { }
 
   ngOnInit() {
