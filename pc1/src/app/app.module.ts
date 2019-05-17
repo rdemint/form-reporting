@@ -1,7 +1,7 @@
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatInputModule, MatCardModule, MatFormFieldModule, 
-    MatNativeDateModule, MatTabsModule } from '@angular/material';
+    MatNativeDateModule, MatTabsModule, MatSlideToggleModule} from '@angular/material';
 import { MatSelectModule} from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatToolbarModule} from '@angular/material/toolbar';
@@ -42,8 +42,8 @@ import { SpecialtyComponent } from './specialty/specialty/specialty.component';
 import { SpecialtyListComponent } from './specialty/specialty-list/specialty-list.component';
 import { DailySummaryComponent } from './daily-summary/daily-summary/daily-summary.component';
 import { DailySummaryFormComponent } from './daily-summary/daily-summary-form/daily-summary-form.component';
-import { DailySummaryFormContainerComponent } from './daily-summary/daily-summary-form-container/daily-summary-form-container.component';
 import { DailySummaryContainerComponent } from './daily-summary/daily-summary-container/daily-summary-container.component';
+import { DailySummaryListComponent } from './daily-summary/daily-summary-list/daily-summary-list.component';
 
 @NgModule({
   declarations: [
@@ -63,8 +63,8 @@ import { DailySummaryContainerComponent } from './daily-summary/daily-summary-co
     SpecialtyListComponent,
     DailySummaryComponent,
     DailySummaryFormComponent,
-    DailySummaryFormContainerComponent,
     DailySummaryContainerComponent,
+    DailySummaryListComponent,
   ],
   imports: [
     ReactiveFormsModule,
@@ -86,6 +86,7 @@ import { DailySummaryContainerComponent } from './daily-summary/daily-summary-co
     MatSelectModule,
     MatTabsModule,
     MatCardModule,
+    MatSlideToggleModule,
   ],
   exports: [
     MatFormFieldModule,

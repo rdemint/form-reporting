@@ -1,5 +1,5 @@
 import { Input, Component, OnInit } from '@angular/core';
-import { DailySummary, Practice } from '../../models';
+import { DailySummary, Practice, Provider } from '../../models';
 
 @Component({
   selector: 'app-daily-summary',
@@ -8,11 +8,13 @@ import { DailySummary, Practice } from '../../models';
 })
 export class DailySummaryComponent implements OnInit {
 	@Input() practice: Practice;
-	@Input() dailySummaries: DailySummary; 
+	@Input() dailySummaries: DailySummary;
+	@Input() provider: Provider;
 
   constructor() { }
 
   ngOnInit() {
   }
+
 
 }

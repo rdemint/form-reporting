@@ -6,7 +6,6 @@ import { PracticeListComponent } from './practice/practice-list/practice-list.co
 import { ProviderListComponent } from './provider/provider-list/provider-list.component';
 import { DailySummaryContainerComponent } from './daily-summary/daily-summary-container/daily-summary-container.component';
 import { DailySummaryFormComponent } from './daily-summary/daily-summary-form/daily-summary-form.component';
-import { DailySummaryFormContainerComponent } from './daily-summary/daily-summary-form-container/daily-summary-form-container.component';
 import { LoginComponent } from './auth/login/login.component';
 import { LogoutComponent } from './auth/logout/logout.component';
 import { EntityComponent } from './entity/entity/entity.component';

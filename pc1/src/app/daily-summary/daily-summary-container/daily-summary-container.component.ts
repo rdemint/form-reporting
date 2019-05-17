@@ -7,9 +7,9 @@ import { DateService } from '../../date.service';
 import { PracticeService } from '../../practice/practice.service';
 
 @Component({
-  selector: 'app-daily-summary-form-container',
-  templateUrl: './daily-summary-form-container.component.html',
-  styleUrls: ['./daily-summary-form-container.component.css']
+  selector: 'app-daily-summary-container',
+  templateUrl: './daily-summary-container.component.html',
+  styleUrls: ['./daily-summary-container.component.css']
 })
 export class DailySummaryContainerComponent implements OnInit {
 	user: User;

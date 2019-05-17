@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef, Input, Output, ViewChild, EventEmitter, HostListener } from '@angular/core';
+import { NgForm } from '@angular/forms';
+import { Practice, DailySummary } from '../../models'
 
 @Component({
   selector: 'app-daily-summary-form',
@@ -9,7 +11,6 @@ export class DailySummaryFormComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {  }
 
 }
