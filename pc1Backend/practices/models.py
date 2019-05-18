@@ -159,7 +159,7 @@ class DailySummary(models.Model):
 	objects = models.Manager()
 
 	class Meta:
-		unique_together = (('date', 'provider'))
+		unique_together = (('date', 'provider', 'specialty'))
 		ordering=['-date']
 
 	@property

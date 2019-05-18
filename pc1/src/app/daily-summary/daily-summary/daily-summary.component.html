@@ -1,13 +1,18 @@
+	<div>
 		<mat-expansion-panel >
 			<mat-expansion-panel-header>
 				<mat-panel-title>
-					<h5>{{provider.name}}</h5>
+					<div>
+						<h5>{{provider.name}}</h5>
+					</div>
 				</mat-panel-title>
 			</mat-expansion-panel-header>
 			<ng-template matExpansionPanelContent>
-				<app-form></app-form>
+				<app-daily-summary-form [specialties]="provider.specialties"></app-daily-summary-form>
 			</ng-template>
 		</mat-expansion-panel>
+		<br>
+	</div>
 
 
 

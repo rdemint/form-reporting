@@ -1,3 +1,53 @@
-<p>
-  daily-summary-form works!
-</p>
+<div class="example-container">
+	<form [formGroup]="summaryForm" (ngSubmit)="onSubmit()">
+		<table>
+		<div *ngIf="specialties.length > 1 else providerSpecialty">
+			<tr>
+			<mat-form-field>
+				<mat-select [(value)]="selected" formControlName="specialty" placeholder="Specialty">
+						<mat-option *ngFor="let specialty of specialties" [value]="specialty">
+							{{specialty}}
+						</mat-option>
+				</mat-select>
+			</mat-form-field>
+			</tr>
+		</div>
+		<tr>
+		<mat-form-field>
+			<label>Visits</label>
+			<input matInput type="text"
+			 	name="visitsInput"
+			 	formControlName="visits"
+			 	class="form-control"
+			 	>
+		</mat-form-field>
+		</tr>
+		<tr>
+		<mat-form-field>	
+			 <label>Workdays</label>
+			<input matInput type="text"
+				name="workdaysInput"
+				formControlName="workdays"
+				class="form-control"
+				>
+		</mat-form-field>
+		</tr>
+		<tr>
+		<mat-form-field>
+		<label>No Shows</label>
+			<input matInput type="text"
+				name="noshowsInput"
+				formControlName="noshows"
+				class="form-control"
+				>
+		</mat-form-field>
+		</tr>
+	</table>
+			<br>
+		<button class="btn btn-primary" type="submit">Submit</button>
+	</form>
+</div>
+
+<ng-template #providerSpecialty>
+	<p>{{specialties[0]}}</p>
+</ng-template>

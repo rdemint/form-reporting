@@ -10,6 +10,7 @@ export class DailySummaryComponent implements OnInit {
 	@Input() practice: Practice;
 	@Input() dailySummaries: DailySummary;
 	@Input() provider: Provider;
+	@Input() selectedDate: Date;
 
   constructor() { }
 

@@ -11,12 +11,12 @@ export class DailySummaryListComponent implements OnInit {
 	@Input() practice: Practice;
 	@Input() dailySummaries: DailySummary;
 	date = new FormControl(new Date());
-	today = new Date();
+	selectedDate = new Date();
   
   constructor() { }
 
   ngOnInit() {
-  }
+    }
 
   dateFilter = (date: Date): boolean => {
   	const day = date.getDay()
