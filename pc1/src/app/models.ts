@@ -8,10 +8,13 @@ export interface Practice {
 }
 
 export interface Provider {
+	id: number;
 	first_name: string;
 	last_name: string;
 	name: string;
 	credentials: string;
+	specialties: Specialty[];
+	practices: string[];
 }
 
 export interface Specialty {

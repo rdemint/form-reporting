@@ -1,16 +1,19 @@
 <div class="example-container">
 	<form [formGroup]="summaryForm" (ngSubmit)="onSubmit()">
 		<table>
-		<div *ngIf="specialties.length > 1 else providerSpecialty">
+		<div *ngIf="provider.specialties.length > 1 else providerSpecialty">
 			<tr>
 			<mat-form-field>
-				<mat-select [(value)]="selected" formControlName="specialty" placeholder="Specialty">
-						<mat-option *ngFor="let specialty of specialties" [value]="specialty">
+				<mat-select 
+					formControlName="specialty"
+					placeholder="Specialty">
+						<mat-option *ngFor="let specialty of provider.specialties" [value]="specialty">
 							{{specialty}}
 						</mat-option>
 				</mat-select>
 			</mat-form-field>
 			</tr>
+
 		</div>
 		<tr>
 		<mat-form-field>
@@ -49,5 +52,5 @@
 </div>
 
 <ng-template #providerSpecialty>
-	<p>{{specialties[0]}}</p>
+	<p>{{provider.specialties[0]}}</p>
 </ng-template>

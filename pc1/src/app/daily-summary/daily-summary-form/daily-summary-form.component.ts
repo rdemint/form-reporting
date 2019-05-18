@@ -1,6 +1,7 @@
 import { Component, OnInit, ElementRef, Input, Output, ViewChild, EventEmitter, HostListener } from '@angular/core';
 import { NgForm, FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
-import { Practice, DailySummary, Specialty } from '../../models'
+import { Practice, DailySummary, Specialty, Provider } from '../../models'
+import { DailySummaryService} from '../daily-summary.service';
 
 @Component({
   selector: 'app-daily-summary-form',
@@ -8,22 +9,31 @@ import { Practice, DailySummary, Specialty } from '../../models'
   styleUrls: ['./daily-summary-form.component.css']
 })
 export class DailySummaryFormComponent implements OnInit {
-	@Input() specialties: Specialty[];
-  summaryForm: FormGroup;
-  selected: any;
+	@Input() provider: Provider;
+  @Input() practice: Practice;
+  @Input() selectedDate: Date;
 
-  constructor() { }
+  summaryForm: FormGroup;
+  
+
+  constructor(private dailySummaryService: DailySummaryService) { }
 
   ngOnInit() { 
-  	this.summaryForm = new FormGroup({
-      'specialty': new FormControl(null),
-  		'visits': new FormControl(null),
+      this.selectedDate = new Date();
+      this.summaryForm = new FormGroup({
+      'practice': new FormControl(this.practice.name),
+      'specialty': new FormControl(this.provider.specialties[0]),
+  		'date': new FormControl(this.selectedDate.toISOString().slice(0,10)),
+      'visits': new FormControl(null),
   		'workdays': new FormControl(null),
-  		'noshows': new FormControl(null)
+  		'noshows': new FormControl(null),
+      'provider': new FormControl(this.provider.id),
+      
   	});
-    this.selected = this.specialties[0];
+
   }
 
   onSubmit() {
+    this.dailySummaryService.postSummary(this.summaryForm.value);
   }
 }

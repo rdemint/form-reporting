@@ -13,9 +13,9 @@ class SpecialtySerializer(serializers.ModelSerializer):
 		fields = "__all__"
 	
 class DailySummarySerializer(serializers.ModelSerializer):
-	practice = serializers.StringRelatedField(many=False)
-	provider = serializers.SlugRelatedField(slug_field='name', many=False, read_only=True)
-	specialty = serializers.StringRelatedField(many=False, read_only=True)
+	practice = serializers.SlugRelatedField(many=False, queryset=Practice.objects.all(), slug_field='name')
+	provider = serializers.PrimaryKeyRelatedField(many=False, queryset=Provider.objects.all())
+	specialty = serializers.SlugRelatedField(many=False, queryset=Specialty.objects.all(), slug_field='name')
 
 	visits_per_workdays = serializers.ReadOnlyField()
 
@@ -25,8 +25,8 @@ class DailySummarySerializer(serializers.ModelSerializer):
 			'workdays', 'noshows', 'visits_per_workdays')
 		validators=[UniqueTogetherValidator(
 				queryset=DailySummary.objects.all(),
-				fields=('practice', 'date'),
-				message="A daily summary for this date already exists.  Choose a new date or edit the existing summary."
+				fields=('practice', 'date', 'specialty', 'provider'),
+				message="A daily summary for this date, practice, specialty, and provider already exists.  Choose a new date or edit the existing summary."
 			)
 		]
 

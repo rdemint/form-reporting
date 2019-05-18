@@ -20,7 +20,8 @@ export class DailySummaryListComponent implements OnInit {
 
   dateFilter = (date: Date): boolean => {
   	const day = date.getDay()
-  	return day !==0 && day !==6;
+    const month = date.getMonth()
+  	return day !==0 && day !==6  && date.getDate() <= this.selectedDate.getDate() && month == this.selectedDate.getMonth();
   }
 
 }

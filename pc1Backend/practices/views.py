@@ -30,6 +30,10 @@ class FilteredDailySummaries(ListCreateAPIView):
 	filter_backends = (filters.DjangoFilterBackend,)
 	filterset_class = DailySummaryFilter
 
+	def post(self,request,*args,**kwargs):
+		print(self.request.data)
+		return self.create(request, *args, **kwargs)
+
 
 class EntityList(ListCreateAPIView):
 	serializer_class = EntitySerializer

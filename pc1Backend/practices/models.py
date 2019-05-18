@@ -8,7 +8,6 @@ from django.utils.text import slugify
 class Entity(models.Model):
 	name = models.CharField(max_length=200)
 	slug = models.SlugField(unique=True)
-	# specialties = models.ManyToManyRel(to=Specialty, through='DailySummary', related_name='specialties')
 
 	@property
 	def specialties(self):
@@ -29,7 +28,7 @@ class Entity(models.Model):
 class Practice(models.Model):
 	name = models.CharField(max_length=200)
 	slug = models.SlugField(unique=True)
-	entity = models.ForeignKey(to=Entity, on_delete=models.CASCADE, default=None, null=True, related_name='practices')
+	entity = models.ForeignKey(to=Entity, on_delete=models.CASCADE, default=None, null=True, blank=True, related_name='practices')
 
 	def save(self, *args, **kwargs):
 		if self.entity == "None" or self.entity=="":
@@ -143,19 +142,18 @@ class Provider(models.Model):
 
 
 class DailySummary(models.Model):
-	'''submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)'''
-	'''provider = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="daily_summaries") '''
+	# submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
 	practice = models.ForeignKey(Practice, on_delete=models.CASCADE, related_name="daily_summaries")
 	entity = models.ForeignKey(Entity, null=True, default=None, on_delete=models.CASCADE, related_name="daily_summaries")
 	specialty = models.ForeignKey(Specialty, null=True, on_delete=models.CASCADE, related_name="daily_summaries")
 	date = models.DateField(null=True)
-	last_updated = models.DateTimeField(auto_now_add=True)
+
 	visits = models.IntegerField(null=False)
 	workdays = models.IntegerField(null=False)
 	noshows = models.IntegerField(null=True)
 	provider = models.ForeignKey(Provider, on_delete=models.CASCADE, related_name="daily_summaries")
 	
-
+	last_updated = models.DateTimeField(auto_now_add=True)
 	objects = models.Manager()
 
 	class Meta:
@@ -167,12 +165,14 @@ class DailySummary(models.Model):
 		return round(decimal.Decimal(self.visits/self.workdays), 1)
 	
 	def save(self, *args, **kwargs):
-		entity = self.practice.entity
-		if self.specialty in self.provider.specialties.all():
+		#automatically set entity
+		if self.practice.entity:
+			self.entity = self.practice.entity
+		#last resort guard ensuring the related relationship already exist
+		if self.provider in self.practice.providers.all() and self.specialty in self.provider.specialties.all():
 			super().save(*args, **kwargs)
 		else:
-			print('That specialty is not associated with that provider. Please add it before trying again.')
-			raise Exception
+			raise Exception('There is a problem with the relationships between the Practice, Provider, and Specialty.  The related relationships for your selection do not exist.')
 
 	def __str__(self):
 		return self.practice.__str__() + ': Daily for ' + self.date.strftime('%A') +', ' + self.date.strftime('%m/%d/%Y')

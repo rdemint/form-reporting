@@ -16,7 +16,7 @@ class PracticeAdmin(admin.ModelAdmin):
 
 
 class DailySummaryAdmin(admin.ModelAdmin):
-	pass 
+	exclude = ('entity',)
 
 class ProviderAdmin(admin.ModelAdmin):
 	fields = ('first_name', 'last_name', 'slug',
@@ -53,6 +53,7 @@ class CreateUserForm(forms.ModelForm):
 		if commit:
 			user.save()
 		return user
+
 
 class UpdateUserForm(forms.ModelForm):
 	password = ReadOnlyPasswordHashField()

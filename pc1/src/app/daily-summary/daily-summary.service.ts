@@ -23,10 +23,10 @@ export class DailySummaryService {
   }
 
   patchSummary(summary: DailySummary, practice_slug: string, summaryId) {
-    return this.http.patch<DailySummary>(environment['daily_summary_url'] + summaryId + "/", summary)
+    return this.http.patch<DailySummary>(environment['daily_summary_url'] + summaryId + "/", summary).subscribe()
   }
 
-  postSummary(summary: DailySummary, practice_slug: string) {
-    return this.http.post<DailySummary>(environment['daily_summary_url'], summary)
+  postSummary(summary: DailySummary) {
+    return this.http.post<DailySummary>(environment['daily_summary_url'], summary).subscribe()
   }
 }
