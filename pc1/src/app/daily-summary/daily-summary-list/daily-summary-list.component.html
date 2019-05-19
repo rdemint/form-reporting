@@ -1,23 +1,25 @@
 <div class="container">
 <h4>{{practice.name}}</h4>
-
 <mat-form-field>
 	<input matInput 
 		[matDatepicker]="datePicker" 
 		[max]="today" 
 		[matDatepickerFilter]="dateFilter" 
 		placeholder="Submitting reports for:" 
-		[formControl]="date">
+		[formControl]="selectedDateForm"
+		[value]="selectedDate">
 	<mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
 	<mat-datepicker #datePicker></mat-datepicker>
 </mat-form-field>
 </div>
 <div class="container">
 <div *ngFor="let provider of practice.providers">
-	<app-daily-summary 
+	<app-daily-summary
+	[selectedDate]="selectedDate" 
 	[practice]="practice" 
 	[provider]="provider" 
-	[dailySummaries]="dailySummaries">
+	[dailySummaries]="dailySummaries"
+	(addSummaryOutput)="addSummary($event)">
 </app-daily-summary>
 </div>
 </div>

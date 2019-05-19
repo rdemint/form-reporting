@@ -1,21 +1,30 @@
 	<div>
-		<mat-expansion-panel >
+		<mat-expansion-panel #expPanel [class.darkenBackground]="dailySummaryExists">
 			<mat-expansion-panel-header>
 				<mat-panel-title>
+					<div *ngIf="dailySummaryExists">
+						<i class="material-icons" style="padding: 6px">done</i>
+					</div>
 					<div>
 						<h5>{{provider.name}}</h5>
 					</div>
+
 				</mat-panel-title>
 			</mat-expansion-panel-header>
 			<ng-template matExpansionPanelContent>
-				<app-daily-summary-form 
+				<app-daily-summary-form
+				[dailySummaryExists]="dailySummaryExists"
+				[dailySummary]="dailySummary"
+				[selectedDate]="selectedDate" 
 				[practice]="practice"
 				[provider]="provider"
+				(addSummaryOutput)="addSummary($event)"
 				></app-daily-summary-form>
 			</ng-template>
 		</mat-expansion-panel>
 		<br>
 	</div>
+
 
 
 

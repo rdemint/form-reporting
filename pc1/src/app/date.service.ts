@@ -10,7 +10,7 @@ export class DateService implements OnInit {
 	selected_month$ = new BehaviorSubject<string>(null);
   	selected_year$ = new BehaviorSubject<string>(null);
   	year = '2019';
- 	month = '4';
+ 	month = '5';
 
   	YEAR_OPTIONS: string[] = ["2018", "2019"];
   	MONTH_OPTIONS: string[] = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10", "11", "12"];

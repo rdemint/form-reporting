@@ -1,3 +1,6 @@
 <div *ngIf="practice && dailySummaries">
-	<app-daily-summary-list [dailySummaries]="dailySummaries" [practice]="practice"></app-daily-summary-list>
+	<app-daily-summary-list 
+		[dailySummaries]="dailySummaries" 
+		[practice]="practice"
+		(addSummaryOutput)="addSummary($event)"></app-daily-summary-list>
 </div>

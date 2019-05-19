@@ -8,7 +8,7 @@ export interface Practice {
 }
 
 export interface Provider {
-	id: number;
+	id: string;
 	first_name: string;
 	last_name: string;
 	name: string;
@@ -26,7 +26,7 @@ export interface Specialty {
 
 export interface DailySummary {
 	id?: number;
-	date: Date;
+	date: string;
 	last_updated?: string;
 	visits: number;
 	workdays: number;

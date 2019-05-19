@@ -4,7 +4,8 @@
 		<div *ngIf="provider.specialties.length > 1 else providerSpecialty">
 			<tr>
 			<mat-form-field>
-				<mat-select 
+				<mat-select
+					[disabled]="dailySummaryExists"
 					formControlName="specialty"
 					placeholder="Specialty">
 						<mat-option *ngFor="let specialty of provider.specialties" [value]="specialty">
@@ -18,7 +19,8 @@
 		<tr>
 		<mat-form-field>
 			<label>Visits</label>
-			<input matInput type="text"
+			<input 
+				matInput type="text"
 			 	name="visitsInput"
 			 	formControlName="visits"
 			 	class="form-control"
@@ -28,7 +30,8 @@
 		<tr>
 		<mat-form-field>	
 			 <label>Workdays</label>
-			<input matInput type="text"
+			<input 
+				matInput type="text"
 				name="workdaysInput"
 				formControlName="workdays"
 				class="form-control"
@@ -38,7 +41,8 @@
 		<tr>
 		<mat-form-field>
 		<label>No Shows</label>
-			<input matInput type="text"
+			<input 
+				matInput type="text"
 				name="noshowsInput"
 				formControlName="noshows"
 				class="form-control"
@@ -47,7 +51,7 @@
 		</tr>
 	</table>
 			<br>
-		<button class="btn btn-primary" type="submit">Submit</button>
+		<button *ngIf="!dailySummaryExists" class="btn btn-primary" type="submit">Submit</button>
 	</form>
 </div>
 
