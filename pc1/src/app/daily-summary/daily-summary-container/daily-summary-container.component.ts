@@ -45,6 +45,7 @@ export class DailySummaryContainerComponent implements OnInit {
       this.dailySummaryService.postSummary(dailySummary);
       this.dailySummaries.push(dailySummary);
       this.dailySummaries = this.dailySummaries.slice();
+      console.log("summary added");
     }
 
     putSummary(dailySummary) {
