@@ -7,7 +7,6 @@ from django.contrib.auth import get_user_model, authenticate
 
 
 class SpecialtySerializer(serializers.ModelSerializer):
-
 	class Meta:
 		model = Specialty 
 		fields = "__all__"
@@ -16,12 +15,13 @@ class DailySummarySerializer(serializers.ModelSerializer):
 	practice = serializers.SlugRelatedField(many=False, queryset=Practice.objects.all(), slug_field='name')
 	provider = serializers.PrimaryKeyRelatedField(many=False, queryset=Provider.objects.all())
 	specialty = serializers.SlugRelatedField(many=False, queryset=Specialty.objects.all(), slug_field='name')
-
+	submitted_on = serializers.DateTimeField(format="%m-%d-%y", read_only=True)
+	last_updated = serializers.DateTimeField(format="%m-%d-%y", read_only=True)
 	visits_per_workdays = serializers.ReadOnlyField()
 
 	class Meta:
 		model = DailySummary
-		fields = ('date', 'entity', 'practice', 'provider', 'specialty', 'visits', 
+		fields = ('id', 'date', 'submitted_on', 'last_updated', 'submitted_by', 'entity', 'practice', 'provider', 'specialty', 'visits', 
 			'workdays', 'noshows', 'visits_per_workdays')
 		validators=[UniqueTogetherValidator(
 				queryset=DailySummary.objects.all(),

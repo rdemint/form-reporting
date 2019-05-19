@@ -35,6 +35,11 @@ class FilteredDailySummaries(ListCreateAPIView):
 		return self.create(request, *args, **kwargs)
 
 
+class DailySummaryDetail(RetrieveUpdateDestroyAPIView):
+	queryset = DailySummary.objects.all()
+	serializer_class = DailySummarySerializer 
+
+
 class EntityList(ListCreateAPIView):
 	serializer_class = EntitySerializer
 	queryset = Entity.objects.all()
@@ -85,6 +90,8 @@ class CreateTokenView(ObtainAuthToken):
 			'email': user.email, 
 			'practice_name': practice_name,
 			'entity_name': entity_name, 
-			'user_type': user.user_type
+			'user_type': user.user_type,
+			'user_id': user.id
+			
 			})
 	

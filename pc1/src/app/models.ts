@@ -25,7 +25,7 @@ export interface Specialty {
 
 
 export interface DailySummary {
-	id?: number;
+	id: string;
 	date: string;
 	last_updated?: string;
 	visits: number;
@@ -37,6 +37,7 @@ export interface DailySummary {
 }
 
 export interface User {
+	id: string;
 	email: string;
 	first_name?: string;
 	last_name?: string;

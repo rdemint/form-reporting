@@ -42,8 +42,22 @@ export class DailySummaryContainerComponent implements OnInit {
     }
 
     addSummary(dailySummary) {
+      this.dailySummaryService.postSummary(dailySummary);
       this.dailySummaries.push(dailySummary);
-      // this.snackBar.open('Summary Submitted', "Ok", {duration: 2000, panelClass: ['snackBarStyling']});
+      this.dailySummaries = this.dailySummaries.slice();
+    }
+
+    putSummary(dailySummary) {
+      // Updates the summary in memory to a getDailySummaries API call
+      // Sets the user ID to populate the submitted_by property field.  PUTS the summary to the backend
+      let id = dailySummary['id'];
+      let originalSummary = this.dailySummaries.filter((summary)=> summary.id == id)[0];
+      let index = this.dailySummaries.indexOf(originalSummary);
+      this.dailySummaries[index] = dailySummary;
+      this.dailySummaries = this.dailySummaries.slice();
+
+      dailySummary['submitted_by'] = this.user.id;
+      this.dailySummaryService.putSummary(dailySummary, id);
     }
 
 }

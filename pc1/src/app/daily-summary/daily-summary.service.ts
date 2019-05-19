@@ -22,8 +22,8 @@ export class DailySummaryService {
 
   }
 
-  patchSummary(summary: DailySummary, practice_slug: string, summaryId) {
-    return this.http.patch<DailySummary>(environment['daily_summary_url'] + summaryId + "/", summary).subscribe()
+  putSummary(summary: DailySummary, summaryId: string) {
+    return this.http.put<DailySummary>(environment['daily_summary_url'] + summaryId + "/", summary).subscribe()
   }
 
   postSummary(summary: DailySummary) {

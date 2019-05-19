@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils.text import slugify
+from django.conf import settings
 
 # Create your models here.
 class Entity(models.Model):
@@ -12,7 +13,8 @@ class Entity(models.Model):
 	@property
 	def specialties(self):
 		qs = Specialty.objects.filter(providers__entity=self).all()
-		return list(qs)
+		specialtySet = set(qs)
+		return specialtySet
 	
 	def save(self, *args, **kwargs):
 		self.slug=slugify(self.name)
@@ -134,26 +136,19 @@ class Provider(models.Model):
 		unique_together = ('first_name', 'last_name', 'entity')
 		ordering=['last_name']
 
-# class DailySummaryManager(models.Manager):
-
-# 	def get_queryset(self, year, month): 
-# 		return super().get_queryset().filter(date__month=self.request.kwargs['month'], date__year=self.request.kwargs['year'])
-#very interesting but I do not need this now
-
 
 class DailySummary(models.Model):
-	# submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT)
+	submitted_by = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.PROTECT, null=True, blank=True)
 	practice = models.ForeignKey(Practice, on_delete=models.CASCADE, related_name="daily_summaries")
 	entity = models.ForeignKey(Entity, null=True, default=None, on_delete=models.CASCADE, related_name="daily_summaries")
 	specialty = models.ForeignKey(Specialty, null=True, on_delete=models.CASCADE, related_name="daily_summaries")
 	date = models.DateField(null=True)
-
+	submitted_on = models.DateTimeField(null=True, blank=True, auto_now_add=True)
 	visits = models.IntegerField(null=False)
 	workdays = models.IntegerField(null=False)
 	noshows = models.IntegerField(null=True)
 	provider = models.ForeignKey(Provider, on_delete=models.CASCADE, related_name="daily_summaries")
-	
-	last_updated = models.DateTimeField(auto_now_add=True)
+	last_updated = models.DateTimeField(auto_now=True)
 	objects = models.Manager()
 
 	class Meta:
@@ -164,6 +159,16 @@ class DailySummary(models.Model):
 	def visits_per_workdays(self):
 		return round(decimal.Decimal(self.visits/self.workdays), 1)
 	
+	@property
+	def edited(self):
+		if self.submitted_on == self.last_updated and self.last_updated != null:
+			return False
+		elif self.submitted_on != self.last_updated and self.last_updated != null:
+			return True 
+		else:
+			return False
+	
+
 	def save(self, *args, **kwargs):
 		#automatically set entity
 		if self.practice.entity:

@@ -8,7 +8,6 @@
 					<div>
 						<h5>{{provider.name}}</h5>
 					</div>
-
 				</mat-panel-title>
 			</mat-expansion-panel-header>
 			<ng-template matExpansionPanelContent>
@@ -19,12 +18,14 @@
 				[practice]="practice"
 				[provider]="provider"
 				(addSummaryOutput)="addSummary($event)"
+				(putSummaryOutput)="putSummary($event)"
+				[dailySummaryDisabled]="dailySummaryDisabled"
+				(editingOutput)="setEditing($event)"
+				[editing]="editing"
 				></app-daily-summary-form>
 			</ng-template>
 		</mat-expansion-panel>
 		<br>
 	</div>
-
-
 
 

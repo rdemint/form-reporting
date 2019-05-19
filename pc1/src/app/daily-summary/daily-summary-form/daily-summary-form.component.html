@@ -5,7 +5,6 @@
 			<tr>
 			<mat-form-field>
 				<mat-select
-					[disabled]="dailySummaryExists"
 					formControlName="specialty"
 					placeholder="Specialty">
 						<mat-option *ngFor="let specialty of provider.specialties" [value]="specialty">
@@ -51,7 +50,16 @@
 		</tr>
 	</table>
 			<br>
-		<button *ngIf="!dailySummaryExists" class="btn btn-primary" type="submit">Submit</button>
+		<div *ngIf="dailySummary.last_updated">
+			<p>Last updated: {{dailySummary.last_updated}}</p>
+		</div>
+		<div *ngIf="dailySummary.submitted_on && !dailySummary.last_updated">
+			<p>Submitted on: {{dailySummary.submitted_on}}</p>
+		</div>
+		<button *ngIf="!dailySummaryDisabled && !editing" class="btn btn-primary" type="submit">Submit</button>
+		<a *ngIf="dailySummaryDisabled" (click)="enableEditing()" style="color:blue">Edit this summary.</a>
+		<button *ngIf="editing" class="btn btn-warning" (click)="putSummary()">Update</button>
+		<button *ngIf="editing" class="btn btn-default" (click)="cancelEdit()">Cancel</button>
 	</form>
 </div>
 

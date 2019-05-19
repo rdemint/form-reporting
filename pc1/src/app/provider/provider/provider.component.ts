@@ -13,7 +13,7 @@ export class ProviderComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  	this.dailySummaries = this.dailySummaries.filter((summary)=> summary.provider == this.provider.name)
+  	this.dailySummaries = this.dailySummaries.filter((summary)=> summary.provider == this.provider.id)
   }
 
 }

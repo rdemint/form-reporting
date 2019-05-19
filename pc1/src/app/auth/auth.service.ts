@@ -60,7 +60,8 @@ export class AuthService implements OnInit {
 	
 	updateData(data) {
 		this.getDataByType(data);
-		this.userService.selectUser({	
+		this.userService.selectUser({
+			id: data['user_id'],	
 	  		email: data['email'],
 	  		user_type: data['user_type'],
 	  	});

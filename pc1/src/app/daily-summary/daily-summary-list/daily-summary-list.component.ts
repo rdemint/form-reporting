@@ -11,6 +11,8 @@ export class DailySummaryListComponent implements OnInit, OnChanges {
 	@Input() practice: Practice;
 	@Input() dailySummaries: DailySummary;
   @Output() addSummaryOutput = new EventEmitter<DailySummary>(); 
+  @Output() putSummaryOutput = new EventEmitter<DailySummary>();
+
 	selectedDateForm: FormControl;
   selectedDate: Date;
 	today = new Date();
@@ -29,11 +31,9 @@ export class DailySummaryListComponent implements OnInit, OnChanges {
   	return day !==0 && day !==6  && date.getDate() <= this.today.getDate() && month == this.today.getMonth();
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-
-  }
-
   addSummary(dailySummary) {this.addSummaryOutput.emit(dailySummary)}
+  
+  putSummary(dailySummary) {this.putSummaryOutput.emit(dailySummary)}
 
   setDate(){
 
@@ -43,11 +43,13 @@ export class DailySummaryListComponent implements OnInit, OnChanges {
     let today = new Date();
     let day = today.getDay();
     if ( day == 0) {
-         let friday = new Date(today.setDate(today.getDate()-1));
+      // Today is sunday
+         let friday = new Date(today.setDate(today.getDate()-2));
          return friday;
       }
     
     else if (day == 6) {
+      // Today is saturday
       let friday = new Date(today.setDate(today.getDate()-1));
       return friday;
     }
@@ -56,4 +58,8 @@ export class DailySummaryListComponent implements OnInit, OnChanges {
        return today;
       }
     }
+
+   ngOnChanges(changes: SimpleChanges) {
   }
+
+}
