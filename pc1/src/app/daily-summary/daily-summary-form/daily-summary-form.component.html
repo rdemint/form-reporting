@@ -1,20 +1,7 @@
-<div class="example-container">
+<div style="padding:10px">
 	<form [formGroup]="summaryForm" (ngSubmit)="onSubmit()">
 		<table>
-		<div *ngIf="provider.specialties.length > 1 else providerSpecialty">
-			<tr>
-			<mat-form-field>
-				<mat-select
-					formControlName="specialty"
-					placeholder="Specialty">
-						<mat-option *ngFor="let specialty of provider.specialties" [value]="specialty">
-							{{specialty}}
-						</mat-option>
-				</mat-select>
-			</mat-form-field>
-			</tr>
-
-		</div>
+		<thead><strong>{{specialty}}</strong></thead>
 		<tr>
 		<mat-form-field>
 			<label>Visits</label>
@@ -56,13 +43,12 @@
 		<div *ngIf="dailySummary.submitted_on && !dailySummary.last_updated">
 			<p>Submitted on: {{dailySummary.submitted_on}}</p>
 		</div>
-		<button *ngIf="!dailySummaryDisabled && !editing" class="btn btn-primary" type="submit">Submit</button>
-		<a *ngIf="dailySummaryDisabled" (click)="enableEditing()" style="color:blue">Edit this summary.</a>
-		<button *ngIf="editing" class="btn btn-warning" (click)="putSummary()">Update</button>
-		<button *ngIf="editing" class="btn btn-default" (click)="cancelEdit()">Cancel</button>
+			<div>
+				<button *ngIf="!dailySummaryDisabled && !editing" class="btn btn-primary" type="submit">Submit</button>
+				<a *ngIf="dailySummaryDisabled && !editing" (click)="enableEditing()" style="color:blue">Edit this summary.</a>
+				<button *ngIf="editing" class="btn btn-warning" (click)="putSummary()">Update</button>
+				<button *ngIf="editing" class="btn btn-default" (click)="cancelEdit()">Cancel</button>
+			</div>
 	</form>
 </div>
 
-<ng-template #providerSpecialty>
-	<p>{{provider.specialties[0]}}</p>
-</ng-template>

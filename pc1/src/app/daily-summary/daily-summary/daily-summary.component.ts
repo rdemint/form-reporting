@@ -1,10 +1,12 @@
-import { Input, Component, Output, ViewChild, ElementRef, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Input, Component, Output, ViewChild, ChangeDetectionStrategy, ElementRef, EventEmitter, OnInit, OnChanges, SimpleChanges } from '@angular/core';
 import { DailySummary, Practice, Provider } from '../../models';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-daily-summary',
   templateUrl: './daily-summary.component.html',
-  styleUrls: ['./daily-summary.component.css']
+  styleUrls: ['./daily-summary.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DailySummaryComponent implements OnInit, OnChanges {
 	@Input() practice: Practice;
@@ -13,55 +15,50 @@ export class DailySummaryComponent implements OnInit, OnChanges {
 	@Input() selectedDate: Date;
   @Output() addSummaryOutput = new EventEmitter<DailySummary>();
   @Output() putSummaryOutput = new EventEmitter<DailySummary>(); 
+  nullDailySummary: DailySummary = {id: null, practice: null, provider: null, visits: null, noshows: null, workdays: null, date: null, specialty: null};
   dailySummary: DailySummary;
-  dailySummaryExists: boolean = true;
+ 
+
+  dailySummaryExists: boolean = false;
   editing: boolean = false;
   dailySummaryDisabled: boolean = false;
 
+  // Refactor
+  providerDailySummaries = {}; 
+  providerSpecialtiesForm: FormControl;
+// 
   constructor() { }
 
-  ngOnInit() { 
-  }
+  ngOnInit() {  }
 
-
-
-  findSummary(): void {
-    // Responsible for finding the DailySummary object to that will be used to populate form fields.  
-    // Sets default object if none is found so the form doesn't throw undefined errors.
-        this.dailySummary = this.dailySummaries.find(
-          (summary)=> {
-            if (summary.practice == this.practice.name && summary.provider == this.provider.id && summary.date == this.selectedDate.toISOString().slice(0,10)) {
-              return true
-            }
-          }
-        );
-        if (this.dailySummary == undefined)
-          {
-            this.dailySummary = {id: null, practice: null, provider: null, visits: null, noshows: null, workdays: null, date: null, specialty: null};
-        }
-  }
-
-
-  summaryIsDisabled (): void {
-    if (this.dailySummaryExists == true && this.editing == true) {
-      this.dailySummaryDisabled = false;
-    }
-    else if (this.dailySummaryExists == true && this.editing == false) {
-      this.dailySummaryDisabled  = true;
-    }
-    else if (this.dailySummaryExists== false) {
-      this.dailySummaryDisabled = false;
+// 
+  findSummaries() {
+    this.dailySummaryExists = false;
+    let specialties = this.provider.specialties;
+    for (let i = 0; i < specialties.length; i++) {
+      let summary = this.dailySummaries.filter((summary)=> {
+           if (
+             summary.practice == this.practice.name && 
+             summary.provider == this.provider.id && 
+             summary.date == this.selectedDate.toISOString().slice(0,10) &&
+             summary.specialty == specialties[i]
+             ) 
+               {return true }
+            else 
+              { return false}
+            })[0];
+      this.providerDailySummaries[specialties[i]] = this.summaryOrNull(summary);
     }
   }
 
-  summaryExists(): void {
-    if (this.dailySummary['date'] == null) {
-      this.dailySummaryExists = false;
+  summaryOrNull(summary) {
+    if (summary == undefined) {
+      return this.nullDailySummary;
     }
 
     else {
-      this.dailySummaryExists = true;
-    }
+      this.dailySummaryExists = true; 
+      return summary }
   }
 
   addSummary(dailySummary) {
@@ -70,27 +67,12 @@ export class DailySummaryComponent implements OnInit, OnChanges {
 
   putSummary(dailySummary) {
     this.editing = false;
-    this.summaryIsDisabled();
     this.putSummaryOutput.emit(dailySummary);
   }
 
-  setEditing(bool) {
-    this.editing = bool;
-    this.summaryIsDisabled();
-  }
-
   ngOnChanges(changes: SimpleChanges) {
-    if (changes['selectedDate']) {
-      this.editing = false;
-      this.findSummary(); 
-      this.summaryExists();
-      this.summaryIsDisabled();
-    }
-
-    if(changes['dailySummaries']) {
-      this.findSummary();
-      this.summaryExists();
-      this.summaryIsDisabled();
+    if (changes['selectedDate'] || changes['dailySummaries']) {
+      this.findSummaries(); 
     }
   }
 

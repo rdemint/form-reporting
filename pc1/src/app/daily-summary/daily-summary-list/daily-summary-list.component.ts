@@ -1,11 +1,12 @@
-import { Input, Output, EventEmitter, Component, OnInit, OnChanges, SimpleChanges } from '@angular/core';
+import { Input, Output, EventEmitter, Component, OnInit, OnChanges, SimpleChanges, ChangeDetectionStrategy } from '@angular/core';
 import { FormControl } from '@angular/forms';
 import { DailySummary, Practice } from '../../models';
 
 @Component({
   selector: 'app-daily-summary-list',
   templateUrl: './daily-summary-list.component.html',
-  styleUrls: ['./daily-summary-list.component.css']
+  styleUrls: ['./daily-summary-list.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DailySummaryListComponent implements OnInit, OnChanges {
 	@Input() practice: Practice;

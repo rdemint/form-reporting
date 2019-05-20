@@ -2,7 +2,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatInputModule, MatCardModule, MatFormFieldModule, 
     MatNativeDateModule, MatTabsModule, MatSlideToggleModule, 
-    MatSnackBarModule} from '@angular/material';
+    MatSnackBarModule, MatDividerModule} from '@angular/material';
 import { MatSelectModule} from '@angular/material/select';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatToolbarModule} from '@angular/material/toolbar';
@@ -91,6 +91,7 @@ import { CheckCompleteDirective } from './directives/check-complete.directive';
     MatCardModule,
     MatSnackBarModule,
     MatSlideToggleModule,
+    MatDividerModule
   ],
   exports: [
     MatFormFieldModule,

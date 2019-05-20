@@ -6,7 +6,7 @@ import { User } from '../models';
   providedIn: 'root'
 })
 export class UserService {
-	anonymousUser = {name: '', email: ''};
+	anonymousUser = {id: null, name: '', email: ''};
 	user$ = new BehaviorSubject<User>(this.anonymousUser);
   
   constructor() { }
