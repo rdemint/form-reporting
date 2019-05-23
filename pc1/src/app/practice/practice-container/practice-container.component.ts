@@ -33,7 +33,7 @@ export class PracticeContainerComponent implements OnInit {
   }
 
   getDailySummaries() {
-    this.dailySummaryService.getDailySummaries({'practice': this.practice.slug, 'year': this.dateService.year, 'month': this.dateService.month})
+    this.dailySummaryService.getDailySummaries({'practice': this.practice.slug, 'year': this.dateService.default_year, 'month': this.dateService.default_month})
         .subscribe((dailySummaries)=> {
           this.dailySummaries = dailySummaries;
         });

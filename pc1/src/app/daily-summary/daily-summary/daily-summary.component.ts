@@ -15,7 +15,7 @@ export class DailySummaryComponent implements OnInit, OnChanges {
 	@Input() selectedDate: Date;
   @Output() addSummaryOutput = new EventEmitter<DailySummary>();
   @Output() putSummaryOutput = new EventEmitter<DailySummary>(); 
-  nullDailySummary: DailySummary = {id: null, practice: null, provider: null, visits: null, noshows: null, workdays: null, date: null, specialty: null};
+  nullDailySummary: DailySummary = {id: null, practice: null, provider: null, visits: null, noshows: null, workdays: null, date: null, specialty: null, visits_per_workdays: null};
   dailySummary: DailySummary;
  
 

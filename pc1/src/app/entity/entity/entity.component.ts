@@ -6,6 +6,8 @@ import { DateService } from '../../date.service';
 import { DailySummaryService } from '../../daily-summary/daily-summary.service';
 import { DailySummary, Entity, User } from '../../models';
 import { environment } from '../../../environments/environment';
+import { switchMap, map, tap} from 'rxjs/operators';
+import { Observable, combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-entity',
@@ -18,8 +20,12 @@ export class EntityComponent implements OnInit {
   dailySummaries: DailySummary[];
 
   selected_entity_slug = 'tri-state-inc'
-  year = '2019';
-  month = '4';
+  year: string;
+  month: string;
+  year$: Observable<string>;
+  month$: Observable<string>;
+  yearData$: Observable<any>;
+  summaries$: Observable<DailySummary[]>;
 
   constructor(
   	private entityService: EntityService,
@@ -32,14 +38,24 @@ export class EntityComponent implements OnInit {
 
   ngOnInit() {
   	this.userService.loadUser().subscribe((user)=> this.user = user);
-	  this.entityService.getEntity(this.selected_entity_slug).subscribe((entity)=> {
-      this.entity = entity;
-      this.getDailySummaries();
-      });
+    combineLatest(this.route.paramMap, this.route.queryParamMap)
+      .subscribe(
+          ([params, queryparams]) => {
+            this.entityService.getEntity(params.get('entity_slug'))
+              .subscribe(
+                (entity)=> this.entity = entity
+              );
+            this.getDailySummaries({
+              'entity': params.get('entity_slug'), 
+              'year': queryparams.get('year'), 
+              'month': queryparams.get('month')
+            });
+          }
+        );
   }
 
-  getDailySummaries() {
-    this.dailySummaryService.getDailySummaries({'entity': this.entity.slug, 'year': this.year, 'month': this.month})
+  getDailySummaries(params) {
+    this.dailySummaryService.getDailySummaries(params)
         .subscribe((dailySummaries)=> {
           this.dailySummaries = dailySummaries;
         });

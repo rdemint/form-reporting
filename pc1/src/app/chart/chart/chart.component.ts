@@ -19,6 +19,7 @@ chart_data: any = {
   noshows: [],
   workdays: [],
   visits: [], 
+  visits_per_workday: []
 }
 
   constructor(private entityService: EntityService) { }
@@ -31,6 +32,7 @@ chart_data: any = {
           this.chart_data['noshows'] = this.dailySummaries.map((summary)=> ({label: summary.date, y: summary.noshows}));
           this.chart_data['workdays'] = this.dailySummaries.map((summary)=> ({label: summary.date, y: summary.workdays}));
           this.chart_data['visits'] = this.dailySummaries.map((summary)=> ({label: summary.date, y: summary.visits}));
+          this.chart_data['visits_per_workdays'] = this.dailySummaries.map((summary)=> ({label: summary.date, y: summary.visits_per_workdays}));
         }
 
     createChart() {
@@ -73,7 +75,7 @@ chart_data: any = {
              showInLegend: true,
              name: "No Shows",
              dataPoints: this.chart_data.noshows
-           }
+           },
          ]
        });
     }

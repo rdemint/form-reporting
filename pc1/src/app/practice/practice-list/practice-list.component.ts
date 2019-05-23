@@ -13,6 +13,7 @@ export class PracticeListComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+    console.log(this.dailySummaries);
   }
 
 }

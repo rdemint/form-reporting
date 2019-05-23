@@ -77,7 +77,7 @@ class User(AbstractBaseUser, PermissionsMixin):
 	practice = models.ForeignKey(Practice, on_delete=models.CASCADE,
 		related_name='users', null=True, default=None, blank=True)
 	entity = models.ForeignKey(Entity, on_delete=models.CASCADE, 
-		related_name='entities', null=True)
+		related_name='entities', null=True, blank=True)
 	email = models.EmailField(max_length=255, unique=True)
 	#the following two are required for custom user models 
 	#as stated by the django docs

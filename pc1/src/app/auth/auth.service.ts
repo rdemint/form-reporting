@@ -30,11 +30,11 @@ export class AuthService implements OnInit {
   	private entityService: EntityService, 
   	private userService: UserService,
   	) {
+  	  	this.year = this.dateService.default_year;
+  		this.month = this.dateService.default_month;
   }
 
   ngOnInit() {
-  	this.dateService.loadMonth().subscribe((month)=> this.month=month);
-  	this.dateService.loadYear().subscribe((year)=> this.year=year);
   }
 
   signup(user) {  }
@@ -83,18 +83,17 @@ export class AuthService implements OnInit {
 	navigateByUserType(data){
 		let navExtras: NavigationExtras = { queryParams: {} }
 		navExtras['queryParams'] = {
- 			year: '2019',
- 			month: '4',
+ 			year: this.year,
+ 			month: this.month,
 			}
  		if (data['user_type'] == "admin") {
- 				navExtras['queryParams']['entity'] = data['entity_slug']
 			this.router.navigate(
 				['entities', data['entity_slug']], navExtras
 			);
 		}
 		else if (data['user_type']=="manager") {
 			this.router.navigate(
-				['practices', data['practice_slug']], {queryParams: {year: this.year, month: this.month}}
+				['practices', data['practice_slug'], 'dashboard'], {queryParams: {year: this.year, month: this.month}}
 			);
 		}
 

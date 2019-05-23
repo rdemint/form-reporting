@@ -9,7 +9,6 @@ import { first, map } from 'rxjs/operators';
   selector: 'app-practice',
   templateUrl: './practice.component.html',
   styleUrls: ['./practice.component.css'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PracticeComponent implements OnInit {
   @Input() practice: Practice;

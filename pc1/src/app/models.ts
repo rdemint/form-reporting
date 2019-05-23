@@ -34,6 +34,7 @@ export interface DailySummary {
 	practice: string;
 	provider: string;
 	specialty: string;
+	visits_per_workdays: number;
 }
 
 export interface User {

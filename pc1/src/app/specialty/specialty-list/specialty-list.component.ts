@@ -13,7 +13,6 @@ export class SpecialtyListComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-  	console.log(this.specialties);
   }
 
 }

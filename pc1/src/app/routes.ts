@@ -28,7 +28,7 @@ export const appRoutes: Routes = [
 		]
 	},
 	{
-		path: 'entities/:entitySlug',
+		path: 'entities/:entity_slug',
 		// canActivate: [AuthGuard],
 		component: EntityComponent,
 	},

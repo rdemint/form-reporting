@@ -35,7 +35,7 @@ export class DailySummaryContainerComponent implements OnInit {
   }
     
    getDailySummaries() {
-    this.dailySummaryService.getDailySummaries({'practice': this.selected_practice_slug, 'year': this.dateService.year, 'month': this.dateService.month})
+    this.dailySummaryService.getDailySummaries({'practice': this.selected_practice_slug, 'year': this.dateService.default_year, 'month': this.dateService.default_month})
         .subscribe((dailySummaries)=> {
           this.dailySummaries = dailySummaries;
     	});
@@ -45,7 +45,6 @@ export class DailySummaryContainerComponent implements OnInit {
       this.dailySummaryService.postSummary(dailySummary);
       this.dailySummaries.push(dailySummary);
       this.dailySummaries = this.dailySummaries.slice();
-      console.log("summary added");
     }
 
     putSummary(dailySummary) {
