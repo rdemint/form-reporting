@@ -59,7 +59,6 @@ export class AuthService implements OnInit {
 	}
 	
 	updateData(data) {
-		this.getDataByType(data);
 		this.userService.selectUser({
 			id: data['user_id'],	
 	  		email: data['email'],
@@ -68,16 +67,6 @@ export class AuthService implements OnInit {
 		localStorage.setItem("token", data['token']);
 		this.errors = [];
 		this.authHeader = new HttpHeaders().set("Authorization", "Token " + localStorage['token']);
-	}
-
-	getDataByType(data) { 
-		if (data['user_type'] == "admin") {
-			this.entityService.getEntity(data['entity_slug']);
-		}
-
-		if (data['user_type'] == "staff") {
-			this.practiceService.getPractice(data['practice_slug']);
-		}
 	}
 
 	navigateByUserType(data){
@@ -93,13 +82,13 @@ export class AuthService implements OnInit {
 		}
 		else if (data['user_type']=="manager") {
 			this.router.navigate(
-				['practices', data['practice_slug'], 'dashboard'], {queryParams: {year: this.year, month: this.month}}
+				['practices', data['practice_slug']], {queryParams: {year: this.year, month: this.month}}
 			);
 		}
 
 		else {
 			this.router.navigate(
-				['practices', data['practice_slug'], 'reporting'])
+				['practices', data['practice_slug'], 'reporting'], {queryParams: {year: this.year, month: this.month}})
 		}
   	}
 

@@ -1,1 +1,8 @@
-<router-outlet></router-outlet>
+<div *ngIf="practice && dailySummaries && pyDailySummaries">
+	<app-practice-detail 
+		[practice]="practice" 
+		[dailySummaries]="dailySummaries"
+		[pyDailySummaries]="pyDailySummaries">
+			
+		</app-practice-detail>
+</div>

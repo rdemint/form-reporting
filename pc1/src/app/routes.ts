@@ -13,19 +13,14 @@ import { AuthGuard } from './auth-guard';
 
 export const appRoutes: Routes = [
 	{
-		path: 'practices/:practiceSlug',
+		path: 'practices/:practice_slug',
 		// canActivate: [AuthGuard],
-		// component: PracticeContainerComponent,
-		children: [
-			{
-				path: 'dashboard',
-				component: PracticeContainerComponent
-			},
-			{
-				path: 'reporting',
-				component: DailySummaryContainerComponent
-			}
-		]
+		component: PracticeContainerComponent,
+	},
+	{
+		path: 'practices/:practice_slug/reporting',
+		// canActivate: [AuthGuard],
+		component: DailySummaryContainerComponent
 	},
 	{
 		path: 'entities/:entity_slug',

@@ -22,6 +22,11 @@ export class DailySummaryService {
 
   }
 
+  getPYDailySummaries(params: any) {
+    params['year'] = (+params['year']-1).toString();
+    return this.getDailySummaries(params);
+  }
+
   putSummary(summary: DailySummary, summaryId: string) {
     return this.http.put<DailySummary>(environment['daily_summary_url'] + summaryId + "/", summary).subscribe()
   }

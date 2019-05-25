@@ -13,6 +13,7 @@
 </mat-form-field>
 </div>
 <div class="container">
+<div *ngIf="practice.providers.length > 0 else noProviders">
 <div *ngFor="let provider of practice.providers">
 	<app-daily-summary
 	[selectedDate]="selectedDate" 
@@ -24,3 +25,7 @@
 </app-daily-summary>
 </div>
 </div>
+
+<ng-template #noProviders>
+	<p>There are no providers associated with this practice.  Contact Practice Concepts to add providers, so you can get to reporting.</p>  
+

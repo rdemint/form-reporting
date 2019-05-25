@@ -19,9 +19,8 @@ class DailySummaryAdmin(admin.ModelAdmin):
 	exclude = ('entity',)
 
 class ProviderAdmin(admin.ModelAdmin):
-	fields = ('first_name', 'last_name', 'slug',
-		'credentials', 'practices', 'specialties', 'alias_1', 'alias_2',
-		'entity')
+	fields = ('first_name', 'last_name',
+		'credentials', 'entity', 'practices', 'specialties', 'alias_1', 'alias_2')
 
 class SpecialtyAdmin(admin.ModelAdmin):
 	fields = ('name',)

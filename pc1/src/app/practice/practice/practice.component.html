@@ -1,6 +1,11 @@
 	<mat-card>
 		<mat-card-title>{{practice.name}}</mat-card-title>
 		<mat-card-content>
-			<app-chart [dailySummaries]="dailySummaries" [chartName]="practice.slug"></app-chart>
+			<app-chart 
+				[dailySummaries]="dailySummaries" 
+				[chartName]="practice.slug">
+			</app-chart>
 		</mat-card-content>
 	</mat-card>
+
+	

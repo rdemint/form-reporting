@@ -3,6 +3,7 @@ from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin
 from django.contrib.auth.base_user import BaseUserManager
 from django.utils.text import slugify
+from django.shortcuts import get_object_or_404
 from django.conf import settings
 
 # Create your models here.
@@ -117,7 +118,9 @@ class Provider(models.Model):
 	entity = models.ForeignKey(
 		Entity, 
 		on_delete=models.CASCADE, 
-		related_name="providers")
+		related_name="providers",
+		null = True,
+		blank = True)
 	specialties = models.ManyToManyField(Specialty, related_name='providers')
 	visits_goal = models.IntegerField(default=20)
 
@@ -153,7 +156,7 @@ class DailySummary(models.Model):
 
 	class Meta:
 		unique_together = (('date', 'provider', 'specialty'))
-		ordering=['-date']
+		ordering=['date']
 
 	@property
 	def visits_per_workdays(self):

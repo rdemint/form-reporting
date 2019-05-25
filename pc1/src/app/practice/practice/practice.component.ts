@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Router, NavigationExtras } from '@angular/router';
 import { User } from '../../models';
 import { Practice, DailySummary } from '../../models';
 
@@ -14,9 +15,9 @@ export class PracticeComponent implements OnInit {
   @Input() practice: Practice;
 	@Input() dailySummaries: DailySummary[];
 
-  constructor( ) { }
+  constructor(private router: Router) { }
 
-  ngOnInit() { 
+  ngOnInit() {
     this.dailySummaries = this.dailySummaries.filter((summary)=> summary.practice == this.practice.name)
   }
 

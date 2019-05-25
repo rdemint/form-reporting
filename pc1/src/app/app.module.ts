@@ -43,9 +43,11 @@ import { SpecialtyComponent } from './specialty/specialty/specialty.component';
 import { SpecialtyListComponent } from './specialty/specialty-list/specialty-list.component';
 import { DailySummaryComponent } from './daily-summary/daily-summary/daily-summary.component';
 import { DailySummaryFormComponent } from './daily-summary/daily-summary-form/daily-summary-form.component';
-import { DailySummaryContainerComponent } from './daily-summary/daily-summary-container/daily-summary-container.component';
 import { DailySummaryListComponent } from './daily-summary/daily-summary-list/daily-summary-list.component';
+import { DailySummaryContainerComponent } from './daily-summary/daily-summary-container/daily-summary-container.component';
 import { CheckCompleteDirective } from './directives/check-complete.directive';
+import { PracticeDetailComponent } from './practice/practice-detail/practice-detail.component';
+import { DailySummaryChartComponent } from './daily-summary/daily-summary-chart/daily-summary-chart.component';
 
 @NgModule({
   declarations: [
@@ -68,6 +70,8 @@ import { CheckCompleteDirective } from './directives/check-complete.directive';
     DailySummaryContainerComponent,
     DailySummaryListComponent,
     CheckCompleteDirective,
+    PracticeDetailComponent,
+    DailySummaryChartComponent,
   ],
   imports: [
     ReactiveFormsModule,

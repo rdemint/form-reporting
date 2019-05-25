@@ -21,6 +21,7 @@ export class DailySummaryListComponent implements OnInit, OnChanges {
   constructor() { }
 
   ngOnInit() {
+    console.log(this.practice.providers)
     this.selectedDate = this.setDate();
     this.selectedDateForm = new FormControl(this.today);
     this.selectedDateForm.valueChanges.subscribe((date)=> this.selectedDate = date);

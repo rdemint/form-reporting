@@ -1,45 +1,58 @@
 import { Component, OnInit } from '@angular/core';
-import { MatSnackBar } from '@angular/material';
-import { DailySummary, User, Practice, Provider } from '../../models';
+import { ActivatedRoute, Router } from '@angular/router';
+import { DailySummary, User, Practice } from '../../models';
 import { DailySummaryService } from '../../daily-summary/daily-summary.service';
 import { environment } from '../../../environments/environment';
 import { UserService } from '../../user/user.service';
 import { DateService } from '../../date.service';
 import { PracticeService } from '../../practice/practice.service';
-
+import { combineLatest, Observable } from 'rxjs';
 
 @Component({
-  selector: 'app-daily-summary-container',
+  selector: 'app-practice-container',
   templateUrl: './daily-summary-container.component.html',
-  styleUrls: ['./daily-summary-container.component.css'],
-  providers: [MatSnackBar]
+  styleUrls: ['./daily-summary-container.component.css']
 })
 export class DailySummaryContainerComponent implements OnInit {
-	user: User;
-	practice: Practice;
-	selected_practice_slug = 'carolina-health';
-	providers: Provider[];
-	dailySummaries: DailySummary[];
+    user: User;
+    practice: Practice;
+    dailySummaries: DailySummary[];
 
   constructor(
-  	private practiceService: PracticeService,
+    private practiceService: PracticeService,
     private dailySummaryService: DailySummaryService,
     private dateService: DateService,
-    private userService: UserService, 
-    private snackBar: MatSnackBar) { }
+    private userService: UserService,
+    private route: ActivatedRoute,
+    ) { }
 
   ngOnInit() {
-  	this.userService.loadUser().subscribe((user)=> this.user = user);
-  	this.practiceService.getPractice(this.selected_practice_slug).subscribe((practice)=> this.practice = practice);
-    this.getDailySummaries();
-  }
-    
-   getDailySummaries() {
-    this.dailySummaryService.getDailySummaries({'practice': this.selected_practice_slug, 'year': this.dateService.default_year, 'month': this.dateService.default_month})
+    // this container has the same functionality as practice-container
+    // the two could be merged with a behaviorsubject service combination
+    // (on the to-do list)
+    this.userService.loadUser().subscribe((user)=> this.user = user);
+    combineLatest(this.route.paramMap, this.route.queryParamMap)
+      .subscribe(
+          ([params, queryparams]) => {
+            this.practiceService.getPractice(params.get('practice_slug'))
+              .subscribe(
+                (practice)=> this.practice = practice
+              );
+            this.getDailySummaries({
+              'practice': params.get('practice_slug'), 
+              'year': queryparams.get('year'), 
+              'month': queryparams.get('month')
+            });
+          }
+        );
+   }
+
+  getDailySummaries(params) {
+    this.dailySummaryService.getDailySummaries(params)
         .subscribe((dailySummaries)=> {
           this.dailySummaries = dailySummaries;
-    	});
-    }
+        });
+  } 
 
     addSummary(dailySummary) {
       this.dailySummaryService.postSummary(dailySummary);

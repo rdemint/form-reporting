@@ -1,0 +1,15 @@
+	<h4>{{practice.name}}</h4>
+	<mat-card>
+		<mat-card-content>
+			<app-daily-summary-chart 
+				[dailySummaries]="dailySummaries" 
+				[chartName]="practice.slug" 
+				[pyDailySummaries]="pyDailySummaries"
+				[pyComparison]="true"
+				[pyComparisonLabels]="chart1Labels"
+				>
+			</app-daily-summary-chart>
+		</mat-card-content>
+	</mat-card>
+	<br>
+	<a style="color:blue" (click)="navToReporting()">Go to reporting view</a>

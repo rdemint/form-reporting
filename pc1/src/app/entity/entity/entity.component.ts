@@ -18,14 +18,8 @@ export class EntityComponent implements OnInit {
   user: User;
   entity: Entity;
   dailySummaries: DailySummary[];
-
-  selected_entity_slug = 'tri-state-inc'
   year: string;
   month: string;
-  year$: Observable<string>;
-  month$: Observable<string>;
-  yearData$: Observable<any>;
-  summaries$: Observable<DailySummary[]>;
 
   constructor(
   	private entityService: EntityService,
